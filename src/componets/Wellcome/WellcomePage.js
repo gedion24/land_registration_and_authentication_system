@@ -38,12 +38,14 @@ function Wellcomepage() {
                 Explore your favourite events and register now to showcase your
                 talent and win exciting prizes.
               </p>
-              <a
-                href="/"
-                class="bg-transparent hover:bg-yellow-300 text-yellow-300 hover:text-black rounded shadow hover:shadow-lg py-2 px-4 border border-yellow-300 hover:border-transparent"
-              >
-                <Link to="/signup">Get Started</Link>
-              </a>
+              <Link to="/signup">
+                <a
+                  href="/"
+                  class="bg-transparent hover:bg-yellow-300 text-yellow-300 hover:text-black rounded shadow hover:shadow-lg py-2 px-4 border border-yellow-300 hover:border-transparent"
+                >
+                  Get Started
+                </a>
+              </Link>
             </div>
             <div class="p-8 mt- mb- md:mb-0 md:mt-0 ml-0 md:ml-12 lg:w-2/3  justify-center">
               {/* <div class="h-48 flex flex-wrap content-center">

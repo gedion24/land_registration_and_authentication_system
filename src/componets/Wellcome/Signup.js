@@ -2,6 +2,7 @@ import React from "react";
 import { Link, Route, Routes } from "react-router-dom";
 
 import Signin from "../../assets/Sign_In.svg";
+import AdminPage from "../Admin/AdminPage";
 
 function Signup() {
   return (
@@ -49,7 +50,7 @@ function Signup() {
                           Password
                         </label>
                         <a
-                          href="#"
+                          href="/"
                           class="text-sm text-gray-400 focus:text-blue-500 hover:text-blue-500 hover:underline"
                         >
                           Forgot password?
@@ -66,16 +67,18 @@ function Signup() {
                     </div>
 
                     <div class="mt-6">
-                      <button class="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                        Sign in
-                      </button>
+                      <Link to="/AdminPage">
+                        <button class="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
+                          Sign in
+                        </button>
+                      </Link>
                     </div>
                   </form>
 
                   <p class="mt-6 text-sm text-center text-gray-400">
                     Don&#x27;t have an account yet?{" "}
                     <a
-                      href=""
+                      href="/"
                       class="text-blue-500 focus:outline-none focus:underline hover:underline"
                     >
                       Sign up
