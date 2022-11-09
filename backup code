@@ -1,4 +1,8 @@
-// Login nd sign up page
+// Login nd sign up page  Ctrl+Shift+L (which is editor.action.selectHighlights)
+
+
+
+
 {
   /* <div className="w-full h-screen">
         <div className=" flex justify-center items-center h-full w-full  bg-slate-200 ">
