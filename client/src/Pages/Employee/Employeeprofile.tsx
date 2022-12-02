@@ -1,9 +1,12 @@
 // tsrafce
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
-type Props = {};
+type Props = {
+  empProfile: boolean;
+  setempProfile: Dispatch<SetStateAction<boolean>>;
+};
 
-const Employeeprofile = (props: Props) => {
+const Employeeprofile = ({ empProfile, setempProfile }: Props) => {
   return (
     <>
       <div className="w-full h-full bg-white flex flex-col px-8 py-4">

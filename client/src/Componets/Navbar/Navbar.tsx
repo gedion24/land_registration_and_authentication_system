@@ -20,7 +20,7 @@ const Navbar = (props: Props) => {
 
   return (
     <>
-      <nav className="bg-gray-100 text-black">
+      <nav className="bg-gray-100 text-black ">
         <div className=" px-2 sm:px-6 lg:px-8">
           <div className="relative flex h-16 items-center justify-between">
             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -41,11 +41,6 @@ const Navbar = (props: Props) => {
             </div>
             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
               <div className="flex flex-shrink-0 items-center">
-                {/* <img
-                  className="block h-8 w-auto lg:hidden"
-                  src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                  alt="Your Company"
-                /> */}
                 <img
                   className=" h-8 w-auto lg:block"
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
@@ -57,9 +52,16 @@ const Navbar = (props: Props) => {
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
                   <Link
+                    to="/adminhomepage"
                     className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                     aria-current="page"
+                  >
+                    HOME
+                  </Link>
+                  <Link
                     to="/adminhomepage/employees"
+                    className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    aria-current="page"
                   >
                     Manage Employees
                   </Link>
@@ -68,21 +70,21 @@ const Navbar = (props: Props) => {
                     href="/"
                     className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                   >
-                    Team
+                    {/*  */}
+                    Registered Lands
                   </a>
-
                   <a
                     href="/"
                     className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                   >
-                    Projects
+                    {/*  */}
+                    Register Land
                   </a>
-
                   <a
                     href="/"
                     className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                   >
-                    Calendar
+                    Owners
                   </a>
                 </div>
               </div>
@@ -117,10 +119,10 @@ const Navbar = (props: Props) => {
               </button>
 
               <Menu as="div" className="relative ml-3">
-                <div>
+                <div className="flex justify-center items-center">
                   <Menu.Button
                     type="button"
-                    className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    className="flex rounded-full bg-gray-100 text-sm focus:outline-none justify-center items-center "
                     id="user-menu-button"
                     aria-expanded="false"
                     aria-haspopup="true"
@@ -132,6 +134,11 @@ const Navbar = (props: Props) => {
                       src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                       alt=""
                     />
+                    {/* the logined in usr name */}
+                    <div className="pl-2 md:flex flex-col justify-start hidden ">
+                      <h1>jane doe</h1>
+                      <p>date:12/09/22</p>
+                    </div>
                   </Menu.Button>
                 </div>
                 {/* the Drop down for the profile icon */}

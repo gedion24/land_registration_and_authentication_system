@@ -10,25 +10,21 @@ type Props = {
 };
 
 const EmployeePage = (Props: Props) => {
-  const [isOpen, setIsOpen] = useState(true);
-
-  function openModal() {
-    setIsOpen(true);
-  }
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
       <div className="     ">
         {/* <!-- This is an example component --> */}
         <div>
-          <div className="flex w-full h-screen overflow-hidden  ">
+          <div className="flex w-full h-screen   ">
             {/* <div
               className="bg-gray-900 opacity-50 hidden fixed inset-0 z-10"
               id="sidebarBackdrop"
             ></div> */}
             <div
               id="main-content"
-              className="h-full w-full bg-gray-50 relative overflow-y-auto "
+              className="h-full w-full bg-gray-50 relative  "
             >
               <main>
                 <div className="pt-9 px-4">
@@ -78,14 +74,16 @@ const EmployeePage = (Props: Props) => {
                             This is a list of latest transactions
                           </span>
                         </div>
-                        <div className="flex-shrink-0">
-                          <a
-                            href="/"
-                            className="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg p-2"
-                          >
-                            View all
-                          </a>
-                        </div>
+                        <Link to="/employeehomepage/lands">
+                          <div className="flex-shrink-0">
+                            <a
+                              href="/"
+                              className="text-sm font-medium text-cyan-600 hover:bg-gray-100 rounded-lg p-2"
+                            >
+                              View all
+                            </a>
+                          </div>
+                        </Link>
                       </div>
                       <div className="flex flex-col mt-8">
                         <div className="overflow-x-auto rounded-lg">
@@ -307,19 +305,20 @@ const EmployeePage = (Props: Props) => {
                   </div>
                 </div>
               </main>
-              <Link to="/employeehomepage/landregistration"> Landreg </Link>
-              <Link to="/employeehomepage/employeeprofile">empprofile</Link>
-              <div className="">
+              {/* <Link to="/employeehomepage/landregistration"> Landreg </Link>
+              <Link to="/employeehomepage/employeeprofile">empprofile</Link> */}
+              {/* <div className="">
                 <button
-                  onClick={openModal}
+                  onClick={() => setIsOpen(true)}
                   //onClick={() => setOwner(true)}
                   className=" top-0 px-4 py-2 bg-indigo-500 outline-none rounded text-white shadow-indigo-200 shadow-lg font-medium active:shadow-none active:scale-95 hover:bg-indigo-600  focus:ring-offset-2 disabled:bg-gray-400/80 disabled:shadow-none disabled:cursor-not-allowed transition-colors duration-200"
                 >
                   open modal
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
+          <h1>sadsadasd</h1>
         </div>
       </div>
       {<Ownerprofile show={isOpen} setShow={setIsOpen} />}

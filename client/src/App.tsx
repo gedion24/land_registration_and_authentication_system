@@ -18,12 +18,12 @@ import Updateland from "./Pages/Employee/Updateland";
 import Footer from "./Componets/Navbar/Footer";
 import EmployeePage from "./Pages/Employee/EmployeePage";
 import Ownerprofile from "./Pages/Employee/Ownerprofile";
-import Viewmodal from "./Componets/Modal/Viewmodal";
-import Setmodal from "./Componets/Modal/Setmodal";
-import Modal from "./Componets/Modal/Modal";
+
+import Landregistrated from "./Pages/Employee/Landregistrated";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
+  const [showOption, setShowOption] = useState(false);
 
   return (
     <>
@@ -36,7 +36,15 @@ function App() {
 
           <Route path="/navbar" element={<Navbar />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/employeeprofile" element={<Employeeprofile />} />
+          <Route
+            path="/employeeprofile"
+            element={
+              <Employeeprofile
+                empProfile={showOption}
+                setempProfile={setShowOption}
+              />
+            }
+          />
           <Route path="/AdminPage" element={<AdminPage />} />
           <Route path="/employees" element={<Employee />} />
           <Route path="/landregistration" element={<Landreg />} />
@@ -52,12 +60,22 @@ function App() {
             <Route path="registerEmployee" element={<RegisterEmp />} />
             <Route path="employees" element={<Employee />} />
             <Route path="manageEmployee" element={<ManageEmp />} />
+            <Route path="lands" element={<Landregistrated />} />
           </Route>
           {/* Employye Route */}
           <Route path="/employeehomepage" element={<EmployeeHomePage />}>
             <Route index element={<EmployeePage />} />
-            <Route path="employeeprofile" element={<Employeeprofile />} />
+            <Route
+              path="employeeprofile"
+              element={
+                <Employeeprofile
+                  empProfile={showOption}
+                  setempProfile={setShowOption}
+                />
+              }
+            />
             <Route path="landregistration" element={<Landreg />} />
+            <Route path="lands" element={<Landregistrated />} />
             <Route
               path="ownerprofile"
               element={<Ownerprofile show={isOpen} setShow={setIsOpen} />}
