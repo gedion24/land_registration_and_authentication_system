@@ -1,15 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
 
 import Aos from "aos";
 import "aos/dist/aos.css";
-import Graphcharts from "./Charts/Graphchart";
-import Piechart from "./Charts/Piechart";
+import Graphcharts from "../../Charts/Graphchart";
+import Piechart from "../../Charts/Piechart";
+import Colchart from "../../Charts/Colchart";
+import Barchart from "../../Charts/Barchart";
+import IdContext from "../../Helpers/Context";
 
 // tsrafce
 type Props = {};
 
 const AdminPage = (props: Props) => {
+  const { userid } = useContext(IdContext);
   useEffect(() => {
     Aos.init({ duration: 2000 });
   }, []);
@@ -28,9 +32,12 @@ const AdminPage = (props: Props) => {
                         data-aos="fade-up"
                         className="text-2xl sm:text-3xl leading-none font-bold text-gray-900"
                       >
-                        $45,385
+                        {userid}
                       </span>
-                      <h3 className="text-base font-normal text-gray-500">
+                      <h3
+                        //data-aos="fade-up"
+                        className="text-base font-normal text-gray-500"
+                      >
                         Sales this week
                       </h3>
                     </div>
@@ -216,7 +223,7 @@ const AdminPage = (props: Props) => {
                 <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
                   <div className="flex items-center">
                     <div className="flex-shrink-0">
-                      <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
+                      <span className="text-xl sm:text-2xl leading-none font-bold text-gray-900">
                         2,340
                       </span>
                       <h3 className="text-base font-normal text-gray-500">
@@ -302,7 +309,7 @@ const AdminPage = (props: Props) => {
 
               <div className=" bg-gray-50  flex md:flex-row flex-col px-4 justify-between w-full h-full">
                 <div className="flex flex-col justify-center md:w-2/3 w-full h-full ">
-                  <div className="w-full max-w-7xl  bg-white shadow-lg rounded-md border border-gray-200">
+                  <div className="w-full max-w-6xl  bg-white shadow-lg rounded-md border border-gray-200">
                     <header className="px-5 py-4 border-b border-gray-100 flex justify-between ">
                       <h2 className="font-semibold text-gray-800">Customers</h2>
                       <Link to="/adminhomepage/employees">
@@ -521,8 +528,12 @@ const AdminPage = (props: Props) => {
                     </div>
                   </div>
                 </div>
-                <div className="  h-auto md:w-1/3 w-full md:flex hidden justify-center   bg-gray-50">
-                  <Piechart />
+                <div className="  h-auto md:w-2/5 w-full md:flex hidden   bg-gray-50">
+                  <div className="w-full   items-center ">
+                    {/* <Colchart /> */}
+                    <Barchart />
+                  </div>
+                  {/* <h1>change this to bar graph</h1> */}
                 </div>
               </div>
             </div>
@@ -564,33 +575,80 @@ const AdminPage = (props: Props) => {
                           <p>Lorem Ipsum is simply dummy text</p>
                         </span>
                       </div>
-                      <div className="w-[350px] h-40 bg-newsimg3 bg-cover rounded-lg">
-                        dasdas
+                      <div className="w-[350px] h-40 cursor-pointer text-black hover:text-white transition duration-300 ease-in-out relative object-fill  rounded-lg">
+                        <img
+                          alt=""
+                          className="bg-cover w-full h-40 bg-newsimg3 bg-no-repeat rounded-lg  "
+                        />
+                        <div className="absolute top-0 right-0 bottom-0 left-0 w-full h-full rounded-lg  overflow-hidden bg-fixed opacity-0 hover:opacity-50 transition duration-300 ease-in-out bg-black/75 hover:text-white"></div>
+                        <span className="absolute bottom-0 left-0 px-7 my-7  ">
+                          <h1>What is Lorem Ipsum? box2</h1>
+                          <p>Lorem Ipsum is simply dummy text</p>
+                        </span>
                       </div>
                     </div>
                   </div>
                   <div className="flex flex-col w-full px-4 py-4 ">
                     <div className="space-y-3 h-auto">
-                      {" "}
-                      <div className="w-full h-56 bg-newsimg4 bg-cover rounded-lg  ">
-                        adssad
+                      <div className="w-full h-60  text-black hover:text-white transition duration-300 ease-in-out relative object-fill  rounded-lg  ">
+                        <img
+                          alt=""
+                          className="bg-cover w-full h-60 bg-newsimg4 bg-no-repeat rounded-lg  "
+                        />
+                        <div className="absolute top-0 right-0 bottom-0 left-0 w-full h-full rounded-lg  overflow-hidden bg-fixed opacity-0 hover:opacity-50 transition duration-300 ease-in-out bg-black/75 hover:text-white"></div>
+                        <span className="absolute bottom-0 left-0 px-7 my-7  ">
+                          <h1>What is Lorem Ipsum? box4</h1>
+                          <p>Lorem Ipsum is simply dummy text</p>
+                        </span>
                       </div>
-                      <div className="w-full h-full bg-newsimg5 bg-cover rounded-lg ">
-                        adssad
+                      <div className="w-full h-60  text-black hover:text-white transition duration-300 ease-in-out relative object-fill  rounded-lg ">
+                        <img
+                          alt=""
+                          className="bg-cover w-full h-60 bg-newsimg5 bg-no-repeat rounded-lg  "
+                        />
+                        <div className="absolute top-0 right-0 bottom-0 left-0 w-full h-full rounded-lg  overflow-hidden bg-fixed opacity-0 hover:opacity-50 transition duration-300 ease-in-out bg-black/75 hover:text-white"></div>
+                        <span className="absolute bottom-0 left-0 px-7 my-7  ">
+                          <h1>What is Lorem Ipsum? box5</h1>
+                          <p>Lorem Ipsum is simply dummy text</p>
+                        </span>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="w-1/3 flex flex-col border-l-2 px-3 py-4 space-y-2">
-                  <div className="w-full h-40 bg-newsimg6 bg-cover rounded-lg">
-                    dsadad
+                  <div className="w-full h-40  text-black hover:text-white transition duration-300 ease-in-out relative object-fill  rounded-lg ">
+                    <img
+                      alt=""
+                      className="bg-cover w-full h-40 bg-newsimg6 bg-no-repeat rounded-lg  "
+                    />
+                    <div className="absolute top-0 right-0 bottom-0 left-0 w-full h-full rounded-lg  overflow-hidden bg-fixed opacity-0 hover:opacity-50 transition duration-300 ease-in-out bg-black/75 hover:text-white"></div>
+                    <span className="absolute bottom-0 left-0 px-7 my-7  ">
+                      <h1>What is Lorem Ipsum? box6</h1>
+                      <p>Lorem Ipsum is simply dummy text</p>
+                    </span>
                   </div>
-                  <div className="w-full h-40 bg-newsimg7 bg-cover rounded-lg">
-                    dsadad
+                  <div className="w-full h-40  text-black hover:text-white transition duration-300 ease-in-out relative object-fill  rounded-lg ">
+                    <img
+                      alt=""
+                      className="bg-cover w-full h-40 bg-newsimg7 bg-no-repeat rounded-lg  "
+                    />
+                    <div className="absolute top-0 right-0 bottom-0 left-0 w-full h-full rounded-lg  overflow-hidden bg-fixed opacity-0 hover:opacity-50 transition duration-300 ease-in-out bg-black/75 hover:text-white"></div>
+                    <span className="absolute bottom-0 left-0 px-7 my-7  ">
+                      <h1>What is Lorem Ipsum? box7</h1>
+                      <p>Lorem Ipsum is simply dummy text</p>
+                    </span>
                   </div>
-                  <div className="w-full h-40 bg-newsimg8 bg-cover rounded-lg">
-                    dsadad
+                  <div className="w-full h-40  text-black hover:text-white transition duration-300 ease-in-out relative object-fill  rounded-lg ">
+                    <img
+                      alt=""
+                      className="bg-cover w-full h-40 bg-newsimg8 bg-no-repeat rounded-lg  "
+                    />
+                    <div className="absolute top-0 right-0 bottom-0 left-0 w-full h-full rounded-lg  overflow-hidden bg-fixed opacity-0 hover:opacity-50 transition duration-300 ease-in-out bg-black/75 hover:text-white"></div>
+                    <span className="absolute bottom-0 left-0 px-7 my-7  ">
+                      <h1>What is Lorem Ipsum? box8</h1>
+                      <p>Lorem Ipsum is simply dummy text</p>
+                    </span>
                   </div>
                 </div>
               </div>

@@ -8,7 +8,7 @@ const RegisterEmp = (props: Props) => {
     <>
       {/* <Outlet /> */}
       <div className="w-full h-screen ">
-        <div className="w-full h-full bg-white flex flex-col px-8 py-4">
+        <div className="w-full h-full  flex flex-col px-8 py-4">
           <div className="flex items-center max-h-min justify-between w-full">
             <div className="flex flex-col">
               <h2 className="text-2xl font-semibold my-0">
@@ -21,9 +21,9 @@ const RegisterEmp = (props: Props) => {
             <div className="flex"></div>
           </div>
 
-          <div className="mt-10 mx-auto flex flex-col w-full">
+          <div className="mt-10 mx-auto flex flex-col  w-full">
             <div className="w-full">
-              <section className="p-3 rounded-md shadow-md dark:bg-gray-100 text-black">
+              <section className="p-3 rounded-md shadow-sm dark:bg-gray-00 text-black">
                 <h1 className="text-xl font-bold capitalize ">
                   Sales Registration Form
                 </h1>
@@ -102,14 +102,18 @@ const RegisterEmp = (props: Props) => {
                       />
                     </div>
                     <div>
-                      <label className="" htmlFor="emailAddress">
-                        Registerd By
+                      <label
+                        className="dark:text-gray-200"
+                        htmlFor="passwordConfirmation"
+                      >
+                        Registred by
                       </label>
-                      <input
-                        id="Address"
-                        type="text"
-                        className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                      />
+                      <select className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                        <option>Surabaya</option>
+                        <option>Jakarta</option>
+                        <option>Tangerang</option>
+                        <option>Bandung</option>
+                      </select>
                     </div>
 
                     <div>

@@ -3,6 +3,7 @@ import { HiDotsHorizontal } from "react-icons/hi";
 import { Dialog, Transition } from "@headlessui/react";
 import { Menu } from "@headlessui/react";
 import Employeeprofile from "../Employee/Employeeprofile";
+import { Link } from "react-router-dom";
 
 type Props = {};
 
@@ -54,12 +55,14 @@ const Employee = (props: Props) => {
                 placeholder="search for employee..."
               />
             </div>
-            <button
-              type="button"
-              className="hidden md:flex   px-6 py-2.5 bg-blue-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-            >
-              Add Employee
-            </button>
+            <Link to="/adminhomepage/registerEmployee">
+              <button
+                type="button"
+                className="hidden md:flex   px-6 py-2.5 bg-blue-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+              >
+                Add Employee
+              </button>
+            </Link>
           </div>
           <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
             <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">

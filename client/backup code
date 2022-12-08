@@ -99,3 +99,46 @@
         </div>
       </div> */
 }
+
+// useEffect(() => {
+  //   Axios.get("http://localhost:3001/AALHRIA/isloggedin", {
+  //     headers: {
+  //       "x-access-token": localStorage.getItem("token"),
+  //     },
+  //   })
+  //     .then((response) => {
+  //       const {
+  //         userId,
+  //         roleName,
+
+  //         firstName,
+
+  //         lastName,
+
+  //         message,
+  //       } = response.data;
+  //       console.log(`fetch data login :${userId}`);
+  //       if (response.data.loggedIn === true) {
+  //         console.log(`Authentication Message: ${message}`);
+  //         console.log(`Authentication User Id: ${userId}`);
+  //         console.log(`Authentication Role Name: ${roleName}`);
+
+  //         setName(`${firstName}  ${lastName}`);
+  //         console.log(_name);
+  //         return response.data.roleName;
+  //       } else {
+  //         console.log("something wrong!");
+  //       }
+  //     })
+  //     .then((response) => {
+  //       if (response !== "Employee") {
+  //         navigate("/");
+  //       }
+  //     });
+  // });
+ 
+  // how-to-do-role-based-access-routing-in-react?
+  
+  
+
+

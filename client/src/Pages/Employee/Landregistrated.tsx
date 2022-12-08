@@ -175,14 +175,14 @@ const Landregistrated = (props: Props) => {
                           <div className="py-1" role="none">
                             <h1
                               onClick={() => setIsOpen(true)}
-                              className="text-gray-700 block px-4 py-2 text-sm"
+                              className="text-gray-700 block px-4 py-2 text-sm cursor-pointer"
                               role="menuitem"
                               id="menu-item-0"
                             >
                               owner Details
                             </h1>
                             <h1
-                              className="text-gray-700 block px-4 py-2 text-sm"
+                              className="text-gray-700 block px-4 py-2 text-sm cursor-pointer"
                               role="menuitem"
                               id="menu-item-1"
                             >

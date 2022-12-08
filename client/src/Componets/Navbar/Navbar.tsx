@@ -1,13 +1,31 @@
-import React, { useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useContext,
+} from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Menu } from "@headlessui/react";
-
+import Axios from "axios";
 import { FaBars, FaTimes } from "react-icons/fa";
-
+import { AuthContext } from "../../Helpers/AuthContext";
+import IdContext from "../../Helpers/Context";
 type Props = {};
 
 const Navbar = (props: Props) => {
+  const [authState, setAuthState] = useState({
+    id: 0,
+
+    username: "",
+    role: "",
+    status: false,
+  });
+
+  Axios.defaults.withCredentials = true;
+
   const [showOption, setShowOption] = useState(false);
+  const navigate = useNavigate();
   const [nav, setNav] = useState(false);
   const handleClick = () => setNav(!nav);
   const [signout, setSignOut] = useState(false);
@@ -17,6 +35,69 @@ const Navbar = (props: Props) => {
   const handleclick = () => {
     setShowOption(!showOption);
   };
+  const logout = () => {
+    localStorage.removeItem("token");
+    //navigate("/signup");
+    setAuthState({ ...authState });
+  };
+  const { userid, setuserid } = useContext(IdContext);
+
+  const [_username, setUserName] = useState({});
+  const [_name, setName] = useState("");
+  const [_email, setEmail] = useState("");
+  const [_phoneNumber, setPhoneNumber] = useState("");
+  const [_sex, setSex] = useState("");
+  const [_birthday, setBirthday] = useState("");
+  const [_assignedBy, setAssignedBy] = useState(0);
+
+  useLayoutEffect(() => {
+    Axios.get("http://localhost:3001/AALHRIA/isloggedin", {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    }).then((response) => {
+      const {
+        userId,
+        roleName,
+        roleid,
+        assignedBy,
+        firstName,
+        middleName,
+        lastName,
+        username,
+        email,
+        phoneNumber,
+        sex,
+        birthday,
+        message,
+      } = response.data;
+      console.log(`fetch data login :${response.data.userId}`);
+      if (response.data.loggedIn === true) {
+        setAuthState({
+          id: response.data.userId,
+          username: response.data.username,
+          role: response.data.roleName,
+
+          status: true,
+        });
+
+        console.log(`Authentication Message: ${message}`);
+        console.log(`Authentication User Id: ${userId}`);
+        console.log(`Authentication Role Name: ${roleName}`);
+        //console.log(`Authentication roleid: ${roleid}`);
+        setUserName(username);
+        setEmail(email);
+        setPhoneNumber(phoneNumber);
+        setSex(sex);
+        setBirthday(birthday);
+        setAssignedBy(assignedBy);
+        setName(`${firstName} ${middleName} ${lastName}`);
+        setuserid(response.data.roleName);
+      } else {
+        setAuthState({ ...authState, status: false });
+      }
+    });
+  }, []);
 
   return (
     <>
@@ -46,46 +127,62 @@ const Navbar = (props: Props) => {
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
                   alt="Your Company"
                 />
+
                 {/* logo */}
               </div>
 
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
-                  <Link
-                    to="/adminhomepage"
-                    className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    aria-current="page"
-                  >
-                    HOME
-                  </Link>
-                  <Link
-                    to="/adminhomepage/employees"
-                    className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                    aria-current="page"
-                  >
-                    Manage Employees
-                  </Link>
+                  {authState.role === "Admin" ? (
+                    <>
+                      <Link
+                        to="/adminhomepage"
+                        className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        aria-current="page"
+                      >
+                        HOME
+                      </Link>
+                      <Link
+                        to="/adminhomepage/employees"
+                        className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        aria-current="page"
+                      >
+                        Manage Employees
+                      </Link>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        to="/employeehomepage"
+                        className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        aria-current="page"
+                      >
+                        HOME
+                      </Link>
 
-                  <a
-                    href="/"
-                    className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    {/*  */}
-                    Registered Lands
-                  </a>
-                  <a
-                    href="/"
-                    className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    {/*  */}
-                    Register Land
-                  </a>
-                  <a
-                    href="/"
-                    className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    Owners
-                  </a>
+                      <Link
+                        to="/employeehomepage/lands"
+                        className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        aria-current="page"
+                      >
+                        Registered Lands
+                      </Link>
+                      <Link
+                        to="/employeehomepage/landregistration"
+                        className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        aria-current="page"
+                      >
+                        Register Land
+                      </Link>
+                      <Link
+                        to="/employeehomepage/owners"
+                        className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        aria-current="page"
+                      >
+                        Owners
+                      </Link>
+                    </>
+                  )}
                 </div>
               </div>
               {/* 
@@ -136,7 +233,7 @@ const Navbar = (props: Props) => {
                     />
                     {/* the logined in usr name */}
                     <div className="pl-2 md:flex flex-col justify-start hidden ">
-                      <h1>jane doe</h1>
+                      <h1>{authState.username}</h1>
                       <p>date:12/09/22</p>
                     </div>
                   </Menu.Button>
@@ -168,7 +265,8 @@ const Navbar = (props: Props) => {
                     Settings
                   </a>
                   <a
-                    onClick={() => setShowOption(false)}
+                    onClick={logout}
+                    //onClick={() => setShowOption(false)}
                     href="/"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-700 hover:text-white"
                     role="menuitem"
