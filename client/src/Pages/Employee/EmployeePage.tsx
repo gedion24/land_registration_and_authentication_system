@@ -1,4 +1,10 @@
-import React, { useState, Fragment, Dispatch, SetStateAction } from "react";
+import React, {
+  useState,
+  Fragment,
+  Dispatch,
+  SetStateAction,
+  useContext,
+} from "react";
 import { Link } from "react-router-dom";
 import Graph from "../../assets/Graph.png";
 import Ownerprofile from "./Ownerprofile";
@@ -9,6 +15,7 @@ import Graphcharts from "../../Charts/Graphchart";
 import Piechart from "../../Charts/Piechart";
 import Barchart from "../../Charts/Barchart";
 import Colchart from "../../Charts/Colchart";
+import IdContext from "../../Helpers/Context";
 
 type Props = {
   // show: boolean;
@@ -16,6 +23,7 @@ type Props = {
 };
 
 const EmployeePage = (Props: Props) => {
+  const { userid } = useContext(IdContext);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -39,7 +47,7 @@ const EmployeePage = (Props: Props) => {
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex-shrink-0">
                           <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                            $45,385
+                            $45,385 {userid}
                           </span>
                           <h3 className="text-base font-normal text-gray-500">
                             Sales this week

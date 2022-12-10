@@ -20,7 +20,7 @@ const useAuth = () => {
 
 const Protectedroutes = (props: any) => {
   const auth = useAuth();
-  return auth ? <Outlet /> : <Navigate to="/signup" />;
+  return auth ? <Outlet /> : <Navigate to="/notFOund" />;
 };
 
 export default Protectedroutes;

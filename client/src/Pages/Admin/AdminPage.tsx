@@ -25,25 +25,39 @@ const AdminPage = (props: Props) => {
           <main>
             <div className="pt-9 px-4">
               <div className="w-full grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-4">
-                <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2">
+                <div
+                  data-aos-delay="500"
+                  data-aos="fade-up"
+                  className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8  2xl:col-span-2"
+                >
                   <div className="flex items-center justify-between mb-4">
-                    <div className="flex-shrink-0">
-                      <span
-                        data-aos="fade-up"
-                        className="text-2xl sm:text-3xl leading-none font-bold text-gray-900"
-                      >
-                        {userid}
+                    <div
+                      data-aos-delay="800"
+                      data-aos="fade-up"
+                      className="flex-shrink-0"
+                    >
+                      <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
+                        {/* {userid} */}
+                        <p>13,345</p>
                       </span>
                       <h3
+                        data-aos-delay="800"
+                        data-aos="fade-up"
                         //data-aos="fade-up"
                         className="text-base font-normal text-gray-500"
                       >
                         Sales this week
                       </h3>
                     </div>
-                    <div className="flex items-center justify-end flex-1 text-green-500 text-base font-bold">
+                    <div
+                      data-aos-delay="800"
+                      data-aos="fade-up"
+                      className="flex items-center justify-end flex-1 text-green-500 text-base font-bold"
+                    >
                       12.5%
                       <svg
+                        data-aos-delay="900"
+                        data-aos="fade-up"
                         className="w-5 h-5"
                         fill="currentColor"
                         viewBox="0 0 20 20"
@@ -67,7 +81,11 @@ const AdminPage = (props: Props) => {
                     <Graphcharts />
                   </div>
                 </div>
-                <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 ">
+                <div
+                  data-aos-delay="500"
+                  data-aos="fade-up"
+                  className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 "
+                >
                   <div className="mb-4 flex items-center justify-between">
                     <div>
                       <h3 className="text-xl font-bold text-gray-900 mb-2">
