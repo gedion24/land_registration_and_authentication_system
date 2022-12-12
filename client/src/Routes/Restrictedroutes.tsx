@@ -8,7 +8,7 @@ import {
   Outlet,
 } from "react-router-dom";
 import Axios from "axios";
-import { use } from "vue/types/umd";
+
 const useAuth = () => {
   const user = localStorage.getItem("token");
   if (user) {

@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Route, Routes, useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Axios from "axios";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 type Props = {};
 
 const Signup = (props: Props) => {
-  const navigate = useNavigate();
-  // const [_username, setUsername] = useState("");
-  // const [_password, setPassword] = useState("");
   const [_errMsg, setErrorMsg] = useState("");
+  // useEffect(() => {
+
+  // }, [_errMsg]);
+  const navigate = useNavigate();
+
   const initialValues = {
     username: "",
     password: "",
@@ -61,6 +66,14 @@ const Signup = (props: Props) => {
         });
       });
   };
+  useEffect(() => {
+    if (_errMsg) {
+      toast.error(_errMsg);
+      setErrorMsg("");
+    }
+    //
+  }, [_errMsg]);
+
   return (
     <>
       <div className=" ">
@@ -101,6 +114,7 @@ const Signup = (props: Props) => {
                             name="username"
                             id="text"
                             placeholder="Username"
+                            required
                             className="block w-full px-4 py-2 mt-2  text-gray-700 placeholder-gray-900 bg-white border border-gray-200 rounded-md dark:placeholder-gray-600 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-700 focus:border-blue-400 dark:focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40"
                           />
                         </div>
@@ -123,6 +137,7 @@ const Signup = (props: Props) => {
 
                           <Field
                             autoComplete="off"
+                            required
                             type="password"
                             name="password"
                             id="password"
@@ -143,12 +158,11 @@ const Signup = (props: Props) => {
                         <p className="mt-6 text-sm text-center text-gray-400">
                           Don&#x27;t have an account yet?{" "}
                           <button
-                            //onClick={Signup}
+                            // onClick={notify}
                             className="text-blue-500 focus:outline-none focus:underline hover:underline"
                           >
                             Sign up
                           </button>
-                          .
                         </p>
                       </Form>
                     </Formik>
@@ -173,6 +187,7 @@ const Signup = (props: Props) => {
           </div>
         </div>
       </div>
+      {<ToastContainer />}
     </>
   );
 };
