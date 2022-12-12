@@ -15,7 +15,7 @@ import Graphcharts from "../../Charts/Graphchart";
 import Piechart from "../../Charts/Piechart";
 import Barchart from "../../Charts/Barchart";
 import Colchart from "../../Charts/Colchart";
-import IdContext from "../../Helpers/Context";
+import IdContext from "../../Context/Context";
 
 type Props = {
   // show: boolean;
@@ -23,7 +23,7 @@ type Props = {
 };
 
 const EmployeePage = (Props: Props) => {
-  const { userid } = useContext(IdContext);
+  const { user } = useContext(IdContext);
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -47,7 +47,7 @@ const EmployeePage = (Props: Props) => {
                       <div className="flex items-center justify-between mb-4">
                         <div className="flex-shrink-0">
                           <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                            $45,385 {userid}
+                            $45,385 {user.username}
                           </span>
                           <h3 className="text-base font-normal text-gray-500">
                             Sales this week

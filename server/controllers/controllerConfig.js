@@ -11,7 +11,7 @@ const saltRounds = 10;
 exports.verifyJWT = (request, response, next) => {
   const token = request.headers["x-access-token"];
   if (!token) {
-    response.json({ status: 401, message: "Token is required!" });
+    response.status(401).send("Token is Required");
     //response.status(401).send("Token is required!");
   } else {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {

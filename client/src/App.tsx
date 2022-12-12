@@ -23,9 +23,7 @@ import PasswrdPage from "./Pages/authentication/PasswrdPage";
 
 import Landregistrated from "./Pages/Employee/Landregistrated";
 import Ownerstable from "./Pages/Employee/Ownerstable";
-import Protectedroutes from "./Routes/Protectedroutes";
-import IdContext from "./Helpers/Context";
-import NotFound from "./Componets/Wellcome/NotFound";
+import NotFound from "./Componets/Error/notFound";
 function App() {
   // const [userid, setuserid] = useState([]);
   Axios.defaults.withCredentials = true;
@@ -41,15 +39,56 @@ function App() {
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Wellcomepage />} />
-          <Route path="/notFound" element={<NotFound />} />
-          <Route path="/" element={<Protectedroutes />}>
-            <Route path="/navbar" element={<Navbar />} />
-            <Route path="/employeehomepage" element={<EmployeeHomePage />} />
-            <Route path="/footer" element={<Footer />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/passwordpage" element={<PasswrdPage />} />
+          <Route path="/not_found" element={<NotFound />} />
+
+          <Route path="/navbar" element={<Navbar />} />
+          <Route path="/employeehomepage" element={<EmployeeHomePage />} />
+          <Route path="/footer" element={<Footer />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/passwordpage" element={<PasswrdPage />} />
+          <Route
+            path="/employeeprofile"
+            element={
+              <Employeeprofile
+                empProfile={showOption}
+                setempProfile={setShowOption}
+              />
+            }
+          />
+
+          <Route path="/adminhomepage" element={<AdminHomePage />} />
+
+          <Route path="/AdminPage" element={<AdminPage />} />
+          <Route path="/employees" element={<Employee />} />
+          <Route path="/landregistration" element={<Landreg />} />
+          <Route path="/updateland" element={<Updateland />} />
+          <Route path="/manageEmployee" element={<ManageEmp />} />
+          <Route
+            path="/registerEmployee"
+            element={<RegisterEmp Empreg={reg} setEmpreg={setreg} />}
+          />
+          <Route path="/EmployeePage" element={<EmployeePage />} />
+          <Route path="/owners" element={<Ownerstable />} />
+          {/*  this will decise which route it will take based on the role */}
+
+          {/* Admin Route */}
+
+          <Route path="/adminhomepage" element={<AdminHomePage />}>
+            <Route index element={<AdminPage />} />
             <Route
-              path="/employeeprofile"
+              path="registerEmployee"
+              element={<RegisterEmp Empreg={reg} setEmpreg={setreg} />}
+            />
+            <Route path="employees" element={<Employee />} />
+            <Route path="manageEmployee" element={<ManageEmp />} />
+            <Route path="lands" element={<Landregistrated />} />
+          </Route>
+
+          {/* Employye Route */}
+          <Route path="/employeehomepage" element={<EmployeeHomePage />}>
+            <Route index element={<EmployeePage />} />
+            <Route
+              path="employeeprofile"
               element={
                 <Employeeprofile
                   empProfile={showOption}
@@ -57,55 +96,13 @@ function App() {
                 />
               }
             />
-
-            <Route path="/adminhomepage" element={<AdminHomePage />} />
-
-            <Route path="/AdminPage" element={<AdminPage />} />
-            <Route path="/employees" element={<Employee />} />
-            <Route path="/landregistration" element={<Landreg />} />
-            <Route path="/updateland" element={<Updateland />} />
-            <Route path="/manageEmployee" element={<ManageEmp />} />
+            <Route path="owners" element={<Ownerstable />} />
+            <Route path="landregistration" element={<Landreg />} />
+            <Route path="lands" element={<Landregistrated />} />
             <Route
-              path="/registerEmployee"
-              element={<RegisterEmp Empreg={reg} setEmpreg={setreg} />}
+              path="ownerprofile"
+              element={<Ownerprofile show={isOpen} setShow={setIsOpen} />}
             />
-            <Route path="/EmployeePage" element={<EmployeePage />} />
-            <Route path="/owners" element={<Ownerstable />} />
-            {/*  this will decise which route it will take based on the role */}
-
-            {/* Admin Route */}
-
-            <Route path="/adminhomepage" element={<AdminHomePage />}>
-              <Route index element={<AdminPage />} />
-              <Route
-                path="registerEmployee"
-                element={<RegisterEmp Empreg={reg} setEmpreg={setreg} />}
-              />
-              <Route path="employees" element={<Employee />} />
-              <Route path="manageEmployee" element={<ManageEmp />} />
-              <Route path="lands" element={<Landregistrated />} />
-            </Route>
-
-            {/* Employye Route */}
-            <Route path="/employeehomepage" element={<EmployeeHomePage />}>
-              <Route index element={<EmployeePage />} />
-              <Route
-                path="employeeprofile"
-                element={
-                  <Employeeprofile
-                    empProfile={showOption}
-                    setempProfile={setShowOption}
-                  />
-                }
-              />
-              <Route path="owners" element={<Ownerstable />} />
-              <Route path="landregistration" element={<Landreg />} />
-              <Route path="lands" element={<Landregistrated />} />
-              <Route
-                path="ownerprofile"
-                element={<Ownerprofile show={isOpen} setShow={setIsOpen} />}
-              />
-            </Route>
           </Route>
         </Routes>
         {/* </IdContext.Provider> */}

@@ -9,94 +9,109 @@ import { Link, useNavigate } from "react-router-dom";
 import { Menu } from "@headlessui/react";
 import Axios from "axios";
 import { FaBars, FaTimes } from "react-icons/fa";
-import { AuthContext } from "../../Helpers/AuthContext";
-import IdContext from "../../Helpers/Context";
+import IdContext from "../../Context/Context";
+
 type Props = {};
 
 const Navbar = (props: Props) => {
+  Axios.defaults.withCredentials = true;
+  const navigate = useNavigate();
+  const timeElasped = Date.now();
+  const today = new Date(timeElasped);
+  const defaultLogout: object = {
+    id: 0,
+    username: "",
+    role: "",
+    status: false,
+  };
+  const [nav, setNav] = useState(false);
+  const { user, setUser } = useContext(IdContext);
+
+  const handleClick = () => setNav(!nav); //?
+
+  /*
   const [authState, setAuthState] = useState({
     id: 0,
-
     username: "",
     role: "",
     status: false,
   });
-
-  Axios.defaults.withCredentials = true;
-
-  const [showOption, setShowOption] = useState(false);
-  const navigate = useNavigate();
-  const [nav, setNav] = useState(false);
-  const handleClick = () => setNav(!nav);
-  const [signout, setSignOut] = useState(false);
-  const handlesignout = () => {
-    setSignOut(!signout);
-  };
-  const handleclick = () => {
-    setShowOption(!showOption);
-  };
+  */
+  const [showOption, setShowOption] = useState(false); //modal ui interface
+  // const [signout, setSignOut] = useState(false);
+  // const handlesignout = () => {
+  //   setSignOut(!signout);
+  // };
+  // const handleclick = () => {
+  //   setShowOption(!showOption);
+  // };
   const logout = () => {
     localStorage.removeItem("token");
     //navigate("/signup");
-    setAuthState({ ...authState });
+    setUser({ ...defaultLogout });
+    //setAuthState({ ...authState });
   };
-  const { userid, setuserid } = useContext(IdContext);
+  // const { userid, setuserid } = useContext(IdContext);
 
-  const [_username, setUserName] = useState({});
-  const [_name, setName] = useState("");
-  const [_email, setEmail] = useState("");
-  const [_phoneNumber, setPhoneNumber] = useState("");
-  const [_sex, setSex] = useState("");
-  const [_birthday, setBirthday] = useState("");
-  const [_assignedBy, setAssignedBy] = useState(0);
+  // const [_username, setUserName] = useState({});
+  // const [_name, setName] = useState("");
+  // const [_email, setEmail] = useState("");
+  // const [_phoneNumber, setPhoneNumber] = useState("");
+  // const [_sex, setSex] = useState("");
+  // const [_birthday, setBirthday] = useState("");
+  // const [_assignedBy, setAssignedBy] = useState(0);
 
   useLayoutEffect(() => {
     Axios.get("http://localhost:3001/AALHRIA/isloggedin", {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
-    }).then((response) => {
-      const {
-        userId,
-        roleName,
-        roleid,
-        assignedBy,
-        firstName,
-        middleName,
-        lastName,
-        username,
-        email,
-        phoneNumber,
-        sex,
-        birthday,
-        message,
-      } = response.data;
-      console.log(`fetch data login :${response.data.userId}`);
-      if (response.data.loggedIn === true) {
-        setAuthState({
-          id: response.data.userId,
-          username: response.data.username,
-          role: response.data.roleName,
-
-          status: true,
-        });
-
-        console.log(`Authentication Message: ${message}`);
-        console.log(`Authentication User Id: ${userId}`);
-        console.log(`Authentication Role Name: ${roleName}`);
-        //console.log(`Authentication roleid: ${roleid}`);
-        setUserName(username);
-        setEmail(email);
-        setPhoneNumber(phoneNumber);
-        setSex(sex);
-        setBirthday(birthday);
-        setAssignedBy(assignedBy);
-        setName(`${firstName} ${middleName} ${lastName}`);
-        setuserid(response.data.roleName);
-      } else {
-        setAuthState({ ...authState, status: false });
+    }).then(
+      (response) => {
+        console.log(`Output ${JSON.stringify(response)}`);
+        /**
+         * [response.data]
+         * @param  {[boolean]} loggedIn [description]
+         * @param  {[int]} userId [description]
+         * @param  {[string]} username [description]
+         * @param  {[int]} assignedBy [description]
+         * @param  {[string]} adminName [Combination of the first name and the middle name]
+         * @param  {[string]} roleName [description]
+         * @param  {[string]} firstName [description]
+         * @param  {[string]} middleName [description]
+         * @param  {[string]} lastName [description]
+         * @param  {[string]} email [description]
+         * @param  {[string]} phoneNumber [description]
+         * @param  {[string]} sex [description]
+         * @param  {[string]} birthday [description]
+         * @param  {[string]} message [description]
+         * @return {[object]}      [returns a JSON object for these mentioned attributes]
+         */
+        if (response.status === 200) {
+          // https://en.wikipedia.org/wiki/List_of_HTTP_status_codes
+          // "status":200,"statusText":"OK" Successfull Token Authentication
+          // Standard response for successful HTTP requests
+          setUser({
+            id: response.data.userId,
+            username: response.data.username,
+            role: response.data.roleName,
+            status: true,
+          });
+        }
+      },
+      (error) => {
+        console.log(`Nav error: ${JSON.stringify(error)}`);
+        // 401 page here by using navigate(/)
+        // 401 Unauthorized
+        // Similar to 403 Forbidden, but specifically for use
+        // when authentication is required and has failed or has not yet been provided.
+        if (error.response.status === 401) {
+          navigate("/not_found");
+        }
+        setUser({ ...defaultLogout });
       }
-    });
+    );
+    console.log(`Previous user: ${JSON.stringify(user)}`);
   }, []);
 
   return (
@@ -133,7 +148,7 @@ const Navbar = (props: Props) => {
 
               <div className="hidden sm:ml-6 sm:block">
                 <div className="flex space-x-4">
-                  {authState.role === "Admin" ? (
+                  {user.role === "Admin" ? (
                     <>
                       <Link
                         to="/adminhomepage"
@@ -150,7 +165,7 @@ const Navbar = (props: Props) => {
                         Manage Employees
                       </Link>
                     </>
-                  ) : (
+                  ) : user.role === "Employee" ? (
                     <>
                       <Link
                         to="/employeehomepage"
@@ -182,6 +197,8 @@ const Navbar = (props: Props) => {
                         Owners
                       </Link>
                     </>
+                  ) : (
+                    <></>
                   )}
                 </div>
               </div>
@@ -233,8 +250,8 @@ const Navbar = (props: Props) => {
                     />
                     {/* the logined in usr name */}
                     <div className="pl-2 md:flex flex-col justify-start hidden ">
-                      <h1>{authState.username}</h1>
-                      <p>date:12/09/22</p>
+                      <h1>{user.username}</h1>
+                      <p>{today.toDateString()}</p>
                     </div>
                   </Menu.Button>
                 </div>

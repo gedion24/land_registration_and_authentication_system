@@ -7,13 +7,13 @@ import Graphcharts from "../../Charts/Graphchart";
 import Piechart from "../../Charts/Piechart";
 import Colchart from "../../Charts/Colchart";
 import Barchart from "../../Charts/Barchart";
-import IdContext from "../../Helpers/Context";
+import IdContext from "../../Context/Context";
 
 // tsrafce
 type Props = {};
 
 const AdminPage = (props: Props) => {
-  const { userid } = useContext(IdContext);
+  const { user } = useContext(IdContext);
 
   useEffect(() => {
     Aos.init({ duration: 2000 });
@@ -38,7 +38,7 @@ const AdminPage = (props: Props) => {
                       className="flex-shrink-0"
                     >
                       <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                        {userid}
+                        {user.username}
                         <p>13,345</p>
                       </span>
                       <h3
