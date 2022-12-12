@@ -14,6 +14,7 @@ type Props = {};
 
 const AdminPage = (props: Props) => {
   const { userid } = useContext(IdContext);
+
   useEffect(() => {
     Aos.init({ duration: 2000 });
   }, []);
@@ -37,7 +38,7 @@ const AdminPage = (props: Props) => {
                       className="flex-shrink-0"
                     >
                       <span className="text-2xl sm:text-3xl leading-none font-bold text-gray-900">
-                        {/* {userid} */}
+                        {userid}
                         <p>13,345</p>
                       </span>
                       <h3
