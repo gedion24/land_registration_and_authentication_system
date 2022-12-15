@@ -4,13 +4,16 @@ import React, {
   SetStateAction,
   useContext,
   useState,
+  useEffect,
 } from "react";
-import { Outlet } from "react-router-dom";
 import { Dialog, Transition } from "@headlessui/react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Axios from "axios";
 import IdContext from "../../Context/Context";
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 type Props = {
   Empreg: boolean;
@@ -19,39 +22,77 @@ type Props = {
 
 const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
   const { user } = useContext(IdContext);
+  const [_msg, setMsg] = useState({
+    type: "",
+    message: "",
+  });
 
   const initialValues = {
+    roleid: "",
     assignedBy: user.id,
     firstName: "",
     middleName: "",
     lastName: "",
     username: "",
     password: "",
+    email: "",
+    phoneNumber: "",
     sex: "",
     birthday: "",
-    phonenumber: "",
-    email: "",
-    currnetAddress: "",
-    roleid: 0,
+    residentAddress: "",
   };
   const validationSchema = Yup.object().shape({
-    // firstName: Yup.string().required(),
-    // middleName: Yup.string().required(),
-    // lastName: Yup.string().required(),
-    // username: Yup.string().required(),
-    // password: Yup.string().required(),
-    // sex: Yup.string().required(),
-    // birthday: Yup.string().required(),
-    // phonenumber: Yup.string().required(),
-    // email: Yup.string().required(),
-    // currnetAddress: Yup.string().required(),
-    // roleid: Yup.string().required(),
+    firstName: Yup.string().required("*required"),
+    middleName: Yup.string().required("*required"),
+    lastName: Yup.string().required("*required"),
+    username: Yup.string().required("*required"),
+    password: Yup.string().required("*required"),
+    sex: Yup.string().required("*required"),
+    birthday: Yup.string().required("*required"),
+    phoneNumber: Yup.string().required("*required"),
+    email: Yup.string().required("*required"),
+    residentAddress: Yup.string().required("*required"),
+    roleid: Yup.string().required("*required"),
   });
-
-  const [date, setdate] = useState("");
   const onSubmit = (data: object) => {
     console.log(`DATA ${JSON.stringify(data)}`);
+    Axios.post("http://localhost:3001/AALHRIA/register", data, {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    }).then((response) => {
+      console.log(`Response: ${JSON.stringify(response.data)}`);
+      if (response.data.status === "fail") {
+        //errorcode
+        //message
+        setMsg({
+          type: "error",
+          message: response.data.message,
+        });
+      } else if (response.data.status === "success") {
+        //affectedRows
+        //message
+        setMsg({
+          type: "success",
+          message: response.data.message,
+        });
+      }
+    });
   };
+  useEffect(() => {
+    if (_msg.type) {
+      if (_msg.type === "error") {
+        toast.error(_msg.message);
+      } else if (_msg.type === "success") {
+        toast.success(_msg.message);
+      }
+      setMsg({
+        type: "",
+        message: "",
+      });
+    }
+  }, [_msg]);
+
   return (
     <>
       <Transition appear show={Empreg} as={Fragment}>
@@ -69,6 +110,7 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
+            {<ToastContainer />}
             <div className="flex min-h-full items-center justify-center p-4 text-center">
               <Transition.Child
                 as={Fragment}
@@ -85,7 +127,9 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                       <h2 className="text-2xl font-semibold my-0">
                         Staff Registration
                       </h2>
-                      <p className="text-sm font-light">En</p>
+                      <p className="text-sm font-light">
+                        Staff Registration From
+                      </p>
                     </div>
                     <button
                       type="button"
@@ -118,7 +162,7 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                     <div className="">
                                       <div>
                                         <label className="block text-sm  font-medium">
-                                          Employee Image
+                                          Staff Image
                                         </label>
                                         <div className="mt-1 flex justify-center  items-center px-6 pt-5 pb-6 border-2 h-96 border-gray-300 border-dashed rounded-md">
                                           <div className="space-y-1 text-center">
@@ -175,12 +219,16 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                           >
                                             First Name
                                           </label>
+                                          <ErrorMessage
+                                            name="firstName"
+                                            component="span"
+                                            className="ml-2 p-2 mb-2 text-sm text-red-700 "
+                                          />
                                           <Field
                                             id="firstName"
                                             name="firstName"
                                             type="text"
-                                            placeholder="First Name"
-                                            className="block w-full px-4 py-2 mt-2 placeholder:text-black text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                            className=" is-invalid block w-full px-4 py-2 mt-2 placeholder:text-black text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
                                         <div className="w-full">
@@ -190,11 +238,15 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                           >
                                             Middle Name
                                           </label>
+                                          <ErrorMessage
+                                            name="middleName"
+                                            component="span"
+                                            className="ml-2 p-2 mb-2 text-sm text-red-700 "
+                                          />
                                           <Field
                                             id="middleName"
                                             name="middleName"
                                             type="text"
-                                            placeholder="Middle Name"
                                             className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
@@ -205,11 +257,15 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                           >
                                             Last Name
                                           </label>
+                                          <ErrorMessage
+                                            name="lastName"
+                                            component="span"
+                                            className="ml-2 p-2 mb-2 text-sm text-red-700 "
+                                          />
                                           <Field
                                             id="lastName"
-                                            name="lasteName"
+                                            name="lastName"
                                             type="text"
-                                            placeholder="Last Name"
                                             className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
@@ -219,33 +275,49 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                         <div className="w-full">
                                           <label
                                             className=" dark:text-gray-900"
-                                            htmlFor="passwordConfirmation"
+                                            htmlFor="sex"
                                           >
                                             Sex
                                           </label>
+                                          <ErrorMessage
+                                            name="sex"
+                                            component="span"
+                                            className="ml-2 p-2 mb-2 text-sm text-red-700 "
+                                          />
                                           <Field
                                             name="sex"
                                             as="select"
                                             className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           >
-                                            <option value="male">male</option>
-                                            <option value="female">
-                                              female
+                                            <option value="" disabled selected>
+                                              Unspecified
+                                            </option>
+                                            <option value="Male">Male</option>
+                                            <option value="Female">
+                                              Female
                                             </option>
                                           </Field>
                                         </div>
                                         <div className="w-full">
                                           <label
                                             className=" dark:text-gray-900"
-                                            htmlFor="passwordConfirmation"
+                                            htmlFor="roleid"
                                           >
                                             Role
                                           </label>
+                                          <ErrorMessage
+                                            name="roleid"
+                                            component="span"
+                                            className="ml-2 p-2 mb-2 text-sm text-red-700 "
+                                          />
                                           <Field
                                             name="roleid"
                                             as="select"
                                             className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           >
+                                            <option value="" disabled selected>
+                                              Unspecified
+                                            </option>
                                             <option value="1">Admin</option>
                                             <option value="2">Employee</option>
                                           </Field>
@@ -255,19 +327,22 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                             className=""
                                             htmlFor="birthday"
                                           >
-                                            birth date
+                                            Date of Birth
                                           </label>
+                                          <ErrorMessage
+                                            name="birthday"
+                                            component="span"
+                                            className="ml-2 p-2 mb-2 text-sm text-red-700 "
+                                          />
                                           <Field
                                             id="birthday"
-                                            Name="birthday"
+                                            name="birthday"
                                             type="date"
-                                            placeholder="Birth data"
                                             className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-900 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
                                       </div>
                                       <div className="flex w-full space-x-8">
-                                        {" "}
                                         <div className="w-full">
                                           <label
                                             className=""
@@ -275,27 +350,37 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                           >
                                             Phone number
                                           </label>
+                                          <ErrorMessage
+                                            name="phoneNumber"
+                                            component="span"
+                                            className="ml-2 p-2 mb-2 text-sm text-red-700 "
+                                          />
                                           <Field
                                             id="phoneNumber"
                                             name="phoneNumber"
-                                            type="number"
-                                            placeholder="Phone number"
-                                            className="block w-full px-4 py-2 mt-2 placeholder:text-black text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                            placeholder="+251"
+                                            type="tel"
+                                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
                                         <div className="w-full">
                                           <label
                                             className=""
-                                            htmlFor=" currnetAddress"
+                                            htmlFor=" currentAddress"
                                           >
-                                            currnet address
+                                            Resident Address
                                           </label>
+                                          <ErrorMessage
+                                            name="residentAddress"
+                                            component="span"
+                                            className="ml-2 p-2 mb-2 text-sm text-red-700 "
+                                          />
                                           <Field
-                                            id="currnetAddress"
-                                            name="currnetAddress"
+                                            id="residentAddress"
+                                            name="residentAddress"
+                                            placeholder="Bole"
                                             type="text"
-                                            placeholder="current address"
-                                            className="block w-full px-4 py-2 mt-2 placeholder:text-black text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
                                       </div>
@@ -304,12 +389,17 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                           <label className="" htmlFor="email">
                                             Email
                                           </label>
+                                          <ErrorMessage
+                                            name="email"
+                                            component="span"
+                                            className="ml-2 p-2 mb-2 text-sm text-red-700 "
+                                          />
                                           <Field
                                             id="email"
                                             name="email"
                                             type="email"
-                                            placeholder="Email"
-                                            className="block w-full px-4 py-2 mt-2 placeholder:text-black text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                            placeholder="johndoe@gmail.com"
+                                            className="block w-full px-4 py-2 mt-2  text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
                                         <div className="w-full">
@@ -317,27 +407,39 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                             className=""
                                             htmlFor="username"
                                           >
-                                            User name
+                                            Username
                                           </label>
+                                          <ErrorMessage
+                                            name="username"
+                                            component="span"
+                                            className="ml-2 p-2 mb-2 text-sm text-red-700 "
+                                          />
                                           <Field
                                             id="username"
+                                            name="username"
                                             type="text"
-                                            placeholder="username"
-                                            className="block w-full px-4 py-2 mt-2 placeholder:text-black text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                            placeholder="johndoe"
+                                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
                                         <div className="w-full">
                                           <label
                                             className=""
-                                            htmlFor="username"
+                                            htmlFor="password"
                                           >
                                             Password
                                           </label>
+                                          <ErrorMessage
+                                            name="password"
+                                            component="span"
+                                            className="ml-2 p-2 mb-2 text-sm text-red-700 "
+                                          />
                                           <Field
-                                            id="username"
+                                            id="password"
                                             type="password"
-                                            placeholder="Password"
-                                            className="block w-full px-4 py-2 mt-2 placeholder:text-black text-gray-800 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-900 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                            name="password"
+                                            placeholder="********"
+                                            className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-900 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
                                       </div>
@@ -345,7 +447,7 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                   </div>
                                 </div>
 
-                                <div className="flex justify-end   space-x-4">
+                                <div className="flex justify-end space-x-4">
                                   <button
                                     onClick={() => setEmpreg(false)}
                                     type="button"
@@ -355,7 +457,7 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                   </button>
                                   <button
                                     type="submit"
-                                    className="  hidden md:flex   px-6 py-2.5 bg-blue-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+                                    className=" dissabled hidden md:flex   px-6 py-2.5 bg-blue-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                                   >
                                     Save
                                   </button>

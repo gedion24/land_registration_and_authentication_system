@@ -45,6 +45,43 @@ class DbService {
       });
     });
   }
+
+  async registerStaff(data) {
+    console.log(`Data :${Object.values(data)}`);
+    return new Promise((resolve, reject) => {
+      // This adds staff members into the database
+      const query = `INSERT INTO staff VALUES (0,?);`;
+      dbConn.query(query, [Object.values(data)], (err, result) => {
+        if (err) {
+          // ER_DUP_ENTRY only handled ..
+          // The following code manipulates the error code for the front end
+          console.log(`DB ERROR: ${err}`);
+          var errMessage = err.sqlMessage
+            .replace(new RegExp(".*" + "key"), "")
+            .slice(2, -1)
+            .replace(new RegExp(".*" + "staff."), "")
+            .replace("_UNIQUE", "")
+            .replace(".", " and ");
+          reject({ code: err.code, message: errMessage });
+        }
+        resolve(result);
+      });
+    });
+  }
+
+  async viewStaff() {
+    return new Promise((resolve, reject) => {
+      // This adds staff members into the database
+      const query = `SELECT * FROM staff;`;
+      dbConn.query(query, (err, result) => {
+        if (err) reject(new Error("Unable to retrive database information!"));
+        if (result.length > 0) {
+          resolve(result);
+        }
+      });
+    });
+  }
+
   /*
   async getAllData() {
     try {
@@ -62,7 +99,6 @@ class DbService {
       console.log(err);
     }
   }
-
   async insertNewName(name) {
     try {
       const dateAdded = new Date();
@@ -102,7 +138,6 @@ class DbService {
       return false;
     }
   }
-
   async updateNameById(id, name) {
     try {
       id = parseInt(id, 10);
@@ -120,7 +155,6 @@ class DbService {
       return false;
     }
   }
-
   async searchByName(name) {
     try {
       const response = await new Promise((resolve, reject) => {

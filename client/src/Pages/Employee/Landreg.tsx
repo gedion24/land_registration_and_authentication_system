@@ -178,20 +178,20 @@ const Landreg = (props: Props) => {
 
           <div className="mt-10 mx-auto flex flex-col w-full jsu">
             <div className="w-full ">
-              <section className="p-3 rounded-md shadow-md dark:bg-gray-100 text-black">
+              <section className="p-3 rounded-md shadow-md  text-black">
                 <h1 className="text-xl font-bold capitalize ">
                   Sales Registration Form
                 </h1>
                 <form>
                   <div className="flex justify-between my-4  ">
-                    <div className="w-3/5  h-auto flex flex-col     px-2">
+                    <div className="w-4/5  h-auto flex flex-col    px-2">
                       {" "}
                       <div className="">
                         <div>
                           <label className="block text-sm  font-medium">
                             Employee Image
                           </label>
-                          <div className="mt-1 flex justify-center items-center px-6 pt-5 pb-6 border-2 h-[400px] border-gray-300 border-dashed rounded-md">
+                          <div className="mt-1 flex justify-center items-center px-6 pt-5 pb-6 border-2 h-[800px] border-gray-300 border-dashed rounded-md">
                             <div className="space-y-1 text-center">
                               <svg
                                 className="mx-auto h-12 w-12"
@@ -231,205 +231,259 @@ const Landreg = (props: Props) => {
                       </div>
                     </div>
 
-                    <div className="w-full  h-full grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2 px-2">
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
+                    <div className="w-full  h-full flex flex-col justify-center items-center px-2 space-y-4">
+                      <div className="flex w-full space-x-4">
+                        <div className="w-full">
+                          <label
+                            className=" dark:text-black"
+                            htmlFor="passwordConfirmation"
+                          >
+                            possersor name
+                          </label>
+                          <select className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-black dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                            <option value="" disabled selected>
+                              Unspecified
+                            </option>
+                            <option>Jakarta</option>
+                            <option>Tangerang</option>
+                            <option>Bandung</option>
+                          </select>
+                        </div>
+                        <div className="w-full">
+                          <label
+                            className=" dark:text-black"
+                            htmlFor="passwordConfirmation"
+                          >
+                            sub city
+                          </label>
+                          <select className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-black dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                            <option value="" disabled selected>
+                              Unspecified
+                            </option>
+                            <option>Jakarta</option>
+                            <option>Tangerang</option>
+                            <option>Bandung</option>
+                          </select>
+                        </div>
+                        <div className="w-full">
+                          <label
+                            className=" dark:text-black"
+                            htmlFor="passwordConfirmation"
+                          >
+                            Former wereda
+                          </label>
+                          <select className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-black dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                            <option value="" disabled selected>
+                              Unspecified
+                            </option>
+                            <option>Jakarta</option>
+                            <option>Tangerang</option>
+                            <option>Bandung</option>
+                          </select>
+                        </div>
                       </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
+                      <div className="flex w-full space-x-4">
+                        <div className="w-full">
+                          <label
+                            className=" dark:text-black"
+                            htmlFor="passwordConfirmation"
+                          >
+                            Former Kebele
+                          </label>
+                          <select className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-black dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                            <option value="" disabled selected>
+                              Unspecified
+                            </option>
+                            <option>Jakarta</option>
+                            <option>Tangerang</option>
+                            <option>Bandung</option>
+                          </select>
+                        </div>
+
+                        <div className="w-full">
+                          <label className="" htmlFor="username">
+                            block Number
+                          </label>
+                          <input
+                            id="username"
+                            type="text"
+                            placeholder="block number"
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                          />
+                        </div>
+                        <div className="w-full">
+                          <label className="" htmlFor="username">
+                            parcel Number
+                          </label>
+                          <input
+                            id="username"
+                            type="text"
+                            placeholder="parcel number"
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                          />
+                        </div>
                       </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
+                      <div className="flex w-full space-x-4">
+                        <div className="w-full">
+                          <label className="" htmlFor="username">
+                            House number
+                          </label>
+                          <input
+                            id="username"
+                            type="text"
+                            placeholder="First Name"
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-900 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                          />
+                        </div>
+                        <div className="w-full">
+                          <label className="" htmlFor="username">
+                            plot Area
+                          </label>
+                          <input
+                            id="username"
+                            type="text"
+                            placeholder="block number"
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                          />
+                        </div>
+                        <div className="w-full">
+                          <label className="" htmlFor="username">
+                            land grade
+                          </label>
+                          <input
+                            id="username"
+                            type="text"
+                            placeholder="parcel number"
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                          />
+                        </div>
                       </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
+                      <div className="flex w-full space-x-4">
+                        <div className="w-full">
+                          <label className="" htmlFor="username">
+                            Tittle Deed Number
+                          </label>
+                          <input
+                            id="username"
+                            type="text"
+                            placeholder="First Name"
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-900 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                          />
+                        </div>
+                        <div className="w-full">
+                          <label className="" htmlFor="username">
+                            plot Area
+                          </label>
+                          <input
+                            id="username"
+                            type="text"
+                            placeholder="block number"
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                          />
+                        </div>
+                        <div className="w-full">
+                          <label className="" htmlFor="birthday">
+                            Carta issued date
+                          </label>
+                          {/* <ErrorMessage
+                            name="birthday"
+                            component="span"
+                            className="ml-2 p-2 mb-2 text-sm text-red-700 "
+                          /> */}
+                          <input
+                            id="birthday"
+                            name="birthday"
+                            type="date"
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-900 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                          />
+                        </div>
                       </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
+                      <div className="flex w-full space-x-4">
+                        <div className="w-full">
+                          <label className="" htmlFor="username">
+                            base map number
+                          </label>
+                          <input
+                            id="username"
+                            type="text"
+                            placeholder="First Name"
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-900 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                          />
+                        </div>
+                        <div className="w-full">
+                          <label className="" htmlFor="username">
+                            Registration number
+                          </label>
+                          <input
+                            id="username"
+                            type="text"
+                            placeholder="block number"
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                          />
+                        </div>
+                        <div className="w-full">
+                          <label
+                            className=" dark:text-black"
+                            htmlFor="passwordConfirmation"
+                          >
+                            Type of holding
+                          </label>
+                          <select className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-black dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                            <option value="" disabled selected>
+                              Unspecified
+                            </option>
+                            <option>Jakarta</option>
+                            <option>Tangerang</option>
+                            <option>Bandung</option>
+                          </select>
+                        </div>
                       </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
+                      <div className="flex w-full space-x-4">
+                        <div className="w-full">
+                          <label
+                            className=" dark:text-black"
+                            htmlFor="passwordConfirmation"
+                          >
+                            Planned land use
+                          </label>
+                          <select className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-black dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                            <option value="" disabled selected>
+                              Unspecified
+                            </option>
+                            <option>Jakarta</option>
+                            <option>Tangerang</option>
+                            <option>Bandung</option>
+                          </select>
+                        </div>
+                        <div className="w-full">
+                          <label
+                            className=" dark:text-black"
+                            htmlFor="passwordConfirmation"
+                          >
+                            permmited use
+                          </label>
+                          <select className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-black dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring">
+                            <option value="" disabled selected>
+                              Unspecified
+                            </option>
+                            <option>Jakarta</option>
+                            <option>Tangerang</option>
+                            <option>Bandung</option>
+                          </select>
+                        </div>
+                        <div className="w-full">
+                          <label className="" htmlFor="username">
+                            Staff number
+                          </label>
+                          <input
+                            id="username"
+                            type="text"
+                            placeholder="First Name"
+                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-900 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                          />
+                        </div>
                       </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
-                      </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
-                      </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
-                      </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
-                      </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
-                      </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
-                      </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
-                      </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
-                      </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
-                      </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
-                      </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
-                      </div>
-                      <div>
-                        <label className="" htmlFor="username">
-                          First Name
-                        </label>
-                        <input
-                          id="username"
-                          type="text"
-                          placeholder="First Name"
-                          className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-gray-100 dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
-                        />
-                      </div>
+                      <div className=" w-full bg-black "></div>
                     </div>
                   </div>
 

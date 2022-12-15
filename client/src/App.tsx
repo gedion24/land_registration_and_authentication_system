@@ -24,6 +24,7 @@ import PasswrdPage from "./Pages/authentication/PasswrdPage";
 import Landregistrated from "./Pages/Employee/Landregistrated";
 import Ownerstable from "./Pages/Employee/Ownerstable";
 import NotFound from "./Componets/Error/notFound";
+import ViewActivity from "./Pages/Admin/ViewActivity";
 function App() {
   // const [userid, setuserid] = useState([]);
   Axios.defaults.withCredentials = true;
@@ -31,7 +32,8 @@ function App() {
   const [showOption, setShowOption] = useState(false);
   const [userid, setuserid] = useState();
   const [reg, setreg] = useState(false);
-
+  const [view, setView] = useState(false);
+  const [sid, setSid] = useState(0);
   return (
     <>
       <div className="">
@@ -40,7 +42,16 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Wellcomepage />} />
           <Route path="/not_found" element={<NotFound />} />
-
+          <Route
+            path="/viewactivity"
+            element={
+              <ViewActivity
+                viewactvity={view}
+                setViewactvity={setView}
+                setid={sid}
+              />
+            }
+          />
           <Route path="/navbar" element={<Navbar />} />
           <Route path="/employeehomepage" element={<EmployeeHomePage />} />
           <Route path="/footer" element={<Footer />} />

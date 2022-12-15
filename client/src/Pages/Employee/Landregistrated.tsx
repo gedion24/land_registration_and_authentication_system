@@ -5,6 +5,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import { Menu } from "@headlessui/react";
 import QRcodePage from "../authentication/QRcodePage";
 import Ownerprofile from "../Employee/Ownerprofile";
+import { Link } from "react-router-dom";
 
 type Props = {};
 
@@ -23,13 +24,6 @@ const Landregistrated = (props: Props) => {
               view Registrated status and activites
             </span>
           </div>
-          {/* <div className="flex items-center justify-between ">
-            <div className="lg:ml-40 ml-10 space-x-8">
-              <button className="bg-indigo-600 px-4 py-2 rounded-md text-white font-semibold tracking-wide cursor-pointer">
-                New Report
-              </button>
-            </div>
-          </div> */}
         </div>
         <div>
           {/* search bar */}
@@ -64,13 +58,14 @@ const Landregistrated = (props: Props) => {
                 Recent
               </button>
             </div>
-
-            <button
-              type="button"
-              className="hidden md:flex   px-6 py-2.5 bg-blue-800 text-white font-normal text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
-            >
-              Register land
-            </button>
+            <Link to="/employeehomepage/landregistration">
+              <button
+                type="button"
+                className="hidden md:flex   px-6 py-2.5 bg-blue-800 text-white font-normal text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
+              >
+                Register land
+              </button>
+            </Link>
           </div>
           <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
             <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">

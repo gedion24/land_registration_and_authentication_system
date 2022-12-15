@@ -157,26 +157,85 @@ exports.loginStatus = (request, response) => {
     message: "You are authenticated!",
   });
 };
-/*
+
 exports.registerStaff = (request, response) => {
-  //console.log(request.body);
-  const { name } = request.body;
-  const db = dbService.getDbServiceInstance();
-  const result = db.insertNewName(name);
+  bcrypt.hash(request.body.password, saltRounds, (err, hashedPassword) => {
+    if (err) {
+      console.log(err);
+    }
+    request.body.password = hashedPassword;
+    const result = db.registerStaff(request.body);
+    result
+      .then((data) => {
+        // data = "fieldCount":0,"affectedRows":1,"insertId":32,"info":"","serverStatus":2,"warningStatus":0
+        response.json({
+          status: "success",
+          affectedRows: data.affectedRows,
+          message: `Staff member successfuly registered!`,
+        });
+      })
+      .catch((err) => {
+        //Controller ERROR : {"code":"ER_DUP_ENTRY","message":"staff.name_UNIQUE"}
+        //
+        // HTTP errors say something about the HTTP protocol.
+        // This specific error indicates a server is trying to relay the HTTP request,
+        // but the upstream server did not respond correctly.
 
-  result
-    .then((data) => response.json({ data: data }))
-    .catch((err) => console.log(err));
+        // Your web application communicating with a database server is outside the realm of HTTP
+        // and any errors should be wrapped in the generic HTTP 500 Internal server error response code.
+        response.json({
+          status: "fail",
+          errorcode: err.code,
+          message: `The ${err.message} already in use.`,
+        });
+      });
+  });
 };
-*/
-/*
 
+//viewStaff
+exports.viewStaff = (request, response) => {
+  const result = db.viewStaff();
+  result
+    .then(async (data) => {
+      // for (let x in data) {
+      //   var temp = JSON.stringify(data[x]).toString();
+      //   const retriveRole = db.retriveRole(data[x].roleid);
+
+      //   const re = await retriveRole;
+      //   // <== this function adds role value in litteral form
+      //   // removes the last part of the string json variable of data i.e( }] )
+      //   temp = temp.slice(0, -2);
+      //   temp += `,"roleName":"${re[0].rolename}"}]`;
+      //   data[x] = JSON.parse(temp);
+      // }
+      return data;
+    })
+    .then(async (data) => {
+      // response.send(JSON.stringify(data));
+      var jsonObj = [];
+      for (let x in data) {
+        const retriveRole = db.retriveRole(data[x].roleid);
+        const re = await retriveRole;
+        const view = {
+          id: data[x].id,
+          name: `${data[x].firstName} ${data[x].middleName} ${data[x].lastName}`,
+          roleName: re[0].rolename,
+          accountStatus: data[x].accountStatus,
+          joinedDate: data[x].joinedDate,
+        };
+        jsonObj.push(view);
+      }
+      // console.log(jsonObj);
+      response.json(jsonObj);
+    });
+};
+
+/*
 exports.insertNewName = (request, response) => {
   //console.log(request.body);
   const { name } = request.body;
   const db = dbService.getDbServiceInstance();
   const result = db.insertNewName(name);
-
   result
     .then((data) => response.json({ data: data }))
     .catch((err) => console.log(err));
