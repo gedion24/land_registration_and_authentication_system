@@ -22,6 +22,7 @@ import EmployeePage from "./Pages/Employee/EmployeePage";
 import Ownerprofile from "./Pages/Employee/Ownerprofile";
 import PasswrdPage from "./Pages/authentication/PasswrdPage";
 
+import LandProfile from "./Pages/Employee/LandProfile";
 import Landregistrated from "./Pages/Employee/Landregistrated";
 import Ownerstable from "./Pages/Employee/Ownerstable";
 import NotFound from "./Componets/Error/notFound";
@@ -35,6 +36,7 @@ function App() {
   const [reg, setreg] = useState(false);
   const [view, setView] = useState(false);
   const [sid, setSid] = useState(0);
+  const [landshow, setLandshow] = useState(false);
   return (
     <>
       <div className="">
@@ -60,6 +62,12 @@ function App() {
                 setViewactvity={setView}
                 setid={sid}
               />
+            }
+          />
+          <Route
+            path="/landPorfile"
+            element={
+              <LandProfile showland={landshow} setShowland={setLandshow} />
             }
           />
           <Route path="/navbar" element={<Navbar />} />
@@ -122,6 +130,12 @@ function App() {
             <Route path="owners" element={<Ownerstable />} />
             <Route path="landregistration" element={<Landreg />} />
             <Route path="lands" element={<Landregistrated />} />
+            <Route
+              path="landProfile"
+              element={
+                <LandProfile showland={landshow} setShowland={setLandshow} />
+              }
+            />
             <Route
               path="ownerprofile"
               element={<Ownerprofile show={isOpen} setShow={setIsOpen} />}

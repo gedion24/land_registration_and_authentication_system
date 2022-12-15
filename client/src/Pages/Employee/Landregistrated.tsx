@@ -6,12 +6,15 @@ import { Menu } from "@headlessui/react";
 import QRcodePage from "../authentication/QRcodePage";
 import Ownerprofile from "../Employee/Ownerprofile";
 import { Link } from "react-router-dom";
+import LandProfile from "./LandProfile";
 
 type Props = {};
 
 const Landregistrated = (props: Props) => {
   const [showOption, setShowOption] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [landshow, setLandshow] = useState(false);
+
   return (
     <>
       <div className="bg-white p-8 rounded-md w-full">
@@ -177,6 +180,7 @@ const Landregistrated = (props: Props) => {
                               owner Details
                             </h1>
                             <h1
+                              onClick={() => setLandshow(true)}
                               className="text-gray-700 block px-4 py-2 text-sm cursor-pointer"
                               role="menuitem"
                               id="menu-item-1"
@@ -255,6 +259,7 @@ const Landregistrated = (props: Props) => {
       </div>
       {<QRcodePage QRcode={showOption} setQRcode={setShowOption} />}
       {<Ownerprofile show={isOpen} setShow={setIsOpen} />}
+      {<LandProfile showland={landshow} setShowland={setLandshow} />}
     </>
   );
 };
