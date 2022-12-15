@@ -270,15 +270,33 @@ const Navbar = (props: Props) => {
                   aria-orientation="vertical"
                   aria-labelledby="user-menu-button"
                 >
-                  <a
-                    onClick={() => setShowOption(false)}
-                    href="/"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-700 hover:text-white"
-                    role="menuitem"
-                    id="user-menu-item-0"
-                  >
-                    Your Profile
-                  </a>
+                  {user.role === "Admin" ? (
+                    <>
+                      <Link
+                        to="/adminhomepage/staffprofile "
+                        onClick={() => setShowOption(false)}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-700 hover:text-white"
+                        role="menuitem"
+                        id="user-menu-item-0"
+                      >
+                        Your Profile
+                      </Link>
+                    </>
+                  ) : user.role === "Employee" ? (
+                    <>
+                      <Link
+                        to="/employeehomepage/staffprofile "
+                        onClick={() => setShowOption(false)}
+                        className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-700 hover:text-white"
+                        role="menuitem"
+                        id="user-menu-item-0"
+                      >
+                        Your Profile
+                      </Link>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                   <a
                     onClick={() => setShowOption(false)}
                     href="/"

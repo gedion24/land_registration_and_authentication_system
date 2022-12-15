@@ -483,7 +483,109 @@ const Landreg = (props: Props) => {
                           />
                         </div>
                       </div>
-                      <div className=" w-full bg-black "></div>
+                      <div className=" w-1/2    ">
+                        <h1 className="pb-3 font-semibold text-lg">
+                          coordiate
+                        </h1>
+                        <div className="flex flex-col border-2 rounded-md  border-black">
+                          <div className="overflow-x-auto ">
+                            <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                              <div className="overflow-hidden">
+                                <table className="min-w-full">
+                                  <thead className="border-b">
+                                    <tr className="">
+                                      <th
+                                        scope="col"
+                                        className="text-sm font-medium  text-gray-900 px-6 py-4 text-left"
+                                      >
+                                        X
+                                      </th>
+                                      <th
+                                        scope="col"
+                                        className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
+                                      >
+                                        Y
+                                      </th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr className="border-b">
+                                      <td className="  w-1/2 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <input
+                                          className="w-full h-full p-4"
+                                          type="text"
+                                        />
+                                      </td>
+                                      <td className="  w-1/2 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <input
+                                          className="w-full h-full p-4"
+                                          type="text"
+                                        />
+                                      </td>
+                                    </tr>
+                                    <tr className="bg-white border-b">
+                                      <td className="  w-1/2 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <input
+                                          className="w-full h-full p-4"
+                                          type="text"
+                                        />
+                                      </td>
+                                      <td className="  w-1/2 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <input
+                                          className="w-full h-full p-4"
+                                          type="text"
+                                        />
+                                      </td>
+                                    </tr>
+                                    <tr className="bg-white border-b">
+                                      <td className="  w-1/2 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <input
+                                          className="w-full h-full p-4"
+                                          type="text"
+                                        />
+                                      </td>
+                                      <td className="  w-1/2 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <input
+                                          className="w-full h-full p-4"
+                                          type="text"
+                                        />
+                                      </td>
+                                    </tr>
+                                    <tr className="border-b">
+                                      <td className="  w-1/2 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <input
+                                          className="w-full h-full p-4"
+                                          type="text"
+                                        />
+                                      </td>
+                                      <td className="  w-1/2 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <input
+                                          className="w-full h-full p-4"
+                                          type="text"
+                                        />
+                                      </td>
+                                    </tr>
+                                    <tr className="bg-white border-b">
+                                      <td className="  w-1/2 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <input
+                                          className="w-full h-full p-4"
+                                          type="text"
+                                        />
+                                      </td>
+                                      <td className="  w-1/2 whitespace-nowrap text-sm font-medium text-gray-900">
+                                        <input
+                                          className="w-full h-full p-4"
+                                          type="text"
+                                        />
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 

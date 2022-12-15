@@ -2,7 +2,7 @@ import React, { useState, useEffect, useMemo } from "react";
 import { HiDotsHorizontal } from "react-icons/hi";
 import { Dialog, Transition } from "@headlessui/react";
 import { Menu } from "@headlessui/react";
-import Employeeprofile from "../Employee/Employeeprofile";
+import StaffProfile from "../Profile/Staffprofile";
 import { Link } from "react-router-dom";
 import RegisterEmp from "./RegisterEmp";
 import Axios from "axios";
@@ -20,7 +20,6 @@ import ViewActivity from "./ViewActivity";
 type Props = {};
 
 const Employee = (props: Props) => {
-  const style = { color: "gray", fontSize: "1.5em" };
   const [reg, setreg] = useState(false);
   const [view, setView] = useState(
     // status: false,
@@ -126,14 +125,21 @@ const Employee = (props: Props) => {
     hooks.visibleColumns.push((columns: any) => [
       ...columns,
       {
-        id: "Edit",
-        Header: "Edit",
-        Cell: ({ row }: CellProps<any>) => (
+        id: "profile",
+        Header: "PROFILE",
+        Cell: ({ row }: CellProps<any>) =>
           //onClick={() => alert("Editing: " + row.values.id)}
-          <button onClick={() => alert("Editing: " + row.values.id)}>
-            Profile
-          </button>
-        ),
+          row.values.roleName === "Admin" ? (
+            <Link to="/adminhomepage/staffprofile">
+              <button>Profile</button>
+            </Link>
+          ) : row.values.roleName === "Employee" ? (
+            <Link to="/employeehomepage/staffprofile">
+              <button>Profile</button>
+            </Link>
+          ) : (
+            <></>
+          ),
       },
     ]);
   };
@@ -264,9 +270,7 @@ const Employee = (props: Props) => {
                       return (
                         <tr
                           {...row.getRowProps()}
-                          className={
-                            isEven(idx) ? "bg-slate-200 bg-opacity-30" : ""
-                          }
+                          className={isEven(idx) ? "bg-slate-100/25 " : ""}
                         >
                           {row.cells.map((cell, idx) => (
                             <td

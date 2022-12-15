@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useLayoutEffect } from "react";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import React, { useState } from "react";
+import { Route, Routes } from "react-router-dom";
 // import Navbar from "./componets/Wellcome/Navbar";
 import Wellcomepage from "./Componets/Wellcome/WellcomePage";
 import EmployeeHomePage from "./Pages/Employee/EmployeeHomePage";
@@ -12,7 +12,8 @@ import Landreg from "./Pages/Employee/Landreg";
 import AdminPage from "./Pages/Admin/AdminPage";
 import ManageEmp from "./Pages/Admin/ManageEmp";
 import RegisterEmp from "./Pages/Admin/RegisterEmp";
-import Employeeprofile from "./Pages/Employee/Employeeprofile";
+import StaffProfile from "./Pages/Profile/Staffprofile";
+
 import Employee from "./Pages/Admin/Employee";
 import AdminHomePage from "./Pages/Admin/AdminHomePage";
 import Updateland from "./Pages/Employee/Updateland";
@@ -30,7 +31,7 @@ function App() {
   Axios.defaults.withCredentials = true;
   const [isOpen, setIsOpen] = useState(false);
   const [showOption, setShowOption] = useState(false);
-  const [userid, setuserid] = useState();
+  // const [userid, setuserid] = useState();
   const [reg, setreg] = useState(false);
   const [view, setView] = useState(false);
   const [sid, setSid] = useState(0);
@@ -41,6 +42,15 @@ function App() {
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Wellcomepage />} />
+          <Route
+            path="/staffprofile"
+            element={
+              <StaffProfile
+                empProfile={showOption}
+                setempProfile={setShowOption}
+              />
+            }
+          />
           <Route path="/not_found" element={<NotFound />} />
           <Route
             path="/viewactivity"
@@ -57,15 +67,6 @@ function App() {
           <Route path="/footer" element={<Footer />} />
           <Route path="/login" element={<Login />} />
           <Route path="/passwordpage" element={<PasswrdPage />} />
-          <Route
-            path="/employeeprofile"
-            element={
-              <Employeeprofile
-                empProfile={showOption}
-                setempProfile={setShowOption}
-              />
-            }
-          />
 
           <Route path="/adminhomepage" element={<AdminHomePage />} />
 
@@ -90,7 +91,18 @@ function App() {
               path="registerEmployee"
               element={<RegisterEmp Empreg={reg} setEmpreg={setreg} />}
             />
+            <Route
+              path="staffprofile"
+              element={
+                <StaffProfile
+                  empProfile={showOption}
+                  setempProfile={setShowOption}
+                />
+              }
+            />
             <Route path="employees" element={<Employee />} />
+            <Route path="employees " element={<Employee />} />
+
             <Route path="manageEmployee" element={<ManageEmp />} />
             <Route path="lands" element={<Landregistrated />} />
           </Route>
@@ -99,9 +111,9 @@ function App() {
           <Route path="/employeehomepage" element={<EmployeeHomePage />}>
             <Route index element={<EmployeePage />} />
             <Route
-              path="employeeprofile"
+              path="staffprofile"
               element={
-                <Employeeprofile
+                <StaffProfile
                   empProfile={showOption}
                   setempProfile={setShowOption}
                 />
