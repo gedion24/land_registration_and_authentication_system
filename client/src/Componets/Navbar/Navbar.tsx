@@ -48,7 +48,8 @@ const Navbar = (props: Props) => {
   const logout = () => {
     localStorage.removeItem("token");
     //navigate("/signup");
-    setUser({ ...defaultLogout });
+    setUser({ ...defaultLogout});
+    navigate("/");
     //setAuthState({ ...authState });
   };
   // const { userid, setuserid } = useContext(IdContext);
@@ -93,6 +94,7 @@ const Navbar = (props: Props) => {
           // Standard response for successful HTTP requests
           setUser({
             id: response.data.userId,
+            img: response.data.img,
             username: response.data.username,
             role: response.data.roleName,
             status: true,
@@ -252,7 +254,7 @@ const Navbar = (props: Props) => {
                     <img
                       // onClick={() => setShowOption(!showOption)}
                       className="h-8 w-8 rounded-full"
-                      src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                      src={`/uploads/staffImages/${user.img}`}
                       alt=""
                     />
                     {/* the logined in usr name */}
@@ -273,7 +275,7 @@ const Navbar = (props: Props) => {
                   {user.role === "Admin" ? (
                     <>
                       <Link
-                        to="/adminhomepage/staffprofile "
+                        to={`/adminhomepage/staffprofile/${user.id}`}
                         onClick={() => setShowOption(false)}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-700 hover:text-white"
                         role="menuitem"
@@ -285,7 +287,7 @@ const Navbar = (props: Props) => {
                   ) : user.role === "Employee" ? (
                     <>
                       <Link
-                        to="/employeehomepage/staffprofile "
+                        to={`/employeehomepage/staffprofile/${user.id}`}
                         onClick={() => setShowOption(false)}
                         className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-700 hover:text-white"
                         role="menuitem"

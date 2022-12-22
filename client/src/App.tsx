@@ -45,7 +45,7 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Wellcomepage />} />
           <Route
-            path="/staffprofile"
+            path="/staffprofile/:id"
             element={
               <StaffProfile
                 empProfile={showOption}
@@ -100,7 +100,7 @@ function App() {
               element={<RegisterEmp Empreg={reg} setEmpreg={setreg} />}
             />
             <Route
-              path="staffprofile"
+              path="staffprofile/:id"
               element={
                 <StaffProfile
                   empProfile={showOption}
@@ -119,7 +119,7 @@ function App() {
           <Route path="/employeehomepage" element={<EmployeeHomePage />}>
             <Route index element={<EmployeePage />} />
             <Route
-              path="staffprofile"
+              path="staffprofile/:id"
               element={
                 <StaffProfile
                   empProfile={showOption}
@@ -128,7 +128,7 @@ function App() {
               }
             />
             <Route path="owners" element={<Ownerstable />} />
-            <Route path="landregistration" element={<Landreg />} />
+            <Route path="landregistration/:id" element={<Landreg />} />
             <Route path="lands" element={<Landregistrated />} />
             <Route
               path="landProfile"

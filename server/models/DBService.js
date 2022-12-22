@@ -69,13 +69,113 @@ class DbService {
     });
   }
 
-  async viewStaff() {
+  async viewAllStaff(assignedBy, id) {
+    //console.log(`Assigned by: ${assignedBy} \n Id: ${id}`);
+    return new Promise((resolve, reject) => {
+      if (assignedBy) {
+        // console.log("HERE1");
+        const query = `SELECT * FROM staff WHERE assignedBy = ? ;`;
+        dbConn.query(query, id, (err, result) => {
+          if (err) reject(new Error("Unable to retrive database information!"));
+          if (result.length > 0) {
+            resolve(result);
+          }
+        });
+      } else {
+        console.log("HERE2");
+        // if the current id is null which is the original main Admin
+        const query = `SELECT * FROM staff ;`;
+        dbConn.query(query, (err, result) => {
+          if (err) reject(new Error("Unable to retrive database information!"));
+          if (result.length > 0) {
+            resolve(result);
+          }
+        });
+      }
+    });
+  }
+  async viewStaff(id) {
     return new Promise((resolve, reject) => {
       // This adds staff members into the database
-      const query = `SELECT * FROM staff;`;
+      const query = `SELECT roleid, img, assignedBy, firstName, middleName, lastName, username, accountStatus, email, phoneNumber, sex, birthday, residentAddress, joinedDate FROM staff WHERE id = ?;`;
+      dbConn.query(query, id, (err, result) => {
+        if (err) reject(new Error("Unable to retrive database information!"));
+        if (result.length > 0) {
+          resolve(result);
+        }
+      });
+    });
+  }
+
+  //viewAllOwner
+  async viewAllOwner() {
+    //console.log(`Assigned by: ${assignedBy} \n Id: ${id}`);
+    return new Promise((resolve, reject) => {
+      // if (assignedBy) {
+      //   // console.log("HERE1");
+      //   const query = `SELECT * FROM staff WHERE assignedBy = ? ;`;
+      //   dbConn.query(query, id, (err, result) => {
+      //     if (err) reject(new Error("Unable to retrive database information!"));
+      //     if (result.length > 0) {
+      //       resolve(result);
+      //     }
+      //   });
+      // } else {
+      //console.log("HERE2");
+      // if the current id is null which is the original main Admin
+      const query = `SELECT * FROM citizen ;`;
       dbConn.query(query, (err, result) => {
         if (err) reject(new Error("Unable to retrive database information!"));
         if (result.length > 0) {
+          resolve(result);
+        }
+      });
+      //}
+    });
+  }
+  //
+  //retriveWoredaInfo
+  async retriveWoredaInfo(id) {
+    return new Promise((resolve, reject) => {
+      const query = `SELECT * FROM woreda WHERE id = ? ;`;
+      dbConn.query(query, id, (err, result) => {
+        if (err) reject(new Error("Unable to retrive database information!"));
+        if (result.length > 0) {
+          resolve(result);
+        }
+      });
+    }).then((result) => {
+      return new Promise((resolve, reject) => {
+        const query = `SELECT * FROM subcity WHERE id = ? ;`;
+        dbConn.query(query, result[0].subCityId, (err, result) => {
+          if (err) reject(new Error("Unable to retrive database information!"));
+          if (result.length > 0) {
+            //console.log(result[0].subCityName);
+            resolve(result);
+          }
+        });
+      }).then((data) => {
+        // RESULT: [ { id: 1, subCityId: 10, woredaNumber: 12, kebeleNumber: 9 } ]
+        // DATA: [ { id: 10, subCityName: 'Yeka' } ]
+        const out = {
+          woredaNumber: result[0].woredaNumber,
+          kebeleNumber: result[0].kebeleNumber,
+          subCityName: data[0].subCityName,
+        };
+        return out;
+      });
+    });
+  }
+  //viewOwner
+  async viewOwner(id) {
+    return new Promise((resolve, reject) => {
+      // This adds staff members into the database
+      const query = `SELECT * FROM citizen WHERE id = ?;`;
+      dbConn.query(query, id, (err, result) => {
+        //console.log(result);
+        if (err) reject(new Error("Unable to retrive database information!"));
+        if (result.length > 0) {
+          //console.log(result[0].woredaId);
           resolve(result);
         }
       });
@@ -99,6 +199,7 @@ class DbService {
       console.log(err);
     }
   }
+
   async insertNewName(name) {
     try {
       const dateAdded = new Date();
@@ -138,6 +239,7 @@ class DbService {
       return false;
     }
   }
+
   async updateNameById(id, name) {
     try {
       id = parseInt(id, 10);
@@ -155,6 +257,7 @@ class DbService {
       return false;
     }
   }
+
   async searchByName(name) {
     try {
       const response = await new Promise((resolve, reject) => {

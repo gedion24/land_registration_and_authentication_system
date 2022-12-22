@@ -8,6 +8,10 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
+const fs = require("fs");
+const path = require("path");
+const { json } = require("body-parser");
+
 exports.verifyJWT = (request, response, next) => {
   const token = request.headers["x-access-token"];
   if (!token) {
@@ -18,9 +22,11 @@ exports.verifyJWT = (request, response, next) => {
       if (err) {
         response.json({ auth: false, message: "Authentication Failure!" });
       } else {
+        //TODO: The token should be decoded better
         //console.log(`Decoded :${JSON.stringify(decoded)}`);
         request.userId = decoded.id;
         request.roleName = decoded.roleName;
+        request.img = decoded.img;
         request.assignedBy = decoded.assignedBy;
         request.adminName = decoded.adminName;
         request.firstName = decoded.firstName;
@@ -38,7 +44,6 @@ exports.verifyJWT = (request, response, next) => {
 };
 
 // route callback functions
-
 exports.login = (request, response) => {
   const { username, password } = request.body;
   const result = db.login(username, password);
@@ -93,6 +98,7 @@ exports.login = (request, response) => {
       const {
         id,
         assignedBy,
+        img,
         firstName,
         middleName,
         lastName,
@@ -108,6 +114,7 @@ exports.login = (request, response) => {
         {
           id,
           assignedBy,
+          img,
           firstName,
           middleName,
           lastName,
@@ -143,6 +150,7 @@ exports.loginStatus = (request, response) => {
   response.json({
     loggedIn: true,
     userId: request.userId,
+    img: request.img,
     username: request.username,
     assignedBy: request.assignedBy,
     adminName: request.adminName,
@@ -159,6 +167,27 @@ exports.loginStatus = (request, response) => {
 };
 
 exports.registerStaff = (request, response) => {
+  //TODO:
+  // the image is handled inthis
+  var string = request.body.img;
+  var imageName = "Unspecified/defaultPicture.png";
+  if (string) {
+    var regex = /^data:.+\/(.+);base64,(.*)$/;
+    var matches = string.match(regex);
+    var ext = matches[1];
+    var data = matches[2];
+    var buffer = Buffer.from(data, "base64");
+    const role = ["Unspecified", "Admin", "Employee"];
+    imageName =
+      `${role[request.body.roleid]}/${request.body.firstName} ${
+        request.body.middleName
+      } ${request.body.lastName}-${new Date().getUTCSeconds()}.` + ext;
+
+    fs.writeFileSync(`./uploads/staffImages/${imageName}`, buffer);
+  }
+
+  request.body.img = imageName;
+  console.log(`Request Body: ${JSON.stringify(request.body)}`);
   bcrypt.hash(request.body.password, saltRounds, (err, hashedPassword) => {
     if (err) {
       console.log(err);
@@ -192,32 +221,21 @@ exports.registerStaff = (request, response) => {
   });
 };
 
-//viewStaff
-exports.viewStaff = (request, response) => {
-  const result = db.viewStaff();
-  result
-    .then(async (data) => {
-      // for (let x in data) {
-      //   var temp = JSON.stringify(data[x]).toString();
-      //   const retriveRole = db.retriveRole(data[x].roleid);
-
-      //   const re = await retriveRole;
-      //   // <== this function adds role value in litteral form
-      //   // removes the last part of the string json variable of data i.e( }] )
-      //   temp = temp.slice(0, -2);
-      //   temp += `,"roleName":"${re[0].rolename}"}]`;
-      //   data[x] = JSON.parse(temp);
-      // }
-      return data;
-    })
-    .then(async (data) => {
-      // response.send(JSON.stringify(data));
-      var jsonObj = [];
-      for (let x in data) {
+//viewallstaff
+exports.viewAllStaff = (request, response) => {
+  const result = db.viewAllStaff(request.assignedBy, request.userId);
+  result.then(async (data) => {
+    // console.log(`User ID: ${request.userId}`);
+    // response.send(JSON.stringify(data));
+    var jsonObj = [];
+    for (let x in data) {
+      if (data[x].id !== request.userId) {
+        // this
         const retriveRole = db.retriveRole(data[x].roleid);
         const re = await retriveRole;
         const view = {
           id: data[x].id,
+          img: data[x].img,
           name: `${data[x].firstName} ${data[x].middleName} ${data[x].lastName}`,
           roleName: re[0].rolename,
           accountStatus: data[x].accountStatus,
@@ -225,17 +243,119 @@ exports.viewStaff = (request, response) => {
         };
         jsonObj.push(view);
       }
-      // console.log(jsonObj);
-      response.json(jsonObj);
+    }
+    response.json(jsonObj);
+  });
+};
+
+exports.viewStaff = (request, response) => {
+  // console.log(`Parameter: ${request.params.id}`);
+  // console.log(`Parameter: ${request.assignedBy}`);
+  // roleid img assignedBy firstName middleName lastName username accountStatus email phoneNumber sex birthday residentAddress joinedDate adminName roleName
+  const result = db.viewStaff(request.params.id);
+  result
+    .then(async (data) => {
+      //console.log(`Result: ${JSON.stringify(data[0].assignedBy)}`);
+      var temp = JSON.stringify(data).toString();
+      const retriveAdminName = db.retriveAdminName(data[0].assignedBy);
+      const re = await retriveAdminName;
+      // <== this function converts the assignedBy value to its refering name in the table called staff
+      // removes the last part of the string json variable of data i.e( }] )
+      temp = temp.slice(0, -2);
+      // console.log(`Status: ${JSON.stringify(re.status)}`);
+      if (re.status === "NULL") temp += `,"adminName":"NULL"}]`;
+      else temp += `,"adminName":"${re[0].firstName} ${re[0].middleName}"}]`;
+      data = JSON.parse(temp);
+      return data;
+    })
+    .then(async (data) => {
+      var temp = JSON.stringify(data).toString();
+      const retriveRole = db.retriveRole(data[0].roleid);
+
+      const re = await retriveRole;
+      // <== this function adds role value in litteral form
+      // removes the last part of the string json variable of data i.e( }] )
+      temp = temp.slice(0, -2);
+      temp += `,"roleName":"${re[0].rolename}"}]`;
+      data = JSON.parse(temp);
+      return data;
+    })
+    .then((data) => {
+      if (request.assignedBy === data.assignedBy || "null") {
+        // console.log(data);
+        response.json(data);
+      } else {
+        // error You are not the supervisor of this employee
+      }
     });
 };
 
+//viewAllOwner
+//NOTE: BETTER VERSION
+exports.viewAllOwner = (request, response) => {
+  const result = db.viewAllOwner();
+  result.then(async (data) => {
+    var jsonObj = [];
+    for (let x in data) {
+      const retrieveSubCity = db.retriveWoredaInfo(data[x].woredaId);
+      await retrieveSubCity.then(async (alpha) => {
+        const out = {
+          id: data[x].id,
+          img: data[x].img,
+          fullName: `${data[x].firstName} ${data[x].middleName} ${data[x].lastName}`,
+          // firstName: data[x].firstName,
+          // middleName: data[x].middleName,
+          // lastName: data[x].lastName,
+          sex: data[x].sex,
+          phonenumber: data[x].phonenumber,
+          dateofbirth: data[x].dateofbirth,
+          woredaNumber: alpha.woredaNumber,
+          kebeleNumber: alpha.kebeleNumber,
+          subCityName: alpha.subCityName,
+        };
+        jsonObj.push(out);
+      });
+    }
+    response.json(jsonObj);
+  });
+};
+//viewOwner
+exports.viewOwner = (request, response) => {
+  const result = db.viewOwner(request.params.id);
+  result.then(async (data) => {
+    var jsonObj = [];
+    const retrieveSubCity = db.retriveWoredaInfo(data[0].woredaId);
+    await retrieveSubCity.then((alpha) => {
+      const out = {
+        id: data[0].id,
+        img: data[0].img,
+        fullName: `${data[0].firstName} ${data[0].middleName} ${data[0].lastName}`,
+        sex: data[0].sex,
+        phonenumber: data[0].phonenumber,
+        dateofbirth: data[0].dateofbirth,
+        woredaNumber: alpha.woredaNumber,
+        kebeleNumber: alpha.kebeleNumber,
+        subCityName: alpha.subCityName,
+      };
+      jsonObj.push(out);
+    });
+    await response.json(jsonObj);
+  });
+};
+
+//registerLand
+exports.registerLand = (request, response) => {
+  console.log(request.body);
+};
+
 /*
+
 exports.insertNewName = (request, response) => {
   //console.log(request.body);
   const { name } = request.body;
   const db = dbService.getDbServiceInstance();
   const result = db.insertNewName(name);
+
   result
     .then((data) => response.json({ data: data }))
     .catch((err) => console.log(err));

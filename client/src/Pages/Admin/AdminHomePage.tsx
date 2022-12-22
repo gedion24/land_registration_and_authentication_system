@@ -19,6 +19,7 @@ const HomePage = (props: Props) => {
    */
   const [user, setUser] = useState({
     id: 0,
+    img: "",
     username: "",
     role: "",
     status: false,
