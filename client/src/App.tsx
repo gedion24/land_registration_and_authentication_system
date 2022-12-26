@@ -28,6 +28,8 @@ import Ownerstable from "./Pages/Employee/Ownerstable";
 import NotFound from "./Componets/Error/notFound";
 import ViewActivity from "./Pages/Admin/ViewActivity";
 import Updatestaff from "./Pages/Profile/Updatestaff";
+import DetailsPage from "./Pages/authentication/DetailsPage";
+
 function App() {
   // const [userid, setuserid] = useState([]);
   Axios.defaults.withCredentials = true;
@@ -39,6 +41,8 @@ function App() {
   const [sid, setSid] = useState(0);
   const [landshow, setLandshow] = useState(false);
   const [upd, setUpd] = useState(false);
+  const [citizenId, setCitizenId] = useState(0);
+  const [staffId, setStaffId] = useState(0);
   return (
     <>
       <div className="">
@@ -55,6 +59,8 @@ function App() {
               />
             }
           />
+          <Route path="/details" element={<DetailsPage />} />
+
           <Route path="/not_found" element={<NotFound />} />
           <Route
             path="/viewactivity"
@@ -69,7 +75,11 @@ function App() {
           <Route
             path="/landPorfile"
             element={
-              <LandProfile showland={landshow} setShowland={setLandshow} />
+              <LandProfile
+                showland={landshow}
+                setShowland={setLandshow}
+                citizenId={citizenId}
+              />
             }
           />
           <Route path="/navbar" element={<Navbar />} />
@@ -112,7 +122,13 @@ function App() {
             />
             <Route
               path="updateprofile"
-              element={<Updatestaff updEmp={upd} setUpdEmp={setUpd} />}
+              element={
+                <Updatestaff
+                  updEmp={upd}
+                  setUpdEmp={setUpd}
+                  staffId={staffId}
+                />
+              }
             />
             <Route path="employees" element={<Employee />} />
             <Route path="employees " element={<Employee />} />
@@ -123,6 +139,7 @@ function App() {
 
           {/* Employye Route */}
           <Route path="/employeehomepage" element={<EmployeeHomePage />}>
+            <Route path="updateland" element={<Updateland />} />
             <Route index element={<EmployeePage />} />
             <Route
               path="staffprofile/:id"
@@ -139,7 +156,11 @@ function App() {
             <Route
               path="landProfile"
               element={
-                <LandProfile showland={landshow} setShowland={setLandshow} />
+                <LandProfile
+                  showland={landshow}
+                  setShowland={setLandshow}
+                  citizenId={citizenId}
+                />
               }
             />
             <Route

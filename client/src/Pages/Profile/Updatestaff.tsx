@@ -5,6 +5,7 @@ import React, {
   useContext,
   useState,
   useEffect,
+  useLayoutEffect,
 } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -19,9 +20,10 @@ import Avatar from "react-avatar-edit";
 type Props = {
   updEmp: boolean;
   setUpdEmp: Dispatch<SetStateAction<boolean>>;
+  staffId: number;
 };
 
-const Updatestaff = ({ updEmp, setUpdEmp }: Props) => {
+const Updatestaff = ({ updEmp, setUpdEmp, staffId }: Props) => {
   const [imgBase64, setImgBase64] = useState("");
 
   const onClose = () => {
@@ -37,8 +39,36 @@ const Updatestaff = ({ updEmp, setUpdEmp }: Props) => {
     type: "",
     message: "",
   });
+  const [staff, setStaff] = useState({
+    img: "",
+    assignedBy: 0,
+    firstName: "",
+    middleName: "",
+    lastName: "",
+    username: "",
+    accountStatus: "",
+    email: "",
+    phoneNumber: "",
+    sex: "",
+    birthday: "",
+    residentAddress: "",
+    joinedDate: "",
+    adminName: "",
+    roleName: "",
+    roleid: 0,
+  });
+  useLayoutEffect(() => {
+    Axios.get(`http://localhost:3001/AALHRIA/viewstaff/${staffId}`, {
+      headers: {
+        "x-access-token": localStorage.getItem("token"),
+      },
+    }).then((response) => {
+      setStaff(response.data[0]);
+      //console.log(response.data[0]);
+    });
+  }, []);
   const initialValues = {
-    roleid: "",
+    roleid: staff.roleid,
     img: "",
     assignedBy: user.id,
     firstName: "",
@@ -262,7 +292,8 @@ const Updatestaff = ({ updEmp, setUpdEmp }: Props) => {
                                             id="firstName"
                                             name="firstName"
                                             type="text"
-                                            className=" is-invalid block w-full px-4 py-2 mt-2 placeholder:text-black text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                            placeholder={staff.firstName}
+                                            className=" is-invalid block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
                                         <div className="w-full">
@@ -281,7 +312,8 @@ const Updatestaff = ({ updEmp, setUpdEmp }: Props) => {
                                             id="middleName"
                                             name="middleName"
                                             type="text"
-                                            className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                            placeholder={staff.middleName}
+                                            className="block w-full px-4 py-2 mt-2 text-gray-700  bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
                                         <div className="w-full">
@@ -300,7 +332,8 @@ const Updatestaff = ({ updEmp, setUpdEmp }: Props) => {
                                             id="lastName"
                                             name="lastName"
                                             type="text"
-                                            className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                            placeholder={staff.lastName}
+                                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
                                       </div>
@@ -321,10 +354,10 @@ const Updatestaff = ({ updEmp, setUpdEmp }: Props) => {
                                           <Field
                                             name="sex"
                                             as="select"
-                                            className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                            className="block w-full px-4 py-2 mt-2 text-gray-700  bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           >
                                             <option value="" disabled selected>
-                                              Unspecified
+                                              -[{staff.sex}]-
                                             </option>
                                             <option value="Male">Male</option>
                                             <option value="Female">
@@ -345,12 +378,13 @@ const Updatestaff = ({ updEmp, setUpdEmp }: Props) => {
                                             className="ml-2 p-2 mb-2 text-sm text-red-700 "
                                           />
                                           <Field
+                                            disabled
                                             name="roleid"
                                             as="select"
                                             className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           >
                                             <option value="" disabled selected>
-                                              Unspecified
+                                              Not set
                                             </option>
                                             <option value="1">Admin</option>
                                             <option value="2">Employee</option>
@@ -392,7 +426,7 @@ const Updatestaff = ({ updEmp, setUpdEmp }: Props) => {
                                           <Field
                                             id="phoneNumber"
                                             name="phoneNumber"
-                                            placeholder="+251"
+                                            placeholder={staff.phoneNumber}
                                             type="tel"
                                             className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
@@ -412,7 +446,7 @@ const Updatestaff = ({ updEmp, setUpdEmp }: Props) => {
                                           <Field
                                             id="residentAddress"
                                             name="residentAddress"
-                                            placeholder="Bole"
+                                            placeholder={staff.residentAddress}
                                             type="text"
                                             className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
@@ -432,7 +466,7 @@ const Updatestaff = ({ updEmp, setUpdEmp }: Props) => {
                                             id="email"
                                             name="email"
                                             type="email"
-                                            placeholder="johndoe@gmail.com"
+                                            placeholder={staff.email}
                                             className="block w-full px-4 py-2 mt-2  text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
@@ -452,7 +486,7 @@ const Updatestaff = ({ updEmp, setUpdEmp }: Props) => {
                                             id="username"
                                             name="username"
                                             type="text"
-                                            placeholder="johndoe"
+                                            placeholder={staff.username}
                                             className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
@@ -472,7 +506,6 @@ const Updatestaff = ({ updEmp, setUpdEmp }: Props) => {
                                             id="password"
                                             type="password"
                                             name="password"
-                                            placeholder="********"
                                             className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-900 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
@@ -493,7 +526,7 @@ const Updatestaff = ({ updEmp, setUpdEmp }: Props) => {
                                     type="submit"
                                     className=" dissabled hidden md:flex   px-6 py-2.5 bg-blue-800 text-white font-medium text-xs leading-tight uppercase rounded shadow-lg hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out"
                                   >
-                                    Save
+                                    Update
                                   </button>
                                 </div>
                               </Form>
