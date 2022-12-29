@@ -211,6 +211,38 @@ const Updateland = (props: Props) => {
           </div>
 
           <div className="mt-10 mx-auto flex flex-col w-full jsu">
+            <div className="flex w-full justify-between items-center">
+              <div className="w-full flex items-center justify-end ">
+                <div className="flex bg-gray-50 items-center p-2 rounded-md  w-1/3  border-2 mb-4 ">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-5 w-5 text-gray-400"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  <input
+                    className="bg-gray-50 outline-none ml-1 block w-full  "
+                    type="text"
+                    name=""
+                    id=""
+                    placeholder="search for employee..."
+                  />
+                </div>
+                {/* <button
+                // onClick={() => setShowOption(true)}
+                type="button"
+                className="ml-4 inline-block px-4 py-2.5 bg-transparent text-black font-medium text-sm leading-tight border  rounded hover:text-black hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-100 transition duration-150 ease-in-out"
+              >
+                Recent
+              </button> */}
+              </div>
+            </div>
             <div className="w-full grid grid-cols-5 gap-4">
               <div className="flex items-center w-full justify-between col-span-2 p-3 rounded-lg shadow-xl">
                 <div>
@@ -250,6 +282,7 @@ const Updateland = (props: Props) => {
                 Ownership Transfer to
                 <img src={arrow} alt="" />
               </div>
+
               <div className="flex items-center w-full justify-between col-span-2 p-3 rounded-lg shadow-xl">
                 <div>
                   <label className="block text-sm  font-medium font-poppins">
