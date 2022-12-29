@@ -45,7 +45,8 @@ const Signup = (props: Props) => {
             "x-access-token": response,
           },
         }).then((response) => {
-          console.log(`fetch data login :${response.data.userId}`);
+          console.log(response.data.accountStatus);
+          // console.log(`fetch data login :${response.data.userId}`);
           if (response.data.loggedIn === true) {
             console.log(`Authentication Message: ${response.data.message}`);
             console.log(`Authentication User Id: ${response.data.userId}`);

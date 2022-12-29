@@ -29,6 +29,7 @@ import NotFound from "./Componets/Error/notFound";
 import ViewActivity from "./Pages/Admin/ViewActivity";
 import Updatestaff from "./Pages/Profile/Updatestaff";
 import DetailsPage from "./Pages/authentication/DetailsPage";
+import Accountsuspend from "./Componets/Error/Accountsuspend";
 
 function App() {
   // const [userid, setuserid] = useState([]);
@@ -62,6 +63,7 @@ function App() {
           <Route path="/details" element={<DetailsPage />} />
 
           <Route path="/not_found" element={<NotFound />} />
+          <Route path="/suspended" element={<Accountsuspend />} />
           <Route
             path="/viewactivity"
             element={

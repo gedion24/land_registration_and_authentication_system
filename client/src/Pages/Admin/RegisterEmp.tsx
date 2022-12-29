@@ -23,7 +23,8 @@ type Props = {
 
 const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
   const [imgBase64, setImgBase64] = useState("");
-
+  //true: Active, false: Suspended
+  const [accountStatus, setAccountStatus] = useState(true);
   const onClose = () => {
     setImgBase64("");
   };
@@ -46,12 +47,13 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
     lastName: "",
     username: "",
     password: "",
-    accountStatus: "Active",
+    accountStatus: "",
     email: "",
     phoneNumber: "",
     sex: "",
     birthday: "",
     residentAddress: "",
+    lastChange: new Date().toISOString().substring(0, 10),
     joinedDate: new Date().toISOString().substring(0, 10),
   };
   const validationSchema = Yup.object().shape({
@@ -69,6 +71,12 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
   });
   const onSubmit = (data: any) => {
     console.log(`FILE HERE: ${data.img}`);
+    if (accountStatus) {
+      data.accountStatus = "Active";
+    } else {
+      data.accountStatus = "Inactive";
+    }
+    //data.accountStatus=
     // const file = dataURLtoFile(imgBase64,"test");
     data.img = imgBase64;
     //data.file = imgBase64;
@@ -475,6 +483,33 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                             placeholder="********"
                                             className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-900 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
+                                        </div>
+                                      </div>
+                                      <div className="flex w-full space-x-4">
+                                        <label>Account Status: </label>
+                                        <div className="relative flex flex-col items-center justify-center overflow-hidden">
+                                          <div className="flex">
+                                            <label className="inline-flex relative items-center mr-5 cursor-pointer">
+                                              <input
+                                                type="checkbox"
+                                                className="sr-only peer"
+                                                checked={accountStatus}
+                                                readOnly
+                                              />
+                                              <div
+                                                onClick={() => {
+                                                  setAccountStatus(
+                                                    !accountStatus
+                                                  );
+                                                }}
+                                                className="w-11 h-6 bg-gray-200 rounded-full peer  peer-focus:ring-green-300  peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"
+                                              ></div>
+                                              <span className="ml-2 text-sm font-medium text-gray-900">
+                                                {accountStatus && "Active"}
+                                                {!accountStatus && "Inactive"}
+                                              </span>
+                                            </label>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>

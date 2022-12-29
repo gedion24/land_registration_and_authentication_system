@@ -2,7 +2,6 @@ import React, {
   Dispatch,
   SetStateAction,
   Fragment,
-  useEffect,
   useState,
   useLayoutEffect,
   useRef,
@@ -23,9 +22,9 @@ type Props = {
 };
 
 const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
-  // used to to print the QRcode
+  // used to to print the Land data
   const componentRef = useRef(null);
-  const handlePrint = useReactToPrint({
+  const handlePrintdata = useReactToPrint({
     content: () => componentRef.current,
     documentTitle: "Land-data",
   });
@@ -76,21 +75,20 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
       ],
     },
   ]);
-
+  const [selectedCarta, setSelectedCarta] = useState(0);
+  const onChangeDeedNo = (e: {
+    target: { selectedIndex: React.SetStateAction<number> };
+  }) => {
+    setSelectedCarta(e.target.selectedIndex);
+  };
   useLayoutEffect(() => {
     Axios.get(`http://localhost:3001/AALHRIA/viewAllLand/${citizenId}`, {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
     }).then((response) => {
-      //console.log(response.data.citizenInfo[0]);
-      //console.log(response.data.carta[0]);
-      //console.log(response.data.carta[0].cartaCoordinateData[0]);
       setCurrCitizen(response.data.citizenInfo[0]);
       setCartaInfo(response.data.carta);
-      //setCartaCoordinateData(response.data.carta[0].cartaCoordinateData[0])
-      //console.log(`Response ${JSON.stringify(response.data[0].roleid)}`);
-      //setStaff(response.data[0]);
     });
     console.log("Here");
     console.log(cartaInfo);
@@ -136,35 +134,6 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                     </button>
                   </div>
                   <div ref={componentRef}>
-                    <div className="w-1/2 h-auto flex items-center space-x-4">
-                      <label
-                        className="font-bold text-xl font-poppins w-1/6"
-                        htmlFor="Landid"
-                      >
-                        Land ID :{" "}
-                      </label>
-                      <select
-                        className="  form-select form-select-sm appearance-none block w-full
-    px-2
-    py-1
-    text-sm
-    font-normal
-    text-gray-700
-    bg-white bg-clip-padding bg-no-repeat
-    border border-solid border-gray-300
-    rounded
-    transition
-    ease-in-out
-    m-0
-    focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                        aria-label=".form-select-sm example"
-                      >
-                        <option selected>Open this select menu</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
-                      </select>
-                    </div>
                     <Dialog.Title
                       as="h3"
                       className="text-lg font-medium leading-6 text-gray-900 px-3 py-3 flex text-center justify-center items-center"
@@ -180,15 +149,45 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                       you an email with all of the details of your order.
                     </p>
                   </div> */}
+                    {cartaInfo[selectedCarta] ? (
+                      <div className="w-1/2 h-auto flex items-center ">
+                        <label
+                          className="font-bold text-xl font-poppins w-1/4 ml-3"
+                          htmlFor="Landid"
+                        >
+                          Title Deed No:
+                        </label>
 
+                        <select
+                          className="  form-select form-select-sm appearance-none  w-1/2 px-2 py-1 text-sm  font-normal  text-gray-700  bg-white bg-clip-padding bg-no-repeat  border border-solid border-gray-300 rounded  transition  ease-in-out  m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                          aria-label=".form-select-sm example"
+                          onChange={onChangeDeedNo}
+                        >
+                          {(() => {
+                            const options = [];
+                            for (let x in cartaInfo) {
+                              //TitleDeedNo
+                              options.push(
+                                <option value={parseInt(x)}>
+                                  {cartaInfo[parseInt(x)].cartaTitleDeedNo}
+                                </option>
+                              );
+                            }
+                            return options;
+                          })()}
+                        </select>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
                     <div className="mt- px-3">
                       {/* <div className="w-full  flex justify-end font-semibold text-base">
                       <p>Date: current date</p>
                     </div> */}
-                      <div className=" w-full flex  mt-2">
-                        {cartaInfo[0] ? (
+                      <div className=" w-full flex justify-between  mt-2">
+                        {cartaInfo[selectedCarta] ? (
                           <>
-                            <div className="grid grid-cols-3 divide-x">
+                            <div className="grid grid-cols-3  font-poppins space-y-3">
                               <div>
                                 <label className="block text-sm  font-medium">
                                   Citizen Image
@@ -199,7 +198,7 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                                   />
                                 </div>
                               </div>
-                              <div>
+                              <div className="space-y-2">
                                 <label className="block text-sm  font-medium">
                                   Citizen Detail
                                 </label>
@@ -232,37 +231,78 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                             <div className="flex flex-col space-y-3 px-4 font-semibold text-base">
                               {/* <h1>Date: current date</h1> */}
                               <h1>
-                                House Number:{cartaInfo[0].cartaHouseNumber}
+                                House Number:
+                                {cartaInfo[selectedCarta].cartaHouseNumber}
                               </h1>
                               <h1>
                                 Registration Number:
-                                {cartaInfo[0].cartaRegistrationNo}
+                                {cartaInfo[selectedCarta].cartaRegistrationNo}
                               </h1>
                               <h1>
-                                Permmit Use:{cartaInfo[0].cartaPlannedLandUse}
+                                Permmit Use:
+                                {cartaInfo[selectedCarta].cartaPlannedLandUse}
                               </h1>
                               <h1>
                                 Carta Issue date:
-                                {cartaInfo[0].cartaIssuedDate &&
-                                  cartaInfo[0].cartaIssuedDate.substring(0, 10)}
+                                {cartaInfo[selectedCarta].cartaIssuedDate &&
+                                  cartaInfo[
+                                    selectedCarta
+                                  ].cartaIssuedDate.substring(0, 10)}
                               </h1>
-                              <h1>Issued By:{cartaInfo[0].issuerStaffName}</h1>
+                              <h1>
+                                Issued By:
+                                {cartaInfo[selectedCarta].issuerStaffName}
+                              </h1>
                             </div>
                           </>
                         ) : (
                           <>
-                            <p> ui must be added</p>
+                            <div className="w-full justify-center flex">
+                              <section className="flex items-center h-full sm:p-16 dark:bg-white dark:text-black">
+                                <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8 space-y-8 text-center sm:max-w-md">
+                                  <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 512 512"
+                                    className="w-40 h-40 dark:text-gray-600"
+                                  >
+                                    <path
+                                      fill="currentColor"
+                                      d="M256,16C123.452,16,16,123.452,16,256S123.452,496,256,496,496,388.548,496,256,388.548,16,256,16ZM403.078,403.078a207.253,207.253,0,1,1,44.589-66.125A207.332,207.332,0,0,1,403.078,403.078Z"
+                                    ></path>
+                                    <rect
+                                      width="176"
+                                      height="32"
+                                      x="168"
+                                      y="320"
+                                      fill="currentColor"
+                                    ></rect>
+                                    <polygon
+                                      fill="currentColor"
+                                      points="210.63 228.042 186.588 206.671 207.958 182.63 184.042 161.37 162.671 185.412 138.63 164.042 117.37 187.958 141.412 209.329 120.042 233.37 143.958 254.63 165.329 230.588 189.37 251.958 210.63 228.042"
+                                    ></polygon>
+                                    <polygon
+                                      fill="currentColor"
+                                      points="383.958 182.63 360.042 161.37 338.671 185.412 314.63 164.042 293.37 187.958 317.412 209.329 296.042 233.37 319.958 254.63 341.329 230.588 365.37 251.958 386.63 228.042 362.588 206.671 383.958 182.63"
+                                    ></polygon>
+                                  </svg>
+                                  <p className="text-3xl font-poppins">
+                                    Citizen not registered to any land
+                                  </p>
+                                  {/* <a rel="noopener noreferrer" href="#" className="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900">Back to homepage</a> */}
+                                </div>
+                              </section>
+                            </div>
                           </>
                         )}
                       </div>
                       {/*  */}
-                      {cartaInfo[0] ? (
+                      {cartaInfo[selectedCarta] ? (
                         <>
                           <div className="w-full flex justify-between mt-4">
                             <div className="w-1/2 h-[450px] bg-black flex justify-center items-center text-white">
                               <img
                                 className="w-full h-full"
-                                src={`/uploads/cartaImages/${cartaInfo[0].cartaImage}`}
+                                src={`/uploads/cartaImages/${cartaInfo[selectedCarta].cartaImage}`}
                               />
                             </div>
                             <div className="w-1/2  p-4   ">
@@ -293,13 +333,13 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                                           <tr className="bg-white border-b">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                               {
-                                                cartaInfo[0]
+                                                cartaInfo[selectedCarta]
                                                   .cartaCoordinateData[0].X1
                                               }
                                             </td>
                                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                               {
-                                                cartaInfo[0]
+                                                cartaInfo[selectedCarta]
                                                   .cartaCoordinateData[0].Y1
                                               }
                                             </td>
@@ -307,13 +347,13 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                                           <tr className="bg-white border-b">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                               {
-                                                cartaInfo[0]
+                                                cartaInfo[selectedCarta]
                                                   .cartaCoordinateData[0].X2
                                               }
                                             </td>
                                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                               {
-                                                cartaInfo[0]
+                                                cartaInfo[selectedCarta]
                                                   .cartaCoordinateData[0].Y2
                                               }
                                             </td>
@@ -321,13 +361,13 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                                           <tr className="bg-white border-b">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                               {
-                                                cartaInfo[0]
+                                                cartaInfo[selectedCarta]
                                                   .cartaCoordinateData[0].X3
                                               }
                                             </td>
                                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
                                               {
-                                                cartaInfo[0]
+                                                cartaInfo[selectedCarta]
                                                   .cartaCoordinateData[0].Y3
                                               }
                                             </td>
@@ -335,13 +375,13 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                                           <tr className="bg-white border-b">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                               {
-                                                cartaInfo[0]
+                                                cartaInfo[selectedCarta]
                                                   .cartaCoordinateData[0].X4
                                               }
                                             </td>
                                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
                                               {
-                                                cartaInfo[0]
+                                                cartaInfo[selectedCarta]
                                                   .cartaCoordinateData[0].Y4
                                               }
                                             </td>
@@ -349,13 +389,13 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                                           <tr className="bg-white border-b">
                                             <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
                                               {
-                                                cartaInfo[0]
+                                                cartaInfo[selectedCarta]
                                                   .cartaCoordinateData[0].X5
                                               }
                                             </td>
                                             <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap text-center">
                                               {
-                                                cartaInfo[0]
+                                                cartaInfo[selectedCarta]
                                                   .cartaCoordinateData[0].Y5
                                               }
                                             </td>
@@ -466,43 +506,82 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                                     <tbody>
                                       <tr className="bg-white border-b">
                                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                                          {cartaInfo[0].currentWoredaNumber}
+                                          {
+                                            cartaInfo[selectedCarta]
+                                              .currentWoredaNumber
+                                          }
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                          {cartaInfo[0].formerKebeleNumber}
+                                          {
+                                            cartaInfo[selectedCarta]
+                                              .formerKebeleNumber
+                                          }
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                          {cartaInfo[0].cartaSubCityName}
+                                          {
+                                            cartaInfo[selectedCarta]
+                                              .cartaSubCityName
+                                          }
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                          {cartaInfo[0].cartaBlockNumber}
+                                          {
+                                            cartaInfo[selectedCarta]
+                                              .cartaBlockNumber
+                                          }
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                          {cartaInfo[0].cartaParcelNumber}
+                                          {
+                                            cartaInfo[selectedCarta]
+                                              .cartaParcelNumber
+                                          }
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                          {cartaInfo[0].cartaPlotArea}
+                                          {
+                                            cartaInfo[selectedCarta]
+                                              .cartaPlotArea
+                                          }
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                          {cartaInfo[0].cartaBuiltUpArea}
+                                          {
+                                            cartaInfo[selectedCarta]
+                                              .cartaBuiltUpArea
+                                          }
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                          {cartaInfo[0].cartaLandGrade}
+                                          {
+                                            cartaInfo[selectedCarta]
+                                              .cartaLandGrade
+                                          }
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                          {cartaInfo[0].cartaTitleDeedNo}
+                                          {
+                                            cartaInfo[selectedCarta]
+                                              .cartaTitleDeedNo
+                                          }
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                          {cartaInfo[0].cartaBasemapNo}
+                                          {
+                                            cartaInfo[selectedCarta]
+                                              .cartaBasemapNo
+                                          }
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                          {cartaInfo[0].cartaTypeOfHolding}
+                                          {
+                                            cartaInfo[selectedCarta]
+                                              .cartaTypeOfHolding
+                                          }
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                          {cartaInfo[0].cartaPlannedLandUse}
+                                          {
+                                            cartaInfo[selectedCarta]
+                                              .cartaPlannedLandUse
+                                          }
                                         </td>
                                         <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
-                                          {cartaInfo[0].cartaPermittedUse}
+                                          {
+                                            cartaInfo[selectedCarta]
+                                              .cartaPermittedUse
+                                          }
                                         </td>
                                       </tr>
                                     </tbody>
@@ -522,7 +601,7 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                               </button>
                             </Link>
                             <button
-                              onChangeCapture={handlePrint}
+                              onClick={handlePrintdata}
                               type="button"
                               className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                             >

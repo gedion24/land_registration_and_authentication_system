@@ -12,6 +12,7 @@ import IdContext from "../../Context/Context";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import arrow from "../../assets/arrow-right.png";
 
 type Props = {};
 
@@ -194,13 +195,13 @@ const Updateland = (props: Props) => {
 
   return (
     <>
-      <div className="w-full h-screen ">
+      <div className="w-full h-screen font-poppins ">
         {<ToastContainer />}
         <div className="w-full h-full bg-white flex flex-col px-8 py-4">
           <div className="flex items-center max-h-min justify-between w-full">
             <div className="flex flex-col">
               <h2 className="text-2xl font-semibold my-0">
-                Land Registration Form
+                Land Information Update Form
               </h2>
               {/* <p className="text-sm font-light">
                 View Sales information and manage them here
@@ -210,42 +211,83 @@ const Updateland = (props: Props) => {
           </div>
 
           <div className="mt-10 mx-auto flex flex-col w-full jsu">
-            <div className="grid grid-cols-3 divide-x">
-              <div>
-                <label className="block text-sm  font-medium">
-                  Citizen Image
-                </label>
-                <div className="mt-1 flex justify-center items-center px-1 pt-1 pb-1 border-2 h-[200px] w-[200px] border-gray-300 border-dashed rounded-md">
-                  <img src={`/uploads/citizenImages/${currCitizen.img}`} />
+            <div className="w-full grid grid-cols-5 gap-4">
+              <div className="flex items-center w-full justify-between col-span-2 p-3 rounded-lg shadow-xl">
+                <div>
+                  <label className="block text-sm  font-medium">
+                    Citizen Image
+                  </label>
+                  <div className="mt-1 flex justify-center items-center px-1 pt-1 pb-1 border-2 h-[200px] w-[200px] border-gray-300 border-dashed rounded-md">
+                    <img src={`/uploads/citizenImages/${currCitizen.img}`} />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="block text-sm  font-medium">
+                    Citizen Detail
+                  </label>
+                  <p className=" dark:text-black">
+                    Full Name: {currCitizen.fullName}
+                  </p>
+                  <p className=" dark:text-black">
+                    Date of Birth:{currCitizen.dateofbirth.substring(0, 10)}
+                  </p>
+                  <p className=" dark:text-black">Sex:{currCitizen.sex}</p>
+                  <p className=" dark:text-black">
+                    Phone Number:{currCitizen.phonenumber}
+                  </p>
+                  <p className=" dark:text-black">
+                    Former Kebele:{currCitizen.kebeleNumber}
+                  </p>
+                  <p className=" dark:text-black">
+                    Current Woreda:{currCitizen.woredaNumber}
+                  </p>
+                  <p className=" dark:text-black">
+                    Subcity:{currCitizen.subCityName}
+                  </p>
                 </div>
               </div>
-              <div>
-                <label className="block text-sm  font-medium">
-                  Citizen Detail
-                </label>
-                <p className=" dark:text-black">
-                  Full Name: {currCitizen.fullName}
-                </p>
-                <p className=" dark:text-black">
-                  Date of Birth:{currCitizen.dateofbirth.substring(0, 10)}
-                </p>
-                <p className=" dark:text-black">Sex:{currCitizen.sex}</p>
-                <p className=" dark:text-black">
-                  Phone Number:{currCitizen.phonenumber}
-                </p>
-                <p className=" dark:text-black">
-                  Former Kebele:{currCitizen.kebeleNumber}
-                </p>
-                <p className=" dark:text-black">
-                  Current Woreda:{currCitizen.woredaNumber}
-                </p>
-                <p className=" dark:text-black">
-                  Subcity:{currCitizen.subCityName}
-                </p>
+              <div className="w-full flex flex-col justify-center items-center">
+                Ownership Transfer to
+                <img src={arrow} alt="" />
+              </div>
+              <div className="flex items-center w-full justify-between col-span-2 p-3 rounded-lg shadow-xl">
+                <div>
+                  <label className="block text-sm  font-medium font-poppins">
+                    Citizen Image
+                  </label>
+                  <div className="mt-1 flex justify-center items-center px-1 pt-1 pb-1 border-2 h-[200px] w-[200px] border-gray-300 border-dashed rounded-md">
+                    <img src={`/uploads/citizenImages/${currCitizen.img}`} />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="block text-sm  font-medium">
+                    Citizen Detail
+                  </label>
+                  <p className=" dark:text-black">
+                    Full Name: {currCitizen.fullName}
+                  </p>
+                  <p className=" dark:text-black">
+                    Date of Birth:{currCitizen.dateofbirth.substring(0, 10)}
+                  </p>
+                  <p className=" dark:text-black">Sex:{currCitizen.sex}</p>
+                  <p className=" dark:text-black">
+                    Phone Number:{currCitizen.phonenumber}
+                  </p>
+                  <p className=" dark:text-black">
+                    Former Kebele:{currCitizen.kebeleNumber}
+                  </p>
+                  <p className=" dark:text-black">
+                    Current Woreda:{currCitizen.woredaNumber}
+                  </p>
+                  <p className=" dark:text-black">
+                    Subcity:{currCitizen.subCityName}
+                  </p>
+                </div>
               </div>
             </div>
+
             <div className="w-full ">
-              <section className="p-3 rounded-md shadow-md  text-black">
+              <section className="p-3 mt-7  text-black">
                 <Formik initialValues={initialValues} onSubmit={onSubmit}>
                   <Form>
                     <div className="flex justify-between my-4  ">

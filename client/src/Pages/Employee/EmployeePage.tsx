@@ -85,7 +85,7 @@ const EmployeePage = (Props: Props) => {
                             This is a list of latest Registration
                           </span>
                         </div>
-                        <Link to="/employeehomepage/lands">
+                        <Link to="/employeehomepage/owners">
                           <div className="flex-shrink-0">
                             <a
                               href="/"

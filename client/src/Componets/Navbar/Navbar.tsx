@@ -180,13 +180,13 @@ const Navbar = (props: Props) => {
                         HOME
                       </Link>
 
-                      <Link
+                      {/* <Link
                         to="/employeehomepage/lands"
                         className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                         aria-current="page"
                       >
                         Registered Lands
-                      </Link>
+                      </Link> */}
                       {/* <Link
                         to="/employeehomepage/landregistration"
                         className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
@@ -295,15 +295,7 @@ const Navbar = (props: Props) => {
                   ) : (
                     <></>
                   )}
-                  <a
-                    onClick={() => setShowOption(false)}
-                    href="/"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-700 hover:text-white"
-                    role="menuitem"
-                    id="user-menu-item-1"
-                  >
-                    Settings
-                  </a>
+
                   <a
                     onClick={logout}
                     //onClick={() => setShowOption(false)}
