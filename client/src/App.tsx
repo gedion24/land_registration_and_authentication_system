@@ -19,7 +19,7 @@ import AdminHomePage from "./Pages/Admin/AdminHomePage";
 import Updateland from "./Pages/Employee/Updateland";
 import Footer from "./Componets/Navbar/Footer";
 import EmployeePage from "./Pages/Employee/EmployeePage";
-import Ownerprofile from "./Pages/Employee/Ownerprofile";
+//import Ownerprofile from "./Pages/Reports/Ownerprofile";
 import PasswrdPage from "./Pages/authentication/PasswrdPage";
 
 import LandProfile from "./Pages/Employee/LandProfile";
@@ -30,6 +30,10 @@ import ViewActivity from "./Pages/Admin/ViewActivity";
 import Updatestaff from "./Pages/Profile/Updatestaff";
 import DetailsPage from "./Pages/authentication/DetailsPage";
 import Accountsuspend from "./Componets/Error/Accountsuspend";
+import Reportlist from "./Pages/Reports/Reportlist";
+import Ownerprofile from "./Pages/Reports/Ownerprofile";
+import LandRegReport from "./Pages/Reports/LandRegReport";
+import EmployeeReport from "./Pages/Reports/EmployeeReport";
 
 function App() {
   // const [userid, setuserid] = useState([]);
@@ -44,11 +48,40 @@ function App() {
   const [upd, setUpd] = useState(false);
   const [citizenId, setCitizenId] = useState(0);
   const [staffId, setStaffId] = useState(0);
+  const [showActivity, setshowActivity] = useState(false);
+  const [reposhow, setreposhow] = useState(false);
   return (
     <>
       <div className="">
         {/* <IdContext.Provider value={{ userid, setuserid }}> */}
         <Routes>
+          {/* test route */}
+          <Route path="/report" element={<Reportlist />} />
+
+          <Route
+            path="/employeeReport"
+            element={
+              <EmployeeReport
+                empActvity={showActivity}
+                setempActvity={setshowActivity}
+                setid={0}
+              />
+            }
+          />
+          <Route
+            path="/staffprofile"
+            element={<Ownerprofile show={isOpen} setShow={setIsOpen} />}
+          />
+          <Route
+            path="/regsiterReport"
+            element={
+              <LandRegReport
+                repoland={reposhow}
+                setrepoland={setreposhow}
+                citizenId={0}
+              />
+            }
+          />
           <Route path="/signup" element={<Signup />} />
           <Route path="/" element={<Wellcomepage />} />
           <Route
@@ -137,6 +170,31 @@ function App() {
 
             <Route path="manageEmployee" element={<ManageEmp />} />
             <Route path="lands" element={<Landregistrated />} />
+            <Route path="report" element={<Reportlist />} />
+            <Route
+              path="employeeReport"
+              element={
+                <EmployeeReport
+                  empActvity={showActivity}
+                  setempActvity={setshowActivity}
+                  setid={0}
+                />
+              }
+            />
+            <Route
+              path="staffprofile"
+              element={<Ownerprofile show={isOpen} setShow={setIsOpen} />}
+            />
+            <Route
+              path="regsiterReport"
+              element={
+                <LandRegReport
+                  repoland={reposhow}
+                  setrepoland={setreposhow}
+                  citizenId={0}
+                />
+              }
+            />
           </Route>
 
           {/* Employye Route */}
@@ -165,10 +223,10 @@ function App() {
                 />
               }
             />
-            <Route
+            {/* <Route
               path="ownerprofile"
               element={<Ownerprofile show={isOpen} setShow={setIsOpen} />}
-            />
+            /> */}
           </Route>
         </Routes>
         {/* </IdContext.Provider> */}

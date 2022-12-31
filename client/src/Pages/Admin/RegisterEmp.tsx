@@ -60,12 +60,17 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
     firstName: Yup.string().required("*required"),
     middleName: Yup.string().required("*required"),
     lastName: Yup.string().required("*required"),
-    username: Yup.string().required("*required"),
-    password: Yup.string().required("*required"),
+    username: Yup.string()
+      .required("*required")
+      .min(6, "username is too short"),
+    password: Yup.string()
+      .required("*required")
+      .min(5, "password is too short")
+      .max(8),
     sex: Yup.string().required("*required"),
     birthday: Yup.string().required("*required"),
     phoneNumber: Yup.string().required("*required"),
-    email: Yup.string().required("*required"),
+    email: Yup.string().required("*required").email("Invalid email address"),
     residentAddress: Yup.string().required("*required"),
     roleid: Yup.string().required("*required"),
   });
@@ -270,6 +275,7 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                             id="firstName"
                                             name="firstName"
                                             type="text"
+                                            placeholder="first name"
                                             className=" is-invalid block w-full px-4 py-2 mt-2 placeholder:text-black text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
@@ -289,6 +295,7 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                             id="middleName"
                                             name="middleName"
                                             type="text"
+                                            placeholder="middle name"
                                             className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
@@ -308,6 +315,7 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                             id="lastName"
                                             name="lastName"
                                             type="text"
+                                            placeholder="last name"
                                             className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-800 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
@@ -402,7 +410,7 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                             name="phoneNumber"
                                             placeholder="+251"
                                             type="tel"
-                                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                            className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-black dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
                                         <div className="w-full">
@@ -422,7 +430,7 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                             name="residentAddress"
                                             placeholder="Bole"
                                             type="text"
-                                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                            className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-black dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
                                       </div>
@@ -441,7 +449,7 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                             name="email"
                                             type="email"
                                             placeholder="johndoe@gmail.com"
-                                            className="block w-full px-4 py-2 mt-2  text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                            className="block w-full px-4 py-2 mt-2  text-gray-700 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-black dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
                                         <div className="w-full">
@@ -461,7 +469,7 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                             name="username"
                                             type="text"
                                             placeholder="johndoe"
-                                            className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-300 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                            className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-black dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
                                         <div className="w-full">
@@ -481,7 +489,7 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                                             type="password"
                                             name="password"
                                             placeholder="********"
-                                            className="block w-full px-4 py-2 mt-2 text-gray-800 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-900 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
+                                            className="block w-full px-4 py-2 mt-2 text-gray-800 placeholder:text-black bg-white border border-gray-300 rounded-md dark:bg-white dark:text-gray-900 dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                                           />
                                         </div>
                                       </div>

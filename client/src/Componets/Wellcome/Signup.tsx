@@ -54,6 +54,7 @@ const Signup = (props: Props) => {
             switch (response.data.roleName) {
               case "Admin":
                 navigate("/adminhomepage");
+                //navigate("/suspended");
                 break;
               case "Employee":
                 navigate("/employeehomepage");

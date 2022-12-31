@@ -163,11 +163,11 @@ const Navbar = (props: Props) => {
                         Manage Employees
                       </Link>
                       <Link
-                        to="/adminhomepage/employees"
+                        to="/adminhomepage/report"
                         className=" hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                         aria-current="page"
                       >
-                        Archive
+                        Report archive
                       </Link>
                     </>
                   ) : user.role === "Employee" ? (
