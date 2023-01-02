@@ -145,6 +145,8 @@ const Updatestaff = ({ updEmp, setUpdEmp, staffId }: Props) => {
           message: response.data.message,
         });
       }
+    }).catch((err)=>{
+      console.log(err);
     });
   };
   // UPDATE HANDLER END
@@ -152,7 +154,7 @@ const Updatestaff = ({ updEmp, setUpdEmp, staffId }: Props) => {
   useEffect(() => {
     if (_msg.type) {
       if (_msg.type === "error") {
-        toast.error(_msg.message);
+        toast.error(<div>{_msg.message}<br />Unable to update Staff!</div>);
       } else if (_msg.type === "success") {
         toast.success(_msg.message);
         toast.success("Changes will take effect on the next login");

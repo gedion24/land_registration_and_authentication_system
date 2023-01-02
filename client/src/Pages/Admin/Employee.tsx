@@ -40,6 +40,18 @@ const Employee = (props: Props) => {
       setStaffList(data.data);
     });
   }, []);
+  const dateConverter = (date: string) => {
+    if (date) {
+      var temp_date = new Date(date.substring(0, 10));
+      var new_Date = new Date(
+        temp_date.getTime() +
+          Math.abs(temp_date.getTimezoneOffset() * 60000) * 12
+      )
+        .toISOString()
+        .substring(0, 10);
+      return new_Date;
+    }
+  };
   const columns = useMemo(
     () => [
       {
@@ -96,7 +108,7 @@ const Employee = (props: Props) => {
       {
         Header: "Joined Date",
         accessor: "joinedDate",
-        Cell: ({ value }: CellProps<any>) => <p>{value.substring(0, 10)}</p>,
+        Cell: ({ value }: CellProps<any>) => <p>{dateConverter(value)}</p>,
       },
     ],
     []
@@ -147,6 +159,8 @@ const Employee = (props: Props) => {
           //  state: { device },
           //}}
           // your link creation
+          //TODO:
+          //https://stackoverflow.com/questions/52238637/react-router-how-to-pass-data-between-pages-in-react#:~:text=You%20can%20use%20the%20Link,you%20want%20to%20pass%20on.
           <Link
             to={{ pathname: `/adminhomepage/staffprofile/${row.values.id}` }}
           >

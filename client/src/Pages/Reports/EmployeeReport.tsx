@@ -52,9 +52,7 @@ const EmployeeReport = ({ empActvity, setempActvity, setid }: Props) => {
                       <h2 className="text-2xl font-semibold my-0">
                         Recent Activity
                       </h2>
-                      <p>
-                        every activity of the current employees is listed here
-                      </p>
+                      <p>every activity of the current Admin is listed here</p>
                     </div>
                     <button
                       type="button"

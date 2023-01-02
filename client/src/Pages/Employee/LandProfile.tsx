@@ -13,7 +13,8 @@ import ReactToPrint, {
 
 import { Dialog, Transition } from "@headlessui/react";
 import Axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import notFound from "../../assets/notFound.png";
 
 type Props = {
   showland: boolean;
@@ -60,6 +61,7 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
       cartaPlannedLandUse: null,
       cartaPermittedUse: null,
       issuerStaffName: null,
+      lastChanged: null,
       cartaCoordinateData: [
         {
           X1: null,
@@ -82,18 +84,39 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
     setSelectedCarta(e.target.selectedIndex);
   };
   useLayoutEffect(() => {
-    Axios.get(`http://localhost:3001/AALHRIA/viewAllLand/${citizenId}`, {
+    Axios.get(`http://localhost:3001/AALHRIA/viewAllCarta/${citizenId}`, {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
     }).then((response) => {
       setCurrCitizen(response.data.citizenInfo[0]);
+
       setCartaInfo(response.data.carta);
     });
     console.log("Here");
     console.log(cartaInfo);
     //console.log(cartaCoordinateData);
   }, [showland]);
+  const navigate = useNavigate();
+  const updateLand = (citizenId: any) => {
+    //let titleDeedNo = (document.getElementById("titleDeedNo") as HTMLInputElement).value;
+    navigate("/employeehomepage/updateland", {
+      state: { citizenId: citizenId },
+    });
+  };
+  const dateConverter = (date: string) => {
+    if (date) {
+      var temp_date = new Date(date.substring(0, 10));
+      var new_Date = new Date(
+        temp_date.getTime() +
+          Math.abs(temp_date.getTimezoneOffset() * 60000) * 12
+      )
+        .toISOString()
+        .substring(0, 10);
+      return new_Date;
+    }
+  };
+
   return (
     <>
       <Transition appear show={showland} as={Fragment}>
@@ -134,49 +157,45 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                     </button>
                   </div>
                   <div ref={componentRef}>
-                    <Dialog.Title
-                      as="h3"
-                      className="text-lg font-medium leading-6 text-gray-900 px-3 py-3 flex text-center justify-center items-center"
-                    >
-                      Addis Ababa City Goverment Land Adminstration <br />
-                      and permit Authority permit Hold Certificate of Tittle
-                      Deed
-                    </Dialog.Title>
-
-                    {/* <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                      Your payment has been successfully submitted. We’ve sent
-                      you an email with all of the details of your order.
-                    </p>
-                  </div> */}
                     {cartaInfo[selectedCarta] ? (
-                      <div className="w-1/2 h-auto flex items-center ">
-                        <label
-                          className="font-bold text-xl font-poppins w-1/4 ml-3"
-                          htmlFor="Landid"
+                      <>
+                        <Dialog.Title
+                          as="h3"
+                          className="text-lg font-medium leading-6 text-gray-900 px-3 py-3 flex text-center justify-center items-center"
                         >
-                          Title Deed No:
-                        </label>
+                          Addis Ababa City Goverment Land Adminstration <br />
+                          and permit Authority permit Hold Certificate of Tittle
+                          Deed
+                        </Dialog.Title>
 
-                        <select
-                          className="  form-select form-select-sm appearance-none  w-1/2 px-2 py-1 text-sm  font-normal  text-gray-700  bg-white bg-clip-padding bg-no-repeat  border border-solid border-gray-300 rounded  transition  ease-in-out  m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                          aria-label=".form-select-sm example"
-                          onChange={onChangeDeedNo}
-                        >
-                          {(() => {
-                            const options = [];
-                            for (let x in cartaInfo) {
-                              //TitleDeedNo
-                              options.push(
-                                <option value={parseInt(x)}>
-                                  {cartaInfo[parseInt(x)].cartaTitleDeedNo}
-                                </option>
-                              );
-                            }
-                            return options;
-                          })()}
-                        </select>
-                      </div>
+                        <div className="w-1/2 h-auto flex items-center ">
+                          <label
+                            className="font-bold text-xl font-poppins w-1/4 ml-3"
+                            htmlFor="Landid"
+                          >
+                            Title Deed No:
+                          </label>
+
+                          <select
+                            className="  form-select form-select-sm appearance-none  w-1/2 px-2 py-1 text-sm  font-normal  text-gray-700  bg-white bg-clip-padding bg-no-repeat  border border-solid border-gray-300 rounded  transition  ease-in-out  m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                            aria-label=".form-select-sm example"
+                            onChange={onChangeDeedNo}
+                          >
+                            {(() => {
+                              const options = [];
+                              for (let x in cartaInfo) {
+                                //TitleDeedNo
+                                options.push(
+                                  <option value={parseInt(x)}>
+                                    {cartaInfo[parseInt(x)].cartaTitleDeedNo}
+                                  </option>
+                                );
+                              }
+                              return options;
+                            })()}
+                          </select>
+                        </div>
+                      </>
                     ) : (
                       <></>
                     )}
@@ -207,8 +226,7 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                                 </p>
                                 <p className=" dark:text-black">
                                   Date of Birth:{" "}
-                                  {currCitizen.dateOfBirth &&
-                                    currCitizen.dateOfBirth.substring(0, 10)}
+                                  {dateConverter(currCitizen.dateOfBirth)}
                                 </p>
                                 <p className=" dark:text-black">
                                   Sex: {currCitizen.sex}
@@ -231,28 +249,52 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                             <div className="flex flex-col space-y-3 px-4 font-semibold text-base">
                               {/* <h1>Date: current date</h1> */}
                               <h1>
-                                House Number:
-                                {cartaInfo[selectedCarta].cartaHouseNumber}
-                              </h1>
-                              <h1>
                                 Registration Number:
                                 {cartaInfo[selectedCarta].cartaRegistrationNo}
                               </h1>
                               <h1>
-                                Permmit Use:
+                                House Number:
+                                {cartaInfo[selectedCarta].cartaHouseNumber}
+                              </h1>
+                              <h1>
+                                Type of Holding:
+                                {cartaInfo[selectedCarta].cartaTypeOfHolding}
+                              </h1>
+                              <h1>
+                                Planned Land Use:
                                 {cartaInfo[selectedCarta].cartaPlannedLandUse}
                               </h1>
                               <h1>
-                                Carta Issue date:
-                                {cartaInfo[selectedCarta].cartaIssuedDate &&
-                                  cartaInfo[
-                                    selectedCarta
-                                  ].cartaIssuedDate.substring(0, 10)}
+                                Permitted Land Use:
+                                {cartaInfo[selectedCarta].cartaPermittedUse}
+                              </h1>
+                              <h1>
+                                Carta Issued date:
+                                {dateConverter(
+                                  cartaInfo[selectedCarta].cartaIssuedDate
+                                )}
                               </h1>
                               <h1>
                                 Issued By:
                                 {cartaInfo[selectedCarta].issuerStaffName}
                               </h1>
+                              {cartaInfo[selectedCarta].issuerStaffName !==
+                              cartaInfo[selectedCarta].lastChanged ? (
+                                <>
+                                  <h1>
+                                    Last Changed By:
+                                    {cartaInfo[selectedCarta].lastChanged}
+                                  </h1>
+                                  <h1>
+                                    Last Modified Date:
+                                    {dateConverter(
+                                      cartaInfo[selectedCarta].lastModifiedDate
+                                    )}
+                                  </h1>
+                                </>
+                              ) : (
+                                <></>
+                              )}
                             </div>
                           </>
                         ) : (
@@ -260,33 +302,9 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                             <div className="w-full justify-center flex">
                               <section className="flex items-center h-full sm:p-16 dark:bg-white dark:text-black">
                                 <div className="container flex flex-col items-center justify-center px-5 mx-auto my-8 space-y-8 text-center sm:max-w-md">
-                                  <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 512 512"
-                                    className="w-40 h-40 dark:text-gray-600"
-                                  >
-                                    <path
-                                      fill="currentColor"
-                                      d="M256,16C123.452,16,16,123.452,16,256S123.452,496,256,496,496,388.548,496,256,388.548,16,256,16ZM403.078,403.078a207.253,207.253,0,1,1,44.589-66.125A207.332,207.332,0,0,1,403.078,403.078Z"
-                                    ></path>
-                                    <rect
-                                      width="176"
-                                      height="32"
-                                      x="168"
-                                      y="320"
-                                      fill="currentColor"
-                                    ></rect>
-                                    <polygon
-                                      fill="currentColor"
-                                      points="210.63 228.042 186.588 206.671 207.958 182.63 184.042 161.37 162.671 185.412 138.63 164.042 117.37 187.958 141.412 209.329 120.042 233.37 143.958 254.63 165.329 230.588 189.37 251.958 210.63 228.042"
-                                    ></polygon>
-                                    <polygon
-                                      fill="currentColor"
-                                      points="383.958 182.63 360.042 161.37 338.671 185.412 314.63 164.042 293.37 187.958 317.412 209.329 296.042 233.37 319.958 254.63 341.329 230.588 365.37 251.958 386.63 228.042 362.588 206.671 383.958 182.63"
-                                    ></polygon>
-                                  </svg>
+                                  <img src={notFound} />
                                   <p className="text-3xl font-poppins">
-                                    Citizen not registered to any land
+                                    Cadaster Information Not Found
                                   </p>
                                   {/* <a rel="noopener noreferrer" href="#" className="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900">Back to homepage</a> */}
                                 </div>
@@ -303,6 +321,7 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                               <img
                                 className="w-full h-full"
                                 src={`/uploads/cartaImages/${cartaInfo[selectedCarta].cartaImage}`}
+                                alt="cartaImg"
                               />
                             </div>
                             <div className="w-1/2  p-4   ">
@@ -477,13 +496,13 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                                         >
                                           Base Map Number
                                         </th>
-                                        <th
+                                        {/* <th
                                           scope="col"
                                           className="text-sm font-medium text-gray-900 px-6 py-4"
                                         >
                                           Type of holding
-                                        </th>
-                                        <th
+                                        </th> */}
+                                        {/* <th
                                           scope="col"
                                           className="text-sm font-medium text-gray-900 px-6 py-4"
                                         >
@@ -500,7 +519,7 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                                           className="text-sm font-medium text-gray-900 px-6 py-4"
                                         >
                                           Permitted Land Use
-                                        </th>
+                                        </th> */}
                                       </tr>
                                     </thead>
                                     <tbody>
@@ -565,7 +584,7 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                                               .cartaBasemapNo
                                           }
                                         </td>
-                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                        {/* <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
                                           {
                                             cartaInfo[selectedCarta]
                                               .cartaTypeOfHolding
@@ -582,7 +601,7 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                                             cartaInfo[selectedCarta]
                                               .cartaPermittedUse
                                           }
-                                        </td>
+                                        </td> */}
                                       </tr>
                                     </tbody>
                                   </table>
@@ -592,14 +611,17 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                           </div>
 
                           <div className="flex justify-end space-x-3">
-                            <Link to="/employeehomepage/updateland">
-                              <button
-                                type="button"
-                                className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                              >
-                                Update
-                              </button>
-                            </Link>
+                            {/* <Link to="/employeehomepage/updateland"> */}
+                            <button
+                              type="button"
+                              onClick={() => {
+                                updateLand(citizenId);
+                              }}
+                              className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                            >
+                              Update
+                            </button>
+
                             <button
                               onClick={handlePrintdata}
                               type="button"

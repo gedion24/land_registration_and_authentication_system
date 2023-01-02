@@ -47,7 +47,7 @@ class DbService {
   }
 
   async registerStaff(data) {
-    console.log(`Data :${Object.values(data)}`);
+    //  console.log(`Data :${Object.values(data)}`);
     return new Promise((resolve, reject) => {
       // This adds staff members into the database
       const query = `INSERT INTO staff VALUES (0,?);`;
@@ -55,7 +55,7 @@ class DbService {
         if (err) {
           // ER_DUP_ENTRY only handled ..
           // The following code manipulates the error code for the front end
-          console.log(`DB ERROR: ${err}`);
+          // console.log(`DB ERROR: ${err}`);
           var errMessage = err.sqlMessage
             .replace(new RegExp(".*" + "key"), "")
             .slice(2, -1)
@@ -109,8 +109,8 @@ class DbService {
     });
   }
 
-  //viewAllOwner
-  async viewAllOwner() {
+  //viewAllCitizen
+  async viewAllCitizen() {
     //console.log(`Assigned by: ${assignedBy} \n Id: ${id}`);
     return new Promise((resolve, reject) => {
       // if (assignedBy) {
@@ -169,9 +169,8 @@ class DbService {
       });
     });
   }
-  //viewOwner
-  //TODO: FIX NAME TO CITIZEN
-  async viewOwner(id) {
+  //viewCitizen
+  async viewCitizen(id) {
     return new Promise((resolve, reject) => {
       //This retrives Citizen information by using the id
       const query = `SELECT * FROM citizen WHERE id = ?;`;
@@ -280,7 +279,7 @@ class DbService {
   }
   //registerLand
   async registerLand(carta) {
-    //console.log(`Data :${Object.values(carta)}`);
+    console.log(`Data :${Object.values(carta)}`);
     return new Promise((resolve, reject) => {
       const query = `INSERT INTO carta  VALUES (0,?);`;
       dbConn.query(query, [Object.values(carta)], (err, result) => {
@@ -341,6 +340,7 @@ class DbService {
       dbConn.query(query, citizenId, (err, result) => {
         if (err) reject(new Error("Unable to retrive database information!"));
         //if (result.length > 0) {
+        //console.log(result);
         resolve(result);
         // }
       });
@@ -378,36 +378,42 @@ class DbService {
         0,
         -1
       )} WHERE (id = ${staffId})`;
-      console.log(query);
+      //console.log(query);
 
       dbConn.query(query, async (err, result) => {
-        if (result.affectedRows === 1) {
-          var resultOut = {
-            affectedRows: result.affectedRows,
-          };
-          if (!imageSet) {
-            //  console.log("HERE!");
-            const result1 = this.viewStaff(staffId);
-            const staffInfo = await result1;
-            resultOut = {
+        if (err) {
+          // ER_DUP_ENTRY only handled ..
+          // The following code manipulates the error code for the front end
+          // console.log(`DB ERROR: ${err}`);
+          var errMessage = err.sqlMessage
+            .replace(new RegExp(".*" + "key"), "")
+            .slice(2, -1)
+            .replace(new RegExp(".*" + "staff."), "")
+            .replace("_UNIQUE", "")
+            .replace(".", " and ");
+          reject({ code: err.code, message: errMessage });
+        }
+        if (result) {
+          if (result.affectedRows === 1) {
+            var resultOut = {
               affectedRows: result.affectedRows,
-              staffFullName: `${staffInfo[0].firstName} ${staffInfo[0].middleName} ${staffInfo[0].lastName}`,
-              staffRoleId: staffInfo[0].roleid,
-              staffImg: staffInfo[0].img,
             };
+            if (!imageSet) {
+              //  console.log("HERE!");
+              const result1 = this.viewStaff(staffId);
+              const staffInfo = await result1;
+              resultOut = {
+                affectedRows: result.affectedRows,
+                staffFullName: `${staffInfo[0].firstName} ${staffInfo[0].middleName} ${staffInfo[0].lastName}`,
+                staffRoleId: staffInfo[0].roleid,
+                staffImg: staffInfo[0].img,
+              };
+            }
+            resolve(resultOut);
           }
-          resolve(resultOut);
         }
       });
     });
-
-    // if (err) reject(new Error("Unable to retrive database information!"));
-    //if (result.length > 0) {
-    // resolve(result);
-    // }
-
-    //console.log(query);
-    //UPDATE `login_system`.`staff` SET `roleid` = '5' WHERE (`id` = '2');
   }
   async updateStaffImg(imgPath, staffId) {
     //console.log(`${imgPath}`);
@@ -416,12 +422,68 @@ class DbService {
       // This updates the image with the appropriate image path name
       const query = `UPDATE staff SET img = \'${imgPath}\' WHERE (id = ${staffId} ) ;`;
       dbConn.query(query, (err, result) => {
-        console.log(err);
+        // console.log(err);
         if (err) reject(new Error("Unable to retrive database information!"));
         //if (result.length > 0) {
         // console.log(result);
         resolve(result);
         // }
+      });
+    });
+  }
+
+  async updateLandOwnership(updateData) {
+    /*
+    currentOwner: 1,
+    newOwner: 8,
+    issuedBy: 3,
+    lastModifiedDate: '2022-12-31',
+    cartaTitleDeedNo: '111111'
+    */
+    //console.log(updateData);
+    return new Promise((resolve, reject) => {
+      //SET SQL_SAFE_UPDATES = 0;
+      const query = `UPDATE carta SET 
+      citizenId=\'${updateData.newOwner}\',
+      lastModifiedBy=\'${updateData.issuedBy}\',
+      lastModifiedDate=\'${updateData.lastModifiedDate}\'  
+      WHERE (titleDeedNo = \'${updateData.cartaTitleDeedNo}\' ) ;`;
+
+      dbConn.query(query, (err, result) => {
+        // console.log(err);
+        if (err) reject(new Error("Unable to retrive database information!"));
+        //if (result.length > 0) {
+        // console.log(result);
+        resolve(result);
+        // }
+      });
+    }).then((result1) => {
+      //If the update was successful without the image part
+      if (result1.affectedRows === 1) {
+        return new Promise((resolve, reject) => {
+          const query = `SELECT img FROM carta WHERE (titleDeedNo = \'${updateData.cartaTitleDeedNo}\' );`;
+          dbConn.query(query, (err, result) => {
+            // console.log(err);
+            if (err)
+              reject(new Error("Unable to retrive database information!"));
+            //[ { img: 'Hailu Tesfai Nataye-[2022-12-31][B7sY9].jpeg' } ]
+            resolve(result);
+          });
+        });
+      }
+      //return result1;
+    });
+  }
+
+  async updateLandImage(updateImage, cartaTitleDeedNo) {
+    //console.log(updateImage);
+    return new Promise((resolve, reject) => {
+      const query = `UPDATE carta SET img=\'${updateImage}\' WHERE (titleDeedNo = \'${cartaTitleDeedNo}\' ) ;`;
+      dbConn.query(query, (err, result) => {
+        console.log(err);
+        if (err) reject(new Error("Unable to retrive database information!"));
+
+        resolve(result);
       });
     });
   }

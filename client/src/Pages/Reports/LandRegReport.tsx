@@ -50,7 +50,7 @@ const LandRegReport = ({ repoland, setrepoland, citizenId }: Props) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <div className="w-full max-w-6xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle  transition-all">
+                <div className="w-full max-w-7xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle  transition-all">
                   <div className=" flex justify-between items-center p-3">
                     <div className="flex flex-col">
                       <h2 className="text-2xl font-semibold my-0">
@@ -94,6 +94,9 @@ const LandRegReport = ({ repoland, setrepoland, citizenId }: Props) => {
                               <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 transtfered date
                               </th>
+                              <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                Details
+                              </th>
                             </>
                           </tr>
                         </thead>
@@ -136,6 +139,28 @@ const LandRegReport = ({ repoland, setrepoland, citizenId }: Props) => {
                                 Jan 21, 2020
                               </p>
                             </td>
+                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                              <p className="text-gray-900 whitespace-no-wrap">
+                                Jan 21, 2020
+                              </p>
+                            </td>
+                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                              <p className="text-gray-900 whitespace-no-wrap">
+                                Jan 21, 2020
+                              </p>
+                            </td>
+
+                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                              <Link to="/adminhomepage/landprofilereport">
+                                <button
+                                  // onClick={() => setreposhow(true)}
+                                  type="button"
+                                  className="inline-block px-4 py-2.5 bg-transparent text-black font-medium text-md leading-tight  rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-100 transition duration-150 ease-in-out"
+                                >
+                                  Activity
+                                </button>
+                              </Link>
+                            </td>
                           </tr>
 
                           <tr>
@@ -173,6 +198,27 @@ const LandRegReport = ({ repoland, setrepoland, citizenId }: Props) => {
                               <p className="text-gray-900 whitespace-no-wrap">
                                 Jan 21, 2020
                               </p>
+                            </td>
+                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                              <p className="text-gray-900 whitespace-no-wrap">
+                                Jan 21, 2020
+                              </p>
+                            </td>
+                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                              <p className="text-gray-900 whitespace-no-wrap">
+                                Jan 21, 2020
+                              </p>
+                            </td>
+                            <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                              <Link to="/adminhomepage/landupdatereport">
+                                <button
+                                  // onClick={() => setreposhow(true)}
+                                  type="button"
+                                  className="inline-block px-4 py-2.5 bg-transparent text-black font-medium text-md leading-tight  rounded hover:text-blue-700 hover:bg-gray-100 focus:bg-gray-100 focus:outline-none focus:ring-0 active:bg-gray-100 transition duration-150 ease-in-out"
+                                >
+                                  Activity
+                                </button>
+                              </Link>
                             </td>
                           </tr>
                         </tbody>

@@ -27,14 +27,11 @@ exports.verifyJWT = (request, response, next) => {
   const token = request.headers["x-access-token"];
   if (!token) {
     response.status(401).send("Token is Required");
-    //response.status(401).send("Token is required!");
   } else {
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
       if (err) {
         response.json({ auth: false, message: "Authentication Failure!" });
       } else {
-        //TODO: The token should be decoded better
-        //console.log(`Decoded :${JSON.stringify(decoded)}`);
         request.userId = decoded.id;
         request.roleName = decoded.roleName;
         request.img = decoded.img;
@@ -58,7 +55,7 @@ exports.verifyJWT = (request, response, next) => {
 // route callback functions
 exports.login = (request, response) => {
   const { username, password } = request.body;
-  const result = db.login(username, password);
+  const result = db.login(username);
   result
     .then((data) => {
       return new Promise((resolve, reject) => {
@@ -83,30 +80,29 @@ exports.login = (request, response) => {
 
       const re = await retriveRole;
       // <== this function adds role value in litteral form
-      // removes the last part of the string json variable of data i.e( }] )
+      // removes the last part of the string json variable of data i.e( `}]` )
       temp = temp.slice(0, -2);
       temp += `,"roleName":"${re[0].rolename}"}]`;
       data = JSON.parse(temp);
       return data;
     })
     .then(async (data) => {
-      //console.log(`Result: ${JSON.stringify(data[0].assignedBy)}`);
       var temp = JSON.stringify(data).toString();
       const retriveAdminName = db.retriveAdminName(data[0].assignedBy);
       const re = await retriveAdminName;
       // <== this function converts the assignedBy value to its refering name in the table called staff
-      // removes the last part of the string json variable of data i.e( }] )
+      // removes the last part of the string json variable of data i.e( `}]` )
       temp = temp.slice(0, -2);
-      console.log(`Status: ${JSON.stringify(re.status)}`);
+      //console.log(`Status: ${JSON.stringify(re.status)}`);
       if (re.status === "NULL") temp += `,"adminName":"NULL"}]`;
       else temp += `,"adminName":"${re[0].firstName} ${re[0].middleName}"}]`;
       data = JSON.parse(temp);
       return data;
     })
     .then((data) => {
-      console.log(`Result: ${JSON.stringify(data[0])}`);
+      // console.log(`Result: ${JSON.stringify(data[0])}`);
       // this part creates the jwt token with the data variable
-      console.log(`Data: ${data[0].roleName}`);
+      //console.log(`Data: ${data[0].roleName}`);
       const {
         id,
         assignedBy,
@@ -148,7 +144,7 @@ exports.login = (request, response) => {
       response.json({ auth: true, token: token, data: data });
     })
     .catch((err) => {
-      console.error(`${err}`);
+      //console.error(`${err}`);
       response.json({ auth: false, message: err.message });
     });
 };
@@ -183,9 +179,9 @@ exports.loginStatus = (request, response) => {
 
 exports.registerStaff = (request, response) => {
   //TODO:
-  // the image is handled inthis
+  // the image is handled in this
   var string = request.body.img;
-  console.log(request.body.img);
+  //console.log(request.body.img);
   var imageName = "Unspecified/defaultPicture.png";
   if (string) {
     var regex = /^data:.+\/(.+);base64,(.*)$/;
@@ -222,6 +218,8 @@ exports.registerStaff = (request, response) => {
         });
       })
       .catch((err) => {
+        // console.log("error form controller line 255");
+        // console.log(err);
         //Controller ERROR : {"code":"ER_DUP_ENTRY","message":"staff.name_UNIQUE"}
         //
         // HTTP errors say something about the HTTP protocol.
@@ -239,7 +237,7 @@ exports.registerStaff = (request, response) => {
   });
 };
 
-//viewallstaff
+// viewallstaff
 exports.viewAllStaff = (request, response) => {
   const result = db.viewAllStaff(request.assignedBy, request.userId);
   result.then(async (data) => {
@@ -274,7 +272,7 @@ exports.viewStaff = (request, response) => {
   const result = db.viewStaff(request.params.id);
   result
     .then(async (data) => {
-      //console.log(`Result: ${JSON.stringify(data[0].assignedBy)}`);
+      // console.log(`Result: ${JSON.stringify(data[0].assignedBy)}`);
       var temp = JSON.stringify(data).toString();
       const retriveAdminName = db.retriveAdminName(data[0].assignedBy);
       const re = await retriveAdminName;
@@ -309,10 +307,10 @@ exports.viewStaff = (request, response) => {
     });
 };
 
-//viewAllOwner
+//viewAllCitizen
 //NOTE: BETTER VERSION
-exports.viewAllOwner = (request, response) => {
-  const result = db.viewAllOwner();
+exports.viewAllCitizen = (request, response) => {
+  const result = db.viewAllCitizen();
   result.then(async (data) => {
     var jsonObj = [];
     for (let x in data) {
@@ -338,9 +336,9 @@ exports.viewAllOwner = (request, response) => {
     response.json(jsonObj);
   });
 };
-//viewOwner
-exports.viewOwner = (request, response) => {
-  const result = db.viewOwner(request.params.id);
+//viewCitizen
+exports.viewCitizen = (request, response) => {
+  const result = db.viewCitizen(request.params.id);
   result.then(async (data) => {
     var jsonObj = [];
     const retrieveSubCity = db.retriveWoredaInfo(data[0].woredaId);
@@ -369,9 +367,9 @@ exports.retriveAllWoredaInfo = (request, response) => {
   });
 };
 //registerLand
-exports.registerLand = (request, response) => {
+exports.registerCarta = (request, response) => {
   var duplicate = false;
-  // Retriving the Woreda Foreign-Key BEGINING
+  // Retriving the Woreda Foreign-Key BEGINNING
   /*
       console.log(`Woreda ${request.body.currentWoreda}`);
       console.log(`Kebele ${request.body.formerKebele}`);
@@ -384,7 +382,7 @@ exports.registerLand = (request, response) => {
     /* console.log(woredaId); */
     // Retriving the Woreda Foreign-Key END
 
-    // Checking For Duplicate Carta Information BEGINING
+    // Checking For Duplicate Carta Information BEGINNING
     const checkParameter = {
       citizenId: request.body.citizenId,
       woredaId: woredaId,
@@ -412,7 +410,7 @@ exports.registerLand = (request, response) => {
       .then((duplicate) => {
         if (!duplicate) {
           // Checking For Duplicate Carta Information END
-          // Registering the Coodrinate Data BEGINING
+          // Registering the Coodrinate Data BEGINNING
           const coodrinateData = {
             x1: parseFloat(request.body.x1),
             y1: parseFloat(request.body.y1),
@@ -436,14 +434,14 @@ exports.registerLand = (request, response) => {
             if (res.affectedRows === 1) {
               coordinateId = res.insertId;
               // Registering the Coodrinate Data END
-              // Fetching Citizen Name For Naming Carta Image BEGINING
-              const result2 = db.viewOwner(request.body.citizenId);
+              // Fetching Citizen Name For Naming Carta Image BEGINNING
+              const result2 = db.viewCitizen(request.body.citizenId);
               result2.then((citizen) => {
                 citizenFirstName = citizen[0].firstName;
                 citizenMiddleName = citizen[0].middleName;
                 citizenLastName = citizen[0].lastName;
                 // Fetching Citizen Name For Naming Carta Image END
-                // Storing Image On Server BEGINING
+                // Storing Image On Server BEGINNING
                 var string = request.body.img;
                 var regex = /^data:.+\/(.+);base64,(.*)$/;
                 var matches = string.match(regex);
@@ -457,7 +455,7 @@ exports.registerLand = (request, response) => {
 
                 fs.writeFileSync(`./uploads/cartaImages/${imageName}`, buffer);
                 // Storing Image On Server END
-                // REGISTERING CARTA BEGINING
+                // REGISTERING CARTA BEGINNING
                 const carta = {
                   citizenId: request.body.citizenId,
                   woredaId: woredaId,
@@ -477,6 +475,8 @@ exports.registerLand = (request, response) => {
                   plannedLandUse: request.body.plannedLandUse,
                   permittedUse: request.body.permittedUse,
                   staffId: request.body.staffId,
+                  lastModifiedBy: request.body.lastModifiedBy,
+                  lastModifiedDate: request.body.lastModifiedDate,
                 };
                 const result3 = db.registerLand(carta);
                 // console.log("Carta Registerd Successfully!");
@@ -515,15 +515,15 @@ exports.registerLand = (request, response) => {
   });
 };
 //viewAllLand
-exports.viewAllLand = (request, response) => {
-  console.log(`Parameter: ${request.params.id}`);
+exports.viewAllCarta = (request, response) => {
+  // console.log(`Parameter: ${request.params.id}`);
   const citizenId = request.params.id;
   var jsonOut = {
     citizenInfo: [],
     carta: [],
   };
   // GET CITIZEN INFORMATION BEGINING
-  const result = db.viewOwner(citizenId);
+  const result = db.viewCitizen(citizenId);
   result.then((citizenData) => {
     var fullName = `${citizenData[0].firstName} ${citizenData[0].middleName} ${citizenData[0].lastName}`;
     var img = citizenData[0].img;
@@ -532,7 +532,7 @@ exports.viewAllLand = (request, response) => {
     var dateOfBirth = citizenData[0].dateofbirth;
 
     // GET CITIZEN INFORMATION END
-    // GET WOREDA INFORMATION BEGINING
+    // GET WOREDA INFORMATION BEGINNING
     const result1 = db.retriveWoredaInfo(citizenData[0].woredaId);
     result1.then((woreda) => {
       // console.log("Woreda Information");
@@ -552,19 +552,22 @@ exports.viewAllLand = (request, response) => {
       };
       jsonOut.citizenInfo.push(citizenData);
       // GET WOREDA INFORMATION END
-      // GET CARTA INFORMATION BEGINING
+      // GET CARTA INFORMATION BEGINNING
       const result3 = db.viewCarta(citizenId);
       result3
         .then(async (carta) => {
-          //console.log("CARTA INFORMATION");
+          // console.log("CARTA INFORMATION");
+          //console.log(carta);
           if (carta) {
             for (let x in carta) {
               var result4 = db.retriveWoredaInfo(carta[x].woredaId);
               var woreda = await result4;
               var result5 = db.viewStaff(carta[x].staffId);
               var staff = await result5;
-              var result6 = db.getCoordinate(carta[x].coordinateId);
-              var coordinateData = await result6;
+              var result6 = db.viewStaff(carta[x].lastModifiedBy);
+              var staffLastModifiedBy = await result6;
+              var result7 = db.getCoordinate(carta[x].coordinateId);
+              var coordinateData = await result7;
 
               var cartaData = {
                 cartaId: carta[x].id,
@@ -600,7 +603,10 @@ exports.viewAllLand = (request, response) => {
                 cartaPlannedLandUse: carta[x].plannedLandUse,
                 cartaPermittedUse: carta[x].permittedUse,
                 issuerStaffName: `${staff[0].firstName} ${staff[0].middleName}`,
+                lastChanged: `${staffLastModifiedBy[0].firstName} ${staffLastModifiedBy[0].middleName}`,
+                lastModifiedDate: carta[x].lastModifiedDate,
               };
+              // console.log(carta[x]);
               jsonOut.carta.push(cartaData);
             }
           }
@@ -657,47 +663,111 @@ exports.updateStaff = async (request, response) => {
     const result = db.updateStaff(update, staffId);
     //const data = await result;
     //var imageName = null;
-    result.then(async (imgData) => {
-      //Object.values(data).length
-      // if length is 4 it means there is external data
-      // for the meta data of the new image
+    result
+      .then(async (imgData) => {
+        //Object.values(data).length
+        // if length is 4 it means there is external data
+        // for the meta data of the new image
 
-      // if it is just 1 it means the image that is used is default
-      // and there is no need to store any image
-      console.log(imgData);
-      //var successImageChange = null;
-      if (Object.values(imgData).length === 4) {
-        // STORING THE IMAGE
-        var string = requestArray2D[2][1];
-        var regex = /^data:.+\/(.+);base64,(.*)$/;
-        var matches = string.match(regex);
-        var ext = matches[1];
-        var data = matches[2];
-        var buffer = Buffer.from(data, "base64");
-        const role = ["Unspecified", "Admin", "Employee"];
-        var imageName =
-          `${
-            role[await imgData.staffRoleId]
-          }/${await imgData.staffFullName}-[${new Date()
-            .toISOString()
-            .substring(0, 10)}][${makeid(5)}].` + ext;
-        //console.log(imageName);
-        fs.writeFileSync(`./uploads/staffImages/${imageName}`, buffer);
-        const result1 = db.updateStaffImg(imageName, staffId);
-        //TODO: the result of the image being inserted hasn't been checked!
-        //successImageChange = await result1;
-      }
-      if (Object.values(imgData).length > 0) {
-        console.log("HERE");
-        //console.log(successImageChange && successImageChange.affectedRows);
+        // if it is just 1 it means the image that is used is default
+        // and there is no need to store any image
+        //console.log(imgData);
+        //var successImageChange = null;
+        if (Object.values(imgData).length === 4) {
+          // STORING THE IMAGE
+          var string = requestArray2D[2][1];
+          var regex = /^data:.+\/(.+);base64,(.*)$/;
+          var matches = string.match(regex);
+          var ext = matches[1];
+          var data = matches[2];
+          var buffer = Buffer.from(data, "base64");
+          const role = ["Unspecified", "Admin", "Employee"];
+          var imageName =
+            `${
+              role[await imgData.staffRoleId]
+            }/${await imgData.staffFullName}-[${new Date()
+              .toISOString()
+              .substring(0, 10)}][${makeid(5)}].` + ext;
+          //console.log(imageName);
+          fs.writeFileSync(`./uploads/staffImages/${imageName}`, buffer);
+          const result1 = db.updateStaffImg(imageName, staffId);
+          //TODO: the result of the image being inserted hasn't been checked!
+          //successImageChange = await result1;
+        }
+        if (Object.values(imgData).length > 0) {
+          // console.log("HERE");
+          //console.log(successImageChange && successImageChange.affectedRows);
+          response.json({
+            status: "success",
+            //affectedRows: data.affectedRows,
+            message: `Staff Information Updated successfuly!`,
+          });
+        }
+      })
+      .catch((err) => {
+        //Controller ERROR : {"code":"ER_DUP_ENTRY","message":"staff.name_UNIQUE"}
+        //
+        // HTTP errors say something about the HTTP protocol.
+        // This specific error indicates a server is trying to relay the HTTP request,
+        // but the upstream server did not respond correctly.
+
+        // Your web application communicating with a database server is outside the realm of HTTP
+        // and any errors should be wrapped in the generic HTTP 500 Internal server error response code.
         response.json({
-          status: "success",
-          //affectedRows: data.affectedRows,
-          message: `Staff Information Updated successfuly!`,
+          status: "fail",
+          errorcode: err.code,
+          message: `There is a staff with the same \'${err.message}\'`,
         });
-      }
-    });
+      });
   }
+};
+//updateCartaOwnership
+exports.updateCartaOwnership = async (request, response) => {
+  /*
+  currentOwner: 1,
+  newOwner: 8,
+  issuedBy: 3,
+  lastModifiedDate: '2022-12-31',
+  cartaTitleDeedNo: '111111'
+  newOwnerName: 'Gizaw Barnabas Gorfu'
+  */
+  const result = db.updateLandOwnership(request.body);
+  result.then((data) => {
+    // Getting the image name from the result
+    //console.log(data[0].img.toString().split(".").pop());
+    var imgExt = data[0].img.toString().split(".").pop();
+    var imageName =
+      `${request.body.newOwnerName}-[${request.body.lastModifiedDate}][${makeid(
+        5
+      )}].` + imgExt;
+    if (data) {
+      //Here the image is duplicated and renamed by the new owner name
+      fs.copyFile(
+        `./uploads/cartaImages/${data[0].img}`,
+        `./uploads/cartaImages/${imageName}`,
+        (err) => {
+          if (err) throw err;
+          if (!err) {
+            const result1 = db.updateLandImage(
+              imageName,
+              request.body.cartaTitleDeedNo
+            );
+            result1.then((data) => {
+              if (data) {
+                if (data.affectedRows === 1) {
+                  response.json({
+                    status: "success",
+                    //affectedRows: data.affectedRows,
+                    message: `Owner Information Updated successfuly!`,
+                  });
+                }
+              }
+            });
+          }
+        }
+      );
+    }
+  });
 };
 
 /*

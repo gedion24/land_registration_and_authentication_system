@@ -2,7 +2,7 @@ import React from "react";
 
 type Props = {};
 
-const DetailsPage = (props: Props) => {
+const LandprofileReport = (props: Props) => {
   return (
     <>
       <div className="w-full h-screen font-poppins">
@@ -224,4 +224,4 @@ const DetailsPage = (props: Props) => {
   );
 };
 
-export default DetailsPage;
+export default LandprofileReport;

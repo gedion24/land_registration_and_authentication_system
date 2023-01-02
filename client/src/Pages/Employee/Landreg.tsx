@@ -33,7 +33,7 @@ const Landreg = (props: Props) => {
     subCityName: "",
   });
   useLayoutEffect(() => {
-    Axios.get(`http://localhost:3001/AALHRIA/viewowner/${param.id}`, {
+    Axios.get(`http://localhost:3001/AALHRIA/viewCitizen/${param.id}`, {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
@@ -132,6 +132,8 @@ const Landreg = (props: Props) => {
     plannedLandUse: "",
     permittedUse: "",
     staffId: user.id,
+    lastModifiedBy: user.id,
+    lastModifiedDate: new Date().toISOString().substring(0, 10),
     x1: null,
     x2: null,
     x3: null,
@@ -152,12 +154,12 @@ const Landreg = (props: Props) => {
     data.formerKebele = dropdownKebele.current
       ? dropdownKebele.current.value
       : 0;
-    Axios.post("http://localhost:3001/AALHRIA/registerLand", data, {
+    Axios.post("http://localhost:3001/AALHRIA/registerCarta", data, {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
     }).then((response) => {
-      console.log(`Response: ${JSON.stringify(response.data)}`);
+    //  console.log(`Response: ${JSON.stringify(response.data)}`);
       if (response.data.status === "fail") {
         //errorcode
         //message
@@ -191,6 +193,18 @@ const Landreg = (props: Props) => {
       });
     }
   }, [_msg]);
+  const dateConverter = (date: string) => {
+    if (date) {
+      var temp_date = new Date(date.substring(0, 10));
+      var new_Date = new Date(
+        temp_date.getTime() +
+          Math.abs(temp_date.getTimezoneOffset() * 60000) * 12
+      )
+        .toISOString()
+        .substring(0, 10);
+      return new_Date;
+    }
+  };
 
   return (
     <>
@@ -227,7 +241,8 @@ const Landreg = (props: Props) => {
                   Full Name: {currCitizen.fullName}
                 </p>
                 <p className=" dark:text-black">
-                  Date of Birth:{currCitizen.dateofbirth.substring(0, 10)}
+                  Date of Birth:{dateConverter(currCitizen.dateofbirth)}
+
                 </p>
                 <p className=" dark:text-black">Sex:{currCitizen.sex}</p>
                 <p className=" dark:text-black">
@@ -520,7 +535,7 @@ const Landreg = (props: Props) => {
                                     </div>
                                   </div>{" "}
                                   <img
-                                    className="w-full h-full object-cover rounded-lg mt-3"
+                                    className="p-2 w-full h-full object-cover rounded-lg mt-3"
                                     src={preview}
                                     // alt="cartaImage"
                                   />

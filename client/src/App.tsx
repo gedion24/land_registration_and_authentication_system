@@ -35,6 +35,9 @@ import Ownerprofile from "./Pages/Reports/Ownerprofile";
 import LandRegReport from "./Pages/Reports/LandRegReport";
 import EmployeeReport from "./Pages/Reports/EmployeeReport";
 
+import Reporthomepage from "./Pages/Reports/Reporthomepage";
+import LandprofileReport from "./Pages/Reports/LandProfileReport";
+import LandupdateReport from "./Pages/Reports/LandUpdateReport";
 function App() {
   // const [userid, setuserid] = useState([]);
   Axios.defaults.withCredentials = true;
@@ -127,6 +130,8 @@ function App() {
 
           <Route path="/AdminPage" element={<AdminPage />} />
           <Route path="/employees" element={<Employee />} />
+          {/* <Route path="/landUpdateReport " element={<LandupdateReport />} />
+          <Route path="/landProfileReport " element={<LandprofileReport />} /> */}
           <Route path="/landregistration" element={<Landreg />} />
           <Route path="/updateland" element={<Updateland />} />
           <Route path="/manageEmployee" element={<ManageEmp />} />
@@ -165,12 +170,16 @@ function App() {
                 />
               }
             />
+            {/* <Route path="/reporthomepage" element={<Reporthomepage />}></Route> */}
             <Route path="employees" element={<Employee />} />
-            <Route path="employees " element={<Employee />} />
-
+            {/* <Route path="landUpdateReport " element={<LandupdateReport />} />
+            <Route path="landProfileReport " element={<LandprofileReport />} /> */}
+            <Route path="landprofilereport" element={<LandprofileReport />} />
+            <Route path="landupdatereport" element={<LandupdateReport />} />
             <Route path="manageEmployee" element={<ManageEmp />} />
             <Route path="lands" element={<Landregistrated />} />
             <Route path="report" element={<Reportlist />} />
+
             <Route
               path="employeeReport"
               element={

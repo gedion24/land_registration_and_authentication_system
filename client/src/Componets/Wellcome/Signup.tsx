@@ -45,22 +45,26 @@ const Signup = (props: Props) => {
             "x-access-token": response,
           },
         }).then((response) => {
-          console.log(response.data.accountStatus);
+          //console.log(response.data.accountStatus);
           // console.log(`fetch data login :${response.data.userId}`);
           if (response.data.loggedIn === true) {
             console.log(`Authentication Message: ${response.data.message}`);
             console.log(`Authentication User Id: ${response.data.userId}`);
             console.log(`Authentication Role Name: ${response.data.roleName}`);
-            switch (response.data.roleName) {
-              case "Admin":
-                navigate("/adminhomepage");
-                //navigate("/suspended");
-                break;
-              case "Employee":
-                navigate("/employeehomepage");
-                break;
-              default:
-                break;
+            if (response.data.accountStatus === "Active") {
+              switch (response.data.roleName) {
+                case "Admin":
+                  navigate("/adminhomepage");
+                  break;
+                case "Employee":
+                  navigate("/employeehomepage");
+                  break;
+                default:
+                  break;
+              }
+            } else if (response.data.accountStatus === "Inactive") {
+              localStorage.removeItem("token");
+              navigate("/suspended");
             }
           } else {
             console.log("something wrong!");
@@ -157,7 +161,7 @@ const Signup = (props: Props) => {
                           </button>
                         </div>
 
-                        <p className="mt-6 text-sm text-center text-gray-400">
+                        {/* <p className="mt-6 text-sm text-center text-gray-400">
                           Don&#x27;t have an account yet?{" "}
                           <button
                             // onClick={notify}
@@ -165,7 +169,7 @@ const Signup = (props: Props) => {
                           >
                             Sign up
                           </button>
-                        </p>
+                        </p> */}
                       </Form>
                     </Formik>
                   </div>

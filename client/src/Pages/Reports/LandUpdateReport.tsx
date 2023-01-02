@@ -1,3 +1,12 @@
+// import React from "react";
+
+// type Props = {};
+
+// const landupdateReport = (props: Props) => {
+//   return <div>landupdateReport</div>;
+// };
+
+// export default landupdateReport;
 import Axios from "axios";
 import React, {
   useLayoutEffect,
@@ -17,7 +26,7 @@ import arrow from "../../assets/arrow-left.png";
 //arrow-left.png
 
 type Props = {};
-const Updateland = (props: Props) => {
+const landupdateReport = (props: Props) => {
   // *fetching the employee id
   const { user } = useContext(IdContext);
 
@@ -26,7 +35,7 @@ const Updateland = (props: Props) => {
   const location = useLocation();
   //  Citizen & Carta preload BEGGINING
   const [currCitizen, setCurrCitizen] = useState<any>({
-   // id:null,
+    // id:null,
     fullName: null,
     img: null,
     sex: null,
@@ -101,7 +110,7 @@ const Updateland = (props: Props) => {
       kebeleNumber: null,
       subCityName: null,
     },
-  ]); 
+  ]);
   const [ownersName, setOwnersName] = useState<string[]>([]);
   useLayoutEffect(() => {
     var ownersName: string[] = [];
@@ -125,7 +134,6 @@ const Updateland = (props: Props) => {
     });
   }, [currCitizen]);
 
- 
   // The dropdown to change the carta information BEGINNING
   const [selectedCarta, setSelectedCarta] = useState(0);
   const onChangeDeedNo = (e: {
@@ -171,12 +179,12 @@ const Updateland = (props: Props) => {
   });
   const updateCitizen = (citizenFullName: string) => {
     for (let x in ownersList) {
-      var result = ownersList[x]
-        .fullName.toString()
+      var result = ownersList[x].fullName
+        .toString()
         .localeCompare(citizenFullName);
       // [0 if equal]
       if (parseInt(result) === 0) {
-       // console.log(ownersList[x]);
+        // console.log(ownersList[x]);
         setNewCitizen(ownersList[x]);
       }
     }
@@ -186,20 +194,20 @@ const Updateland = (props: Props) => {
   // Register Land Form Submit BEGINING
   const initialValues = {
     currentOwner: location.state.citizenId,
-    newOwnerName:null,
+    newOwnerName: null,
     newOwner: null,
-    issuedBy:user.id, // state variable here 
+    issuedBy: user.id, // state variable here
     cartaTitleDeedNo: null,
-    lastModifiedDate: new Date().toISOString().substring(0, 10)
+    lastModifiedDate: new Date().toISOString().substring(0, 10),
   };
   const onSubmit = (data: any) => {
-    data.currentOwner= location.state.citizenId;
-    data.newOwnerName=newCitizen.fullName;
-    data.newOwner= newCitizen.id;
-    data.issuedBy=user.id;
-    data.cartaTitleDeedNo= cartaInfo[selectedCarta].cartaTitleDeedNo;
-    data.lastModifiedDate= new Date().toISOString().substring(0, 10);
-     Axios.post("http://localhost:3001/AALHRIA/updateCartaOwnership", data, {
+    data.currentOwner = location.state.citizenId;
+    data.newOwnerName = newCitizen.fullName;
+    data.newOwner = newCitizen.id;
+    data.issuedBy = user.id;
+    data.cartaTitleDeedNo = cartaInfo[selectedCarta].cartaTitleDeedNo;
+    data.lastModifiedDate = new Date().toISOString().substring(0, 10);
+    Axios.post("http://localhost:3001/AALHRIA/updateCartaOwnership", data, {
       headers: {
         "x-access-token": localStorage.getItem("token"),
       },
@@ -225,7 +233,7 @@ const Updateland = (props: Props) => {
   // Register Land Form Submit END
 
   // *Setting Toast message Handler
-   const [_msg, setMsg] = useState({
+  const [_msg, setMsg] = useState({
     type: "",
     message: "",
   });
@@ -502,7 +510,9 @@ const Updateland = (props: Props) => {
                               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-black dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                             >
                               <option value="" disabled selected>
-                              {cartaInfo[selectedCarta].currentWoredaNumber}{" | "}{cartaInfo[selectedCarta].cartaSubCityName}
+                                {cartaInfo[selectedCarta].currentWoredaNumber}
+                                {" | "}
+                                {cartaInfo[selectedCarta].cartaSubCityName}
                               </option>
                             </select>
                           </div>
@@ -519,7 +529,9 @@ const Updateland = (props: Props) => {
                               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-300 rounded-md dark:bg-white dark:text-black dark:border-gray-600 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none focus:ring"
                             >
                               <option value="" disabled selected>
-                                {cartaInfo[selectedCarta].formerKebeleNumber}{" | "}{cartaInfo[selectedCarta].cartaSubCityName}
+                                {cartaInfo[selectedCarta].formerKebeleNumber}
+                                {" | "}
+                                {cartaInfo[selectedCarta].cartaSubCityName}
                               </option>
                             </select>
                           </div>
@@ -945,4 +957,4 @@ const Updateland = (props: Props) => {
   );
 };
 
-export default Updateland;
+export default landupdateReport;
