@@ -15,6 +15,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import Axios from "axios";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import notFound from "../../assets/notFound.png";
+import QRCode from "react-qr-code";
 
 type Props = {
   showland: boolean;
@@ -206,7 +207,7 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                       <div className=" w-full flex justify-between  mt-2">
                         {cartaInfo[selectedCarta] ? (
                           <>
-                            <div className="grid grid-cols-3  font-poppins space-y-3">
+                            <div className="grid grid-cols-2  font-poppins space-y-3 justify-center items-center">
                               <div>
                                 <label className="block text-sm  font-medium">
                                   Citizen Image
@@ -246,7 +247,7 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                               </div>
                             </div>
 
-                            <div className="flex flex-col space-y-3 px-4 font-semibold text-base">
+                            <div className="flex flex-col space-y-3 px-4 font-semibold text-base justify-center">
                               {/* <h1>Date: current date</h1> */}
                               <h1>
                                 Registration Number:
@@ -296,6 +297,19 @@ const LandProfile = ({ showland, setShowland, citizenId }: Props) => {
                                 <></>
                               )}
                             </div>
+                            {/* <div className="w-1/3 p-20">
+                              <QRCode
+                                className="w-full h-full "
+                                size={256}
+                                // style={{
+                                //   height: "auto",
+                                //   maxWidth: "100%",
+                                //   width: "100%",
+                                // }}
+                                value="http://192.168.196.54:3000/employeehomepage/owners"
+                                viewBox={`0 0 256 256`}
+                              />
+                            </div> */}
                           </>
                         ) : (
                           <>

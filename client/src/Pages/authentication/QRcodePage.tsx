@@ -96,7 +96,7 @@ const QRcodePage = ({ QRcode, setQRcode }: Props) => {
                         //   maxWidth: "100%",
                         //   width: "100%",
                         // }}
-                        value="https://laras123.netlify.app/signup"
+                        value="http://192.168.196.54:3000/employeehomepage/owners"
                         viewBox={`0 0 256 256`}
                       />
                     </div>

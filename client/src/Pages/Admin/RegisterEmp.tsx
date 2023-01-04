@@ -152,14 +152,15 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <div className="w-full max-w-7xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle  transition-all">
+                <div className="w-full max-w-7xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle font-poppins  transition-all">
                   <div className=" flex justify-between items-center p-3">
                     <div className="flex flex-col">
                       <h2 className="text-2xl font-semibold my-0">
                         Staff Registration
                       </h2>
                       <p className="text-sm font-light">
-                        Staff Registration From
+                        Fill the following requird information to register
+                        employee
                       </p>
                     </div>
                     <button

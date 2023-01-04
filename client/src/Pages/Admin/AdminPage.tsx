@@ -115,117 +115,114 @@ const AdminPage = (props: Props) => {
                               <tr>
                                 <th
                                   scope="col"
-                                  className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider "
+                                  className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                 >
-                                  Employee
+                                  Owners Name
                                 </th>
                                 <th
                                   scope="col"
                                   className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                 >
-                                  Land ID
+                                  Registration date
                                 </th>
                                 <th
                                   scope="col"
                                   className="p-4 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                                 >
-                                  Owner
+                                  Registered by
                                 </th>
                               </tr>
                             </thead>
                             <tbody className="bg-white">
                               <tr>
                                 <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                  Payment from{" "}
                                   <span className="font-semibold">
-                                    Bonnie Green
+                                    Hailu Tesfai Nataye
                                   </span>
                                 </td>
                                 <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                  Apr 23 ,2021
+                                  03/12/2022
                                 </td>
                                 <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                  $2300
+                                  Kebede Gebre Yohannes
                                 </td>
                               </tr>
                               <tr className="bg-gray-50">
-                                <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
-                                  Payment refund to{" "}
-                                  <span className="font-semibold">#00910</span>
+                                <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                  <span className="font-semibold">
+                                    Zewedu Feleke Caleb
+                                  </span>
                                 </td>
                                 <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                  Apr 23 ,2021
+                                  03/12/2022
                                 </td>
                                 <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                  -$670
+                                  Alemu Kebede
                                 </td>
                               </tr>
                               <tr>
                                 <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                  Payment failed from{" "}
-                                  <span className="font-semibold">#087651</span>
-                                </td>
-                                <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                  Apr 18 ,2021
-                                </td>
-                                <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                  $234
-                                </td>
-                              </tr>
-                              <tr className="bg-gray-50">
-                                <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
-                                  Payment from{" "}
                                   <span className="font-semibold">
-                                    Lana Byrd
+                                    Mahdere Negasi Getahun
                                   </span>
                                 </td>
                                 <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                  Apr 15 ,2021
+                                  03/12/2022
                                 </td>
                                 <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                  $5000
+                                  Alemu Kebede
+                                </td>
+                              </tr>
+                              <tr className="bg-gray-50">
+                                <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
+                                  <span className="font-semibold">
+                                    Tesfaye Goliad Keya
+                                  </span>
+                                </td>
+                                <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
+                                  03/12/2022
+                                </td>
+                                <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
+                                  Alemu Kebede
                                 </td>
                               </tr>
                               <tr>
                                 <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                  Payment from{" "}
                                   <span className="font-semibold">
-                                    Jese Leos
+                                    Dagem Tiruneh Tewolde
                                   </span>
                                 </td>
                                 <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                  Apr 15 ,2021
+                                  03/12/2022
                                 </td>
                                 <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                  $2300
+                                  Gedion Getachew Mitku
                                 </td>
                               </tr>
                               <tr className="bg-gray-50">
-                                <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900 rounded-lg rounded-left">
-                                  Payment from{" "}
+                                <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
                                   <span className="font-semibold">
-                                    THEMESBERG LLC
+                                    Eyoab Beyne Taye
                                   </span>
                                 </td>
                                 <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                  Apr 11 ,2021
+                                  03/12/2022
                                 </td>
                                 <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                  $560
+                                  Dave Hailu Kasahun
                                 </td>
                               </tr>
                               <tr>
                                 <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-900">
-                                  Payment from{" "}
                                   <span className="font-semibold">
-                                    Lana Lysle
+                                    Eyasu Duri Bessufekad
                                   </span>
                                 </td>
                                 <td className="p-4 whitespace-nowrap text-sm font-normal text-gray-500">
-                                  Apr 6 ,2021
+                                  03/12/2022
                                 </td>
                                 <td className="p-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                                  $1437
+                                  Dave Hailu Kasahun
                                 </td>
                               </tr>
                             </tbody>
@@ -390,13 +387,11 @@ const AdminPage = (props: Props) => {
                                 </div>
                               </td>
                               <td className="p-2 whitespace-nowrap">
-                                <div className="text-left">
-                                  alexshatov@gmail.com
-                                </div>
+                                <div className="text-left">03/12/2022</div>
                               </td>
                               <td className="p-2 whitespace-nowrap">
-                                <div className="text-left font-medium text-green-500">
-                                  $2,890.66
+                                <div className="text-left font-medium text-black">
+                                  45
                                 </div>
                               </td>
                               <td className="p-2 whitespace-nowrap">
@@ -429,17 +424,23 @@ const AdminPage = (props: Props) => {
                                 </div>
                               </td>
                               <td className="p-2 whitespace-nowrap">
-                                <div className="text-left">
-                                  philip.h@gmail.com
+                                <div className="text-left">03/12/2022</div>
+                              </td>
+                              <td className="p-2 whitespace-nowrap">
+                                <div className="text-left font-medium text-black">
+                                  45
                                 </div>
                               </td>
                               <td className="p-2 whitespace-nowrap">
-                                <div className="text-left font-medium text-green-500">
-                                  $2,767.04
+                                <div className="text-sm text-center">
+                                  <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                    <span
+                                      aria-hidden
+                                      className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                                    ></span>
+                                    <span className="relative">Active</span>
+                                  </span>
                                 </div>
-                              </td>
-                              <td className="p-2 whitespace-nowrap">
-                                <div className="text-lg text-center">??</div>
                               </td>
                             </tr>
                             <tr>
@@ -460,17 +461,23 @@ const AdminPage = (props: Props) => {
                                 </div>
                               </td>
                               <td className="p-2 whitespace-nowrap">
-                                <div className="text-left">
-                                  mirkofisuk@gmail.com
+                                <div className="text-left">03/12/2022</div>
+                              </td>
+                              <td className="p-2 whitespace-nowrap">
+                                <div className="text-left font-medium text-black">
+                                  45
                                 </div>
                               </td>
                               <td className="p-2 whitespace-nowrap">
-                                <div className="text-left font-medium text-green-500">
-                                  $2,996.00
+                                <div className="text-sm text-center">
+                                  <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                    <span
+                                      aria-hidden
+                                      className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                                    ></span>
+                                    <span className="relative">Active</span>
+                                  </span>
                                 </div>
-                              </td>
-                              <td className="p-2 whitespace-nowrap">
-                                <div className="text-lg text-center">??</div>
                               </td>
                             </tr>
                             <tr>
@@ -491,17 +498,23 @@ const AdminPage = (props: Props) => {
                                 </div>
                               </td>
                               <td className="p-2 whitespace-nowrap">
-                                <div className="text-left">
-                                  olga.s@cool.design
+                                <div className="text-left">03/12/2022</div>
+                              </td>
+                              <td className="p-2 whitespace-nowrap">
+                                <div className="text-left font-medium text-black">
+                                  45
                                 </div>
                               </td>
                               <td className="p-2 whitespace-nowrap">
-                                <div className="text-left font-medium text-green-500">
-                                  $1,220.66
+                                <div className="text-sm text-center">
+                                  <span className="relative inline-block px-3 py-1 font-semibold text-green-900 leading-tight">
+                                    <span
+                                      aria-hidden
+                                      className="absolute inset-0 bg-green-200 opacity-50 rounded-full"
+                                    ></span>
+                                    <span className="relative">Active</span>
+                                  </span>
                                 </div>
-                              </td>
-                              <td className="p-2 whitespace-nowrap">
-                                <div className="text-lg text-center">??</div>
                               </td>
                             </tr>
                             <tr>
@@ -522,13 +535,11 @@ const AdminPage = (props: Props) => {
                                 </div>
                               </td>
                               <td className="p-2 whitespace-nowrap">
-                                <div className="text-left">
-                                  longburak@gmail.com
-                                </div>
+                                <div className="text-left">03/12/2022</div>
                               </td>
                               <td className="p-2 whitespace-nowrap">
-                                <div className="text-left font-medium text-green-500">
-                                  $1,890.66
+                                <div className="text-left font-medium text-black">
+                                  45
                                 </div>
                               </td>
                               <td className="p-2 whitespace-nowrap">
