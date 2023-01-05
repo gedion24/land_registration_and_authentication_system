@@ -1,37 +1,47 @@
 import React from "react";
-
+import Axios from "axios";
+import { Route, useParams } from "react-router-dom";
+import logo from "../../assets/logo.jpg";
+import console from "console";
 type Props = {};
 
 const DetailsPage = (props: Props) => {
   return (
     <>
       <div className="w-full h-screen font-poppins">
-        <div className="w-full h-auto flex justify-center items-center p-5">
+        <div className="w-full h-auto flex flex-col justify-center items-center p-5">
+          <div>
+            <img src={logo} className="w-32 h-32 mb-4" alt="" />
+          </div>
           <h1 className="text-center font-bold font-poppins md:text-lg text-sm">
             Addis Ababa City Goverment Land Adminstration <br />
             and permit Authority permit Hold Certificate of Tittle Deed
           </h1>
         </div>
+
         <div className="w-full  flex justify-end font-semibold text-base px-6">
           <p>Date: current date</p>
         </div>
         {/* info  */}
         <div className="w-full h-auto flex md:flex-row flex-col justify-between px-6 mt-4">
-          <div className="flex flex-col space-y-3 font-semibold md:text-base text-sm">
+          {/* <div className="flex flex-col space-y-3 font-semibold md:text-base text-sm">
             <h1>Posserors Full Name:</h1>
             <h1>Partners Full Name:</h1>
-          </div>
+          </div> */}
           <div className="flex flex-col space-y-3  md:mt-0 mt-2 font-semibold md:text-base text-sm">
+            <h1>Carta Issue date:</h1>
             <h1>House Number:</h1>
             <h1>Registration Number:</h1>
-            <h1>Permmit Use:</h1>
-            <h1>Carta Issue date:</h1>
+            <h1>Tittle deed Number:</h1>
+
             <h1>Staff member:</h1>
           </div>
         </div>
         {/* land info */}
         <div className=" w-full  flex justify-between md:flex-row  flex-col  px-6   mt-4">
-          <div className="md:w-1/2 w-full h-[650px] bg-black"></div>
+          <div className="md:w-1/2 w-full h-[650px] flex justify-center items-center bg-slate-300">
+            <img src="https://placeimg.com/640/480/any" alt="" />
+          </div>
           <div className="md:w-1/2 w-full   p-4 flex flex-col  ">
             {/* table section */}
             <h1 className="text-center mt-10 md:mt-5">COORDINATES</h1>
@@ -173,6 +183,9 @@ const DetailsPage = (props: Props) => {
             </div>
           </div>
         </div>
+        <div className="p-4 px-6 flex md:justify-center justify-start items-center ">
+          <h1 className="font-bold md:text-xl">Citizen Profile </h1>
+        </div>
         {/* owners info */}
         <div className="w-full   px-6 p-5">
           <div className="md:max-w-7xl rounded-lg w-full mx-auto bg-white p-4 flex flex-col">
@@ -211,7 +224,7 @@ const DetailsPage = (props: Props) => {
                   </div>
                 </div>
               </div>
-              <div className="md:w-2/3 w-full h-[400px]  ">
+              <div className="md:w-2/3 w-full h-[404px]  ">
                 <div className=" w-full h-full bg-red-300 flex justify-center items-center">
                   heloo
                 </div>

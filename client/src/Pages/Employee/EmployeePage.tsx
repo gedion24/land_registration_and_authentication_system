@@ -82,7 +82,7 @@ const EmployeePage = (Props: Props) => {
                             Latest Registration
                           </h3>
                           <span className="text-base font-normal text-gray-500">
-                            This is a list of latest Registration
+                            This is a list of latest land Registration
                           </span>
                         </div>
                         <Link to="/employeehomepage/owners">

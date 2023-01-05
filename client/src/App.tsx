@@ -38,6 +38,8 @@ import EmployeeReport from "./Pages/Reports/EmployeeReport";
 // import Reporthomepage from "./Pages/Reports/Reporthomepage";
 import LandprofileReport from "./Pages/Reports/LandProfileReport";
 import LandupdateReport from "./Pages/Reports/LandUpdateReport";
+import Landauthpage from "./Pages/authentication/Landauthpage";
+import Erorrpage from "./Pages/authentication/Erorrpage";
 function App() {
   // const [userid, setuserid] = useState([]);
   Axios.defaults.withCredentials = true;
@@ -142,6 +144,13 @@ function App() {
           <Route path="/EmployeePage" element={<EmployeePage />} />
           <Route path="/owners" element={<Ownerstable />} />
           {/*  this will decise which route it will take based on the role */}
+
+          {/* auth pages route */}
+          <Route path="/checklandauth/:userId" element={<Landauthpage />}>
+            <Route index element={<PasswrdPage />} />
+            <Route path="landauth" element={<DetailsPage />} />
+            <Route path="errorpage" element={<Erorrpage />} />
+          </Route>
 
           {/* Admin Route */}
 

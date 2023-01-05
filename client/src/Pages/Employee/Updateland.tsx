@@ -291,7 +291,7 @@ const Updateland = (props: Props) => {
                       <input
                         id="search-bar"
                         type="text"
-                        className="bg-gray-50 outline-none ml-1 block w-full "
+                        className="bg-gray-50 outline-none ml-1 block w-full text-lg"
                         placeholder="Search here . . ."
                         autoComplete="off"
                         ref={inputRef}
@@ -299,7 +299,7 @@ const Updateland = (props: Props) => {
                       />
                       <ul
                         id="results"
-                        className="absolute w-full top-10 left-0 flex-col py-1 text-sm text-gray-700 bg-gray-50 rounded-lg dark:text-gray-200"
+                        className="absolute w-full p-3 top-10 left-0 border-none flex-col py-1 text-sm text-gray-700 bg-gray-50 rounded-lg dark:text-gray-200"
                         ref={ulRef}
                       >
                         {options.map(
@@ -320,7 +320,7 @@ const Updateland = (props: Props) => {
                           ) => {
                             return (
                               <button
-                                className="block py-2 mt-4 px-4 hover:bg-gray-800 dark:hover:bg-gray-200 dark:hover:text-black text-black border-b-2"
+                                className="block py-2 text-lg p-7 px-4 border-none hover:bg-gray-800 dark:hover:bg-gray-200  dark:hover:text-black text-black border-b-2"
                                 type="button"
                                 key={index}
                                 onClick={(e) => {

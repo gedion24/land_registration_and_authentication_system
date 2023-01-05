@@ -57,9 +57,15 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
     joinedDate: new Date().toISOString().substring(0, 10),
   };
   const validationSchema = Yup.object().shape({
-    firstName: Yup.string().required("*required"),
-    middleName: Yup.string().required("*required"),
-    lastName: Yup.string().required("*required"),
+    firstName: Yup.string()
+      .required("*required")
+      .matches(/^[aA-zZ\s]+$/, "invalid input"),
+    middleName: Yup.string()
+      .required("*required")
+      .matches(/^[aA-zZ\s]+$/, "invalid input"),
+    lastName: Yup.string()
+      .required("*required")
+      .matches(/^[aA-zZ\s]+$/, "invalid input"),
     username: Yup.string()
       .required("*required")
       .min(6, "username is too short"),
@@ -69,7 +75,10 @@ const RegisterEmp = ({ Empreg, setEmpreg }: Props) => {
       .max(8),
     sex: Yup.string().required("*required"),
     birthday: Yup.string().required("*required"),
-    phoneNumber: Yup.string().required("*required"),
+    // age limit
+    phoneNumber: Yup.string()
+      .required("*required")
+      .matches(/^[0-9]+$/, "invalid input"),
     email: Yup.string().required("*required").email("Invalid email address"),
     residentAddress: Yup.string().required("*required"),
     roleid: Yup.string().required("*required"),
